@@ -3,6 +3,9 @@
 # VI files
 *.swp
 
+# Composer files
+vendor/
+
 # ridership directories
 data/
 
