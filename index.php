@@ -20,7 +20,6 @@ if ($data_month) {
 if (! $data_month) {
 	$last_month = strtotime('-1 month');
 	$data_month = date('Y-m', $last_month);
-	echo "'data_month' not passed: using default of '$data_month'<br />";
 	?>
 	<table>
 	<form action="./" method="get" enctype="multipart/form-data">
