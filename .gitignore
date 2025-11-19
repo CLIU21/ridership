@@ -1,0 +1,8 @@
+# gitignore file
+
+# VI files
+*.swp
+
+# ridership directories
+data/
+
