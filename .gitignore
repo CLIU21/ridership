@@ -9,3 +9,6 @@ vendor/
 # ridership directories
 upload/
 
+# files containing secrets
+include/secrets.php
+

@@ -1,3 +1,6 @@
+<?php
+require_once "include/az.php";
+?>
 <!DOCTYPE html>
 <html>
 <head>
