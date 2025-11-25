@@ -12,21 +12,7 @@ require_once "include/az.php";
 <h1>Ridership Report</h1>
 <?php
 
-$data_month = $_POST['data_month'] ?? $_GET['data_month'] ?? "";
-if (! $data_month) {
-	?>
-	<h1>Error: no data_month passed</h1>
-	Please <a href="index.php">choose a data month for the report</a>
-	<?php
-	exit();
-} elseif (! preg_match('/^[12][0-9][0-9][0-9]-[0-9][0-9]$/', $data_month)) {
-	?>
-	<h1>Error: Invalid 'data_month'</h1>
-	Please <a href="index.php">choose a data month for the report</a>
-	<?php
-	exit();
-}
-# else:
+require_once "include/data_month_required.php";
 
 function safe_mkdir($path) {
 	if (! is_dir($path)) {

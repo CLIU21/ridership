@@ -23,21 +23,7 @@ require_once "vendor/autoload.php";
 use Shuchkin\SimpleXLSX;
 use \avadim\FastExcelWriter\Excel;
 
-$data_month = $_POST['data_month'] ?? $_GET['data_month'] ?? "";
-if (! $data_month) {
-	?>
-	<h1>Error: no data_month passed</h1>
-	Please <a href="index.php">choose a data month for the report</a>
-	<?php
-	exit();
-} elseif (! preg_match('/^[12][0-9][0-9][0-9]-[0-9][0-9]$/', $data_month)) {
-	?>
-	<h1>Error: Invalid 'data_month'</h1>
-	Please <a href="index.php">choose a data month for the report</a>
-	<?php
-	exit();
-}
-# else:
+require_once "include/data_month_required.php";
 
 define('LAST_NAME_INDEX', 0);
 define('FIRST_NAME_INDEX', 1);
