@@ -1,7 +1,8 @@
 <?php
-session_start();
+// NOTE: there must be NOTHING PRINTED prior to this include file loading,
+// or the header() call will silently fail.
 
-// echo "<h2>DEBUG: SERVER_NAME = {$_SERVER["SERVER_NAME"]}</h2>\n";
+session_start();
 
 if ($_SERVER["SERVER_NAME"] == "localhost") {
 	# bypass signon requirement
