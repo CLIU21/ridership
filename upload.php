@@ -30,8 +30,7 @@ echo "_POST:"; echo "<pre>"; print_r($_POST); echo "</pre>";
 echo "_FILES:"; echo "<pre>"; print_r($_FILES); echo "</pre>";
 $file_paths = [];
 foreach ($file_labels as $file_id => $file_label) {
-	$file_name = "$file_id.xlsx";
-	$real_name = "$data_dir/$file_name";
+	$real_name = "$data_dir/$file_id.xlsx";
 	$file_paths[$file_id] = $real_name;
 
 	$File = $_FILES[$file_id] ?? ['error' => 4];
@@ -52,7 +51,6 @@ foreach ($file_labels as $file_id => $file_label) {
 		echo "File '$file_id':<br />\n";
 		echo "... temp " . "'" . $tmp_name . "'" . "<br />\n";
 		echo "... orig " . "'" . $orig_name . "'" . "<br />\n";
-		echo "... real " . "'" . $file_name . "'" . "<br />\n";
 		echo "... filepath " . "'" . $real_name . "'" . "<br />\n";
 		if (move_uploaded_file($tmp_name, $real_name)) {
 			echo "==> MOVED<br />";
@@ -80,7 +78,7 @@ $files_needed = 0;
 				$file_path = $file_paths[$file_id] ?? "";
 				if ($file_path && file_exists($file_path)) {
 					?>
-				<span style='font-weight:bold'><?=$file_name?></span>
+				<span style='font-weight:bold'><?=$file_path?></span>
 					<?php
 				} else {
 					?>
