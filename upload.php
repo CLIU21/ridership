@@ -85,11 +85,8 @@ $files_needed = 0;
 ?>
 <table>
 	<form action="./" method="post" enctype="multipart/form-data">
-		<tr>
-			<td align="right">Month for data (YYYY-MM)</td>
-			<td><span style='font-weight:bold'><?=$data_month?></span></td>
-			<input type="hidden" name="data_month" value="<?=$data_month?>">
-		</tr>
+		<input type="hidden" name="data_month" value="<?=$data_month?>">
+		<input type="hidden" name="user_name" value="<?=$user_name?>">
 		<?php
 		foreach ($file_labels as $file_id => $file_label) {
 			?>

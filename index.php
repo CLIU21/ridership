@@ -3,7 +3,9 @@ require_once "include/az.php";
 require_once "include/header.php";
 
 $last_month = strtotime('-1 month');
-$data_month = date('Y-m', $last_month);
+$default_data_month = date('Y-m', $last_month);
+
+$data_month = $_POST['data_month'] ?? $_GET['data_month'] ?? $default_data_month;
 ?>
 <table>
 <form action="upload.php" method="get" enctype="multipart/form-data">
