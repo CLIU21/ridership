@@ -487,12 +487,7 @@ $constants = [
 ];
 
 
-$cwd = getcwd();
-// echo "cwd: {$cwd}<br />";
-$data_root = "{$cwd}/upload/";
-// echo "data_root: {$data_root}<br />";
-$data_dir = "{$data_root}/{$data_month}";
-// echo "data_dir: {$data_dir}<br />";
+include "include/data_dir.php";
 verify_dir($data_dir);
 
 $file_labels = [
