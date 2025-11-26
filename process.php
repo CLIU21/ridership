@@ -574,8 +574,6 @@ foreach ($file_labels as $file_id => $file_label) {
 </table>
 <h2>Processing ...</h2>
 <?php
-$students = [];
-
 echo "<hr />\n";
 
 $zpass = load_xls($file_paths['ZPASS']);
@@ -598,6 +596,7 @@ $student_id_replacements = [
 	3153276528 => 5623149936,
 ];
 
+$students = [];
 $zpass_filtered = [];
 $zpass_with_id_found = [];
 $zpass_with_date = [];
