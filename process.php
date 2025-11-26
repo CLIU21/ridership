@@ -439,6 +439,24 @@ function zpass_output($data, $constants) {
 	return $answer;
 }
 
+function split_data_at_row_count($data, $max_rows) {
+	echo "DEBUG: split_data_at_row_count(" . count($data) . ", " . $max_rows . ")<br />\n";
+
+	$output = [];
+	if (count($data) <= $max_rows) {
+		array_push($output, $data);
+	} else {
+		$header = $data[0];				// first row only
+		$body = array_slice($data, 1);	// all rows except first
+		$chunks = array_chunk($body, $max_rows);
+		foreach ($chunks as $batch) {
+			array_unshift($batch, $header);
+			array_push($output, $batch);
+		}
+	}
+	return $output;
+}
+
 function export_data_as_excel($data, $filename, $sheetname='Sheet1') {
 	$excel = Excel::create([$sheetname]);
 	$sheet = $excel->sheet();
@@ -637,6 +655,12 @@ foreach (['EI', 'SA'] as $grade) {
 	foreach ($zpass_output_split[$grade] as $i => $batch) {
 		dump_data_hidden($batch, "zpass_{$grade}_output_{$i}", "zpass $grade for output #$i");
 	}
+
+	foreach ($zpass_output_split[$grade] as $i => $batch) {
+		$filename = "upload/2025-10/test_excel_output_{$grade}_{$i}.xlsx";
+		export_data_as_excel($batch, $filename, 'Sheet Name Goes Here');
+	}
+
 }
 
 echo "<hr />\n";
