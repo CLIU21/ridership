@@ -109,7 +109,10 @@ $files_needed = 0;
 		}
 		if ($files_needed) {
 			?>
-		<tr><td colspan="2" align="right"><input type="submit" name="submit" value="Submit"></td></tr>
+		<tr>
+			<td align="right" style="font-weight: bold; color: red">Files needed: <?=$files_needed?></td>
+			<td align="left"><input type="submit" name="submit" value="Upload"></td>
+		</tr>
 			<?php
 		}
 		?>
@@ -119,10 +122,14 @@ $files_needed = 0;
 		$process = $_GET['process'] ?? "";
 		if (! $process) {
 			?>
-	<form action="process.php" method="get" enctype="multipart/form-data">
+	<form action="process.php" method="get">
 		<input type="hidden" name="data_month" value="<?=$data_month?>">
+		<input type="hidden" name="user_name" value="<?=$user_name?>">
 		<input type="hidden" name="process" value="process">
-		<tr><td colspan="2" align="right"><input type="submit" name="submit" value="Process"></td></tr>
+		<tr>
+			<td align="right" style="font-weight: bold; color: blue">All files ready.</td>
+			<td align="left"><input type="submit" name="submit" value="Process"></td>
+		</tr>
 	</form>
 			<?php
 		}
