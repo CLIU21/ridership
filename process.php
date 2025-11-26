@@ -7,13 +7,13 @@ require_once "include/header.php";
 // and it's unclear whether this needs to happen *prior* to
 // looking each student up in the Medicare files or *afterwards*.
 
+require_once "include/data_month_required.php";
+require_once "include/user_name_required.php";
+
 require_once "vendor/autoload.php";
 
 use Shuchkin\SimpleXLSX;
 use \avadim\FastExcelWriter\Excel;
-
-require_once "include/data_month_required.php";
-require_once "include/user_name_required.php";
 
 define('LAST_NAME_INDEX', 0);
 define('FIRST_NAME_INDEX', 1);
