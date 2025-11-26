@@ -1,17 +1,6 @@
 <?php
 require_once "include/az.php";
-?>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Ridership</title>
-	<script src="ridership.js" type="text/javascript"></script>
-</head>
-<body>
-<h1>Ridership Report</h1>
-<?php
+require_once "include/header.php";
 
 // NOTE: we're doing a student ID translation for one student,
 // (3153276528 -> 5623149936   # Changed per Robin Miller's instruction; PAID changed)

@@ -1,16 +1,6 @@
 <?php
 require_once "include/az.php";
-?>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Ridership</title>
-</head>
-<body>
-<h1>Ridership Report</h1>
-<?php
+require_once "include/header.php";
 
 require_once "include/data_month_required.php";
 

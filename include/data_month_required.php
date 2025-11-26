@@ -14,5 +14,4 @@ if (! $data_month) {
 	<?php
 	exit();
 }
-
 ?>
