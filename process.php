@@ -596,56 +596,45 @@ $student_id_replacements = [
 	3153276528 => 5623149936,
 ];
 
-$students = [];
-$zpass_filtered = [];
-$zpass_with_id_found = [];
-$zpass_with_date = [];
-$zpass_split_id_day = [];
-$zpass_clean = [];
-$zpass_output = [];
-$zpass_output_split = [];
-
 foreach (['EI', 'SA'] as $grade) {
 	echo "<hr />\n";
 	echo "<h2>grade = '$grade':</h2>\n";
 
-	$students[$grade] = extract_studentIDs($file_paths["{$grade}_IPE"]);
-	dump_data_hidden($students[$grade], "students_{$grade}", "students $grade");
+	$zpass_students = extract_studentIDs($file_paths["{$grade}_IPE"]);
+	dump_data_hidden($zpass_students, "students_{$grade}", "students $grade");
 
 	dump_data_hidden($zpass_split[$grade], "zpass_{$grade}", "zpass $grade (all)");
-	$zpass_filtered[$grade] = filter_data_by_has_id($zpass_split[$grade]);
+	$zpass_filtered = filter_data_by_has_id($zpass_split[$grade]);
 
-	dump_data_hidden($zpass_filtered[$grade]['error'], "zpass_{$grade}_err", "zpass $grade ERROR no ID");
-	dump_data_hidden($zpass_filtered[$grade]['ok'], "zpass_{$grade}_ok", "zpass $grade OK");
+	dump_data_hidden($zpass_filtered['error'], "zpass_{$grade}_err", "zpass $grade ERROR no ID");
+	dump_data_hidden($zpass_filtered['ok'], "zpass_{$grade}_ok", "zpass $grade OK");
 
-	$zpass_with_id_found[$grade] = split_data_by_id_found($zpass_filtered[$grade]['ok'], $students[$grade]);
+	$zpass_with_id_found = split_data_by_id_found($zpass_filtered['ok'], $zpass_students);
 
-	dump_data_hidden($zpass_with_id_found[$grade]['error'], "zpass_{$grade}_not_found", "zpass $grade ID not found in student list");
-	dump_data_hidden($zpass_with_id_found[$grade]['ok'], "zpass_{$grade}_found", "zpass $grade with ID in student list");
+	dump_data_hidden($zpass_with_id_found['error'], "zpass_{$grade}_not_found", "zpass $grade ID not found in student list");
+	dump_data_hidden($zpass_with_id_found['ok'], "zpass_{$grade}_found", "zpass $grade with ID in student list");
 
-	$zpass_with_date[$grade] = data_add_columns_day_time($zpass_with_id_found[$grade]['ok']);
-	dump_data_hidden($zpass_with_date[$grade], "zpass_{$grade}_date_raw", "zpass $grade with date (raw)");
+	$zpass_with_date = data_add_columns_day_time($zpass_with_id_found['ok']);
+	$zpass_with_date = remove_columns_by_indexes($index_list, $zpass_with_date);
+	dump_data_hidden($zpass_with_date, "zpass_{$grade}_date", "zpass $grade with date");
 
-	$zpass_with_date[$grade] = remove_columns_by_indexes($index_list, $zpass_with_date[$grade]);
-	dump_data_hidden($zpass_with_date[$grade], "zpass_{$grade}_date", "zpass $grade with date (clean)");
+	$zpass_split_id_day = time_spread_per_ID_and_day($zpass_with_date);
+	dump_data_hidden($zpass_split_id_day, "zpass_{$grade}_split", "zpass $grade split by ID and day");
 
-	$zpass_split_id_day[$grade] = time_spread_per_ID_and_day($zpass_with_date[$grade]);
-	dump_data_hidden($zpass_split_id_day[$grade], "zpass_{$grade}_split", "zpass $grade split by ID and day");
-
-	$zpass_clean[$grade] = zpass_clean($zpass_split_id_day[$grade], $student_id_replacements);
-	dump_data_hidden($zpass_clean[$grade], "zpass_{$grade}_clean", "zpass $grade cleaned up columns");
+	$zpass_clean = zpass_clean($zpass_split_id_day, $student_id_replacements);
+	dump_data_hidden($zpass_clean, "zpass_{$grade}_clean", "zpass $grade cleaned up columns");
 
 	$constants_local = array_merge($constants['global'], $constants[$grade]);
-	$zpass_output[$grade] = zpass_output($zpass_clean[$grade], $constants_local);[$grade];
-	dump_data_hidden($zpass_output[$grade], "zpass_{$grade}_output", "zpass $grade for output");
+	$zpass_output_all = zpass_output($zpass_clean, $constants_local);[$grade];
+	dump_data_hidden($zpass_output_all, "zpass_{$grade}_output", "zpass $grade for output");
 
 	$max_rows = 1000;
-	$zpass_output_split[$grade] = split_data_at_row_count($zpass_output[$grade], $max_rows);
-	foreach ($zpass_output_split[$grade] as $i => $batch) {
+	$zpass_output_split = split_data_at_row_count($zpass_output_all, $max_rows);
+	foreach ($zpass_output_split as $i => $batch) {
 		dump_data_hidden($batch, "zpass_{$grade}_output_{$i}", "zpass $grade for output #$i");
 	}
 
-	foreach ($zpass_output_split[$grade] as $i => $batch) {
+	foreach ($zpass_output_split as $i => $batch) {
 		$filename = "upload/2025-10/test_excel_output_{$grade}_{$i}.xlsx";
 		export_data_as_excel($batch, $filename, 'Sheet Name Goes Here');
 	}
