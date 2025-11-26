@@ -13,6 +13,7 @@ use Shuchkin\SimpleXLSX;
 use \avadim\FastExcelWriter\Excel;
 
 require_once "include/data_month_required.php";
+require_once "include/user_name_required.php";
 
 define('LAST_NAME_INDEX', 0);
 define('FIRST_NAME_INDEX', 1);
