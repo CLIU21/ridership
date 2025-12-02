@@ -6,6 +6,7 @@ require_once "include/data_month_required.php";
 require_once "include/data_dir_required.php";
 
 require_once "include/file_paths_import.php";
+require_once "include/file_paths_export.php";
 
 ?>
 <h2>Files in that directory:</h2>
@@ -16,7 +17,7 @@ echo "DEBUG: file_paths_import =<pre>"; print_r($file_paths_import); echo "</pre
 
 $files = scandir($data_dir, SCANDIR_SORT_ASCENDING);
 foreach ($files as $file) {
-	if (preg_match('/^[.]/', $file)) {
+	if (is_hidden_file($file)) {
 		continue;
 	}
 	$full_path = $data_dir . "/" . $file;
@@ -31,10 +32,9 @@ foreach ($files as $file) {
 		</td>
 		<td>
 			<?php
-			if (in_array($full_path, $file_paths_import)) {
+			if (is_import_path($full_path)) {
 				echo "Import (uploaded) file";
-			} elseif (preg_match('/^test_excel_output_(EI|SA)_[0-9]+.xlsx$/', $file)) {
-				# php note: "1"==yes, "0"==no, "false"==failure
+			} elseif (is_export_path($full_path)) {
 				echo "Export (produced) file";
 			} else {
 				echo "Other";

@@ -11,4 +11,12 @@ foreach ($file_labels_import as $file_id => $file_label) {
 	$file_paths_import[$file_id] = $real_name;
 }
 
+function is_hidden_file($basename) {
+	return preg_match('/^[.]/', $basename);
+}
+
+function is_import_path($full_path) {
+	global $file_paths_import;
+	return in_array($full_path, $file_paths_import);
+}
 ?>
