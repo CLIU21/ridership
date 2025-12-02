@@ -15,20 +15,20 @@ require_once "include/file_paths_export.php";
 
 echo "DEBUG: file_paths_import =<pre>"; print_r($file_paths_import); echo "</pre>\n";
 
-function is_visible_file($file) {
-	return (! is_hidden_file($file));
+function is_visible_file($basename) {
+	return (! is_hidden_file($basename));
 }
 
 $files = scandir($data_dir, SCANDIR_SORT_ASCENDING);
 $files = array_filter($files, 'is_visible_file');
 
-foreach ($files as $file) {
-	$full_path = $data_dir . "/" . $file;
+foreach ($files as $basename) {
+	$full_path = $data_dir . "/" . $basename;
 	?>
 	<tr>
 		<td>
-			<!-- <a href="view.php?data_month=<?=$file?>"><?=$file?></a> -->
-			<?=$file?>
+			<!-- <a href="view.php?data_month=<?=$basename?>"><?=$basename?></a> -->
+			<?=$basename?>
 		</td>
 		<td>
 			(<?=$full_path?>)
