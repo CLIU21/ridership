@@ -1,4 +1,6 @@
 <?php
+include "include/data_dir.php";
+
 function verify_dir($path) {
 	global $data_month;
 
@@ -10,5 +12,5 @@ function verify_dir($path) {
 		exit();
 	}
 }
-include "include/data_dir.php";
+
 verify_dir($data_dir);

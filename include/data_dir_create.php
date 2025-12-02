@@ -1,4 +1,6 @@
 <?php
+include "include/data_dir.php";
+
 function safe_mkdir($path) {
 	if (! is_dir($path)) {
 		echo "safe_mkdir(): Create directory '$path'<br />";
@@ -12,5 +14,4 @@ function safe_mkdir($path) {
 	}
 }
 
-include "include/data_dir.php";
 safe_mkdir($data_dir);
