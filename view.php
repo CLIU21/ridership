@@ -8,8 +8,6 @@ require_once "include/data_dir_required.php";
 require_once "include/file_paths_import.php";
 require_once "include/file_paths_export.php";
 
-echo "DEBUG: file_paths_import =<pre>"; print_r($file_paths_import); echo "</pre>\n";
-
 function is_visible_file($basename) {
 	return (! is_hidden_file($basename));
 }
