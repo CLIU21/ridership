@@ -11,7 +11,9 @@ require_once "include/data_dir_required.php";
 <?php
 $files = scandir($data_dir, SCANDIR_SORT_ASCENDING);
 foreach ($files as $file) {
-	if (! preg_match('/^[.]/', $file)) {
+	if (preg_match('/^[.]/', $file)) {
+		continue;
+	}
 		?>
 	<tr>
 		<td>
