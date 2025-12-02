@@ -7,11 +7,7 @@ require_once "include/user_name_required.php";
 
 require_once "include/data_dir_create.php";
 
-$file_labels = [
-	'ZPASS' => 'Zpass File',
-	'EI_IPE' => 'Early Intervention IPE data',
-	'SA_IPE' => 'School-Age IPE data',
-];
+require_once "include/file_paths_import.php";
 
 $error_msg = [
 	1 => 'UPLOAD_ERR_INI_SIZE',		// The uploaded file exceeds the upload_max_filesize directive in php.ini
@@ -28,13 +24,8 @@ $error_msg = [
 echo "_GET:"; echo "<pre>"; print_r($_GET); echo "</pre>";
 echo "_POST:"; echo "<pre>"; print_r($_POST); echo "</pre>";
 echo "_FILES:"; echo "<pre>"; print_r($_FILES); echo "</pre>";
-$file_paths = [];
-foreach ($file_labels as $file_id => $file_label) {
-	$real_name = "$data_dir/$file_id.xlsx";
-	$file_paths[$file_id] = $real_name;
-}
 
-foreach ($file_labels as $file_id => $file_label) {
+foreach ($file_labels_import as $file_id => $file_label) {
 	$File = $_FILES[$file_id] ?? ['error' => 4];
 	$error = $File['error'];
 	if ($error == 4) {
@@ -50,7 +41,7 @@ foreach ($file_labels as $file_id => $file_label) {
 	} else {
 		$tmp_name = $File['tmp_name'];
 		$orig_name = $File['name'];
-		$real_name = $file_paths[$file_id];
+		$real_name = $file_paths_import[$file_id];
 		echo "File '$file_id':<br />\n";
 		echo "... temp " . "'" . $tmp_name . "'" . "<br />\n";
 		echo "... orig " . "'" . $orig_name . "'" . "<br />\n";
@@ -70,7 +61,7 @@ $files_needed = 0;
 		<input type="hidden" name="data_month" value="<?=$data_month?>">
 		<input type="hidden" name="user_name" value="<?=$user_name?>">
 		<?php
-		foreach ($file_labels as $file_id => $file_label) {
+		foreach ($file_labels_import as $file_id => $file_label) {
 			?>
 		<tr>
 			<td align="right">
@@ -78,7 +69,7 @@ $files_needed = 0;
 			</td>
 			<td>
 				<?php
-				$file_path = $file_paths[$file_id] ?? "";
+				$file_path = $file_paths_import[$file_id] ?? "";
 				if ($file_path && file_exists($file_path)) {
 					?>
 				<span style='font-weight:bold'><?=$file_path?></span>
