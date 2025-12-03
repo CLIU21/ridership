@@ -50,9 +50,6 @@ foreach ($import_files as $full_path) {
 			<!-- <a href="view.php?data_month=<?=$basename?>"><?=$basename?></a> -->
 			<?=$basename?>
 		</td>
-		<td>
-			(<?=$full_path?>)
-		</td>
 	</tr>
 	<?php
 }
@@ -76,10 +73,9 @@ foreach ($export_files as $full_path) {
 			<?=$basename?>
 		</td>
 		<td>
-			(<?=$full_path?>)
-		</td>
-		<td>
-			export
+			<a href="<?=$full_path?>" download>
+				<button>Download</button>
+			</a>
 		</td>
 	</tr>
 	<?php
@@ -106,9 +102,6 @@ if ($other_files) {
 		</td>
 		<td>
 			(<?=$full_path?>)
-		</td>
-		<td>
-			other
 		</td>
 	</tr>
 		<?php
