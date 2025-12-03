@@ -1,5 +1,7 @@
 <?php
 
+require_once "include/debug_header.php";
+
 //This login script is based on Sami Sipponen's Simple Azure Oauth2 Example with PHP:
 //https://www.sipponen.com/archives/4024
 
