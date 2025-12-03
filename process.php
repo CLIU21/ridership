@@ -446,7 +446,7 @@ function export_data_as_excel($data, $filename, $sheetname='Sheet1') {
 		$sheet->writeRow($row, $rowOptions);
 	}
 	$excel->save($filename);
-	// $excel->save("$filename.xlsx");
+	echo "<h2 style='color: green'>DEBUG: saved excel data to '$filename'</h2>\n";
 }
 
 // strftime is deprecated as of PHP 8.1: use date() or DateTime::format() instead
