@@ -105,7 +105,7 @@ if ($files_missing) {
 <?php
 echo "<hr />\n";
 
-$zpass = load_xls($file_paths['ZPASS']);
+$zpass = load_xls($file_paths_import['ZPASS']);
 // echo 'zpass_data: ' . count($zpass) . "<br/>\n";
 
 $zpass = extract_relevant_columns($zpass);
@@ -122,7 +122,7 @@ foreach (['EI', 'SA'] as $grade) {
 	echo "<hr />\n";
 	echo "<h2>grade = '$grade':</h2>\n";
 
-	$zpass_students_data = load_xls($file_paths["{$grade}_IPE"]);
+	$zpass_students_data = load_xls($file_paths_import["{$grade}_IPE"]);
 	$zpass_students = extract_studentIDs($zpass_students_data);
 	show_array_hidden($zpass_students, "students_{$grade}", "students $grade");
 

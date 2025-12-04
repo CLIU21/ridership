@@ -13,7 +13,7 @@ foreach ($file_labels_import as $file_id => $file_label) {
 
 $files_missing = [];
 foreach ($file_labels_import as $file_id => $file_label) {
-	$file_path = $file_paths[$file_id] ?? "";
+	$file_path = $file_paths_import[$file_id] ?? "";
 	if ($file_path && file_exists($file_path)) {
 		continue;
 	} else {
