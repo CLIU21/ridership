@@ -19,23 +19,23 @@ require_once "include/time_conversion.php";
 require_once "include/excel_read.php";
 require_once "include/excel_write.php";
 
-define('LAST_NAME_INDEX', 0);
-define('FIRST_NAME_INDEX', 1);
-define('CARD_INDEX', 2);
-define('DATE_INDEX', 8);
-define('STUDENT_INDEX', 17);
-define('DISTRICT_INDEX', 19);
-define('GRADE_INDEX', 20);
+define('ZPASS_LAST_NAME_INDEX', 0);
+define('ZPASS_FIRST_NAME_INDEX', 1);
+define('ZPASS_CARD_INDEX', 2);
+define('ZPASS_DATE_INDEX', 8);
+define('ZPASS_STUDENT_INDEX', 17);
+define('ZPASS_DISTRICT_INDEX', 19);
+define('ZPASS_GRADE_INDEX', 20);
 
-define('TIME_INDEX', 'time'); 
-define('DAY_INDEX', 'day'); 
-define('HOURS_INDEX', 'hours'); 
-define('MIN_INDEX', 'min'); 
-define('MAX_INDEX', 'max'); 
-define('ELAPSED_INDEX', 'elapsed'); 
-define('COUNT_INDEX', 'count');
-define('SERVICE_NAME_INDEX', 'service_name'); 
-define('SERVICE_CODE_INDEX', 'service_code'); 
+define('ZPASS_TIME_INDEX', 'time'); 
+define('ZPASS_DAY_INDEX', 'day'); 
+define('ZPASS_HOURS_INDEX', 'hours'); 
+define('ZPASS_MIN_INDEX', 'min'); 
+define('ZPASS_MAX_INDEX', 'max'); 
+define('ZPASS_ELAPSED_INDEX', 'elapsed'); 
+define('ZPASS_COUNT_INDEX', 'count');
+define('ZPASS_SERVICE_NAME_INDEX', 'service_name'); 
+define('ZPASS_SERVICE_CODE_INDEX', 'service_code'); 
 
 define('SSG_STUDENT_INDEX', 1);
 
@@ -45,26 +45,26 @@ function extract_studentIDs($data) {
 
 function extract_relevant_columns($data) {
 	$column_list = [
-		// LAST_NAME_INDEX,
-		// FIRST_NAME_INDEX,
-		CARD_INDEX,
-		DATE_INDEX,
-		STUDENT_INDEX,
-		DISTRICT_INDEX,
-		GRADE_INDEX,
+		// ZPASS_LAST_NAME_INDEX,
+		// ZPASS_FIRST_NAME_INDEX,
+		ZPASS_CARD_INDEX,
+		ZPASS_DATE_INDEX,
+		ZPASS_STUDENT_INDEX,
+		ZPASS_DISTRICT_INDEX,
+		ZPASS_GRADE_INDEX,
 	];
 
 	return keep_columns_by_indexes($column_list, $data);
 }
 
 function split_data_by_id_found($data, $students_ids) {
-	return split_rows_by_column_data_present($data, STUDENT_INDEX, $students_ids);
+	return split_rows_by_column_data_present($data, ZPASS_STUDENT_INDEX, $students_ids);
 }
 
 function split_zonar_by_grade($data) {
-	$split_by_presence = split_rows_by_column_data_present($data, GRADE_INDEX, ['EI', 'SP']);
+	$split_by_presence = split_rows_by_column_data_present($data, ZPASS_GRADE_INDEX, ['EI', 'SP']);
 
-	$split_by_data = split_rows_by_column_data_value($split_by_presence['ok'], GRADE_INDEX);
+	$split_by_data = split_rows_by_column_data_value($split_by_presence['ok'], ZPASS_GRADE_INDEX);
 
 	$answer = [
 		'EI' => $split_by_data['EI'],
@@ -76,25 +76,25 @@ function split_zonar_by_grade($data) {
 }
 
 function filter_data_by_has_id($data) {
-	return filter_data_by_column_not_blank(STUDENT_INDEX, $data);
+	return filter_data_by_column_not_blank(ZPASS_STUDENT_INDEX, $data);
 }
 
 function data_add_columns_day_time($data) {
 	$header = $data[0];				// first row only
 	$body = array_slice($data, 1);	// all rows except first
 
-	$header[DAY_INDEX] = "Day";
-	$header[TIME_INDEX] = "Time";
-	$header[HOURS_INDEX] = "Hours";
+	$header[ZPASS_DAY_INDEX] = "Day";
+	$header[ZPASS_TIME_INDEX] = "Time";
+	$header[ZPASS_HOURS_INDEX] = "Hours";
 
 	$answer = [$header];
 
 	foreach ($body as $row) {
-		$date = $row[DATE_INDEX];
+		$date = $row[ZPASS_DATE_INDEX];
 		list($day, $time) = explode(' ', $date);
-		$row[DAY_INDEX] = $day; 
-		$row[TIME_INDEX] = $time; 
-		$row[HOURS_INDEX] = convert_time_to_hours($time); 
+		$row[ZPASS_DAY_INDEX] = $day; 
+		$row[ZPASS_TIME_INDEX] = $time; 
+		$row[ZPASS_HOURS_INDEX] = convert_time_to_hours($time); 
 		array_push($answer, $row);
 	}
 
@@ -103,10 +103,10 @@ function data_add_columns_day_time($data) {
 
 function data_remove_columns_date_time_etc($data) {
 	$index_list = [
-		CARD_INDEX,
-		DATE_INDEX,
-		DISTRICT_INDEX,
-		TIME_INDEX,
+		ZPASS_CARD_INDEX,
+		ZPASS_DATE_INDEX,
+		ZPASS_DISTRICT_INDEX,
+		ZPASS_TIME_INDEX,
 	];
 	$output = remove_columns_by_indexes($index_list, $data);
 	return $output;
@@ -117,49 +117,49 @@ function time_spread_per_ID_and_day($data) {
 	$body = array_slice($data, 1);	// all rows except first
 
 	# fix header labels ...
-	$header[STUDENT_INDEX] = 'StudentCode';
-	$header[GRADE_INDEX] = 'Service';
-	$header[DAY_INDEX] = 'ServiceDate';
+	$header[ZPASS_STUDENT_INDEX] = 'StudentCode';
+	$header[ZPASS_GRADE_INDEX] = 'Service';
+	$header[ZPASS_DAY_INDEX] = 'ServiceDate';
 
 	# ... and add some new ones
-	$header[MIN_INDEX] = "Min";
-	$header[MAX_INDEX] = "Max";
-	$header[ELAPSED_INDEX] = "Elapsed";
-	$header[COUNT_INDEX] = "Count";
-	$header[SERVICE_NAME_INDEX] = "Service Description";
-	$header[SERVICE_CODE_INDEX] = "ServiceType";
+	$header[ZPASS_MIN_INDEX] = "Min";
+	$header[ZPASS_MAX_INDEX] = "Max";
+	$header[ZPASS_ELAPSED_INDEX] = "Elapsed";
+	$header[ZPASS_COUNT_INDEX] = "Count";
+	$header[ZPASS_SERVICE_NAME_INDEX] = "Service Description";
+	$header[ZPASS_SERVICE_CODE_INDEX] = "ServiceType";
 
 	$answer = [$header];
 	foreach ($body as $row) {
-		$id = $row[STUDENT_INDEX];
-		$day = $row[DAY_INDEX];
-		$hours = $row[HOURS_INDEX];
+		$id = $row[ZPASS_STUDENT_INDEX];
+		$day = $row[ZPASS_DAY_INDEX];
+		$hours = $row[ZPASS_HOURS_INDEX];
 		$index = "$id:$day";
 		if (! isset($answer[$index])) {
 			$answer[$index] = $row;
-			$answer[$index][HOURS_INDEX] = '---';
-			$answer[$index][MIN_INDEX] = $hours;
-			$answer[$index][MAX_INDEX] = $hours;
-			$answer[$index][ELAPSED_INDEX] = 0;
-			$answer[$index][COUNT_INDEX] = 1;
+			$answer[$index][ZPASS_HOURS_INDEX] = '---';
+			$answer[$index][ZPASS_MIN_INDEX] = $hours;
+			$answer[$index][ZPASS_MAX_INDEX] = $hours;
+			$answer[$index][ZPASS_ELAPSED_INDEX] = 0;
+			$answer[$index][ZPASS_COUNT_INDEX] = 1;
 		} else {
-			$min = $answer[$index][MIN_INDEX];
-			$max = $answer[$index][MAX_INDEX];
+			$min = $answer[$index][ZPASS_MIN_INDEX];
+			$max = $answer[$index][ZPASS_MAX_INDEX];
 			$min = min($hours, $min);
 			$max = max($hours, $max);
-			$answer[$index][MIN_INDEX] = $min;
-			$answer[$index][MAX_INDEX] = $max;
-			$answer[$index][ELAPSED_INDEX] = $max - $min;
-			$answer[$index][COUNT_INDEX]++;
+			$answer[$index][ZPASS_MIN_INDEX] = $min;
+			$answer[$index][ZPASS_MAX_INDEX] = $max;
+			$answer[$index][ZPASS_ELAPSED_INDEX] = $max - $min;
+			$answer[$index][ZPASS_COUNT_INDEX]++;
 		}
-		$elapsed = $answer[$index][ELAPSED_INDEX];
+		$elapsed = $answer[$index][ZPASS_ELAPSED_INDEX];
 		$round_trip = ($elapsed > 2.5);
-		$answer[$index][SERVICE_NAME_INDEX] = (
+		$answer[$index][ZPASS_SERVICE_NAME_INDEX] = (
 			$round_trip
 			? 'RoundTrip'
 			: 'OneWay'
 		);
-		$answer[$index][SERVICE_CODE_INDEX] = (
+		$answer[$index][ZPASS_SERVICE_CODE_INDEX] = (
 			$round_trip
 			? 'T2'
 			: 'T1'
@@ -171,10 +171,10 @@ function time_spread_per_ID_and_day($data) {
 
 function replace_student_ids($data, $student_id_replacements) {
 	$fix_row = function($row) use ($student_id_replacements) {
-		$value = $row[STUDENT_INDEX];
+		$value = $row[ZPASS_STUDENT_INDEX];
 		if (isset($student_id_replacements[$value])) {
 			$value = $student_id_replacements[$value];
-			$row[STUDENT_INDEX] = $value;
+			$row[ZPASS_STUDENT_INDEX] = $value;
 		}
 		return $row;
 	};
@@ -187,14 +187,14 @@ function replace_student_ids($data, $student_id_replacements) {
 function zpass_clean($data, $student_id_replacements) {
 	# delete the columns we don't care about anymore
 	$column_list = [
-		GRADE_INDEX,
-		HOURS_INDEX,
-		MIN_INDEX,
-		MAX_INDEX,
-		ELAPSED_INDEX,
-		COUNT_INDEX,
-		SERVICE_NAME_INDEX,
-		// SERVICE_CODE_INDEX,
+		ZPASS_GRADE_INDEX,
+		ZPASS_HOURS_INDEX,
+		ZPASS_MIN_INDEX,
+		ZPASS_MAX_INDEX,
+		ZPASS_ELAPSED_INDEX,
+		ZPASS_COUNT_INDEX,
+		ZPASS_SERVICE_NAME_INDEX,
+		// ZPASS_SERVICE_CODE_INDEX,
 	];
 	$data = remove_columns_by_indexes($column_list, $data);
 
@@ -239,14 +239,14 @@ function zpass_output($data, $constants) {
 	foreach ($body as $row) {
 		$answer_row = [
             $constants['district_code'],
-            $row[STUDENT_INDEX],			// student ID
+            $row[ZPASS_STUDENT_INDEX],			// student ID
             $constants['uploaded_by'],		// Provider ID
-            $row[DAY_INDEX],				// Service Date
+            $row[ZPASS_DAY_INDEX],				// Service Date
             '',								// Make-Up Date
             '',								// Start Time
             '',								// End Time
             $constants['service_type'],		// Service Type
-            $row[SERVICE_CODE_INDEX],		// Service Code
+            $row[ZPASS_SERVICE_CODE_INDEX],		// Service Code
             '',								// Group Size
             '',								// Therapy Method
             '',								// Therapy Method2
