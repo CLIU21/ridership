@@ -66,21 +66,6 @@ $error_msg = [
 // echo "_POST:"; echo "<pre>"; print_r($_POST); echo "</pre>";
 // echo "_FILES:"; echo "<pre>"; print_r($_FILES); echo "</pre>";
 
-$file_paths = [];
-foreach ($file_labels_import as $file_id => $file_label) {
-	$file_name = "$file_id.xlsx";
-	$real_name = "$data_dir/$file_name";
-	$file_paths[$file_id] = $real_name;
-}
-$files_missing = [];
-foreach ($file_labels_import as $file_id => $file_label) {
-	$file_path = $file_paths[$file_id] ?? "";
-	if ($file_path && file_exists($file_path)) {
-		continue;
-	} else {
-		$files_missing[$file_id] = $file_path;
-	}
-}
 if ($files_missing) {
 	?>
 <table>

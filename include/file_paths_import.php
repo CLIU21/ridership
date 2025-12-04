@@ -11,6 +11,16 @@ foreach ($file_labels_import as $file_id => $file_label) {
 	$file_paths_import[$file_id] = $real_name;
 }
 
+$files_missing = [];
+foreach ($file_labels_import as $file_id => $file_label) {
+	$file_path = $file_paths[$file_id] ?? "";
+	if ($file_path && file_exists($file_path)) {
+		continue;
+	} else {
+		$files_missing[$file_id] = $file_path;
+	}
+}
+
 function is_hidden_file($basename) {
 	return preg_match('/^[.]/', $basename);
 }
