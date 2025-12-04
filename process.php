@@ -48,11 +48,6 @@ function load_xls($filename) {
 	}
 }
 
-function show_xls($filename) {
-	$data = load_xls($filename);
-	show_array($data);
-}
-
 define('SSG_STUDENT_INDEX', 1);
 function extract_studentIDs($data) {
 	$ids_column = array_map(
