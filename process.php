@@ -195,6 +195,17 @@ function data_add_columns_day_time($data) {
 	return $answer;
 }
 
+function data_remove_columns_date_time_etc($data) {
+	$index_list = [
+		CARD_INDEX,
+		DATE_INDEX,
+		DISTRICT_INDEX,
+		TIME_INDEX,
+	];
+	$output = remove_columns_by_indexes($index_list, $data);
+	return $output;
+}
+
 function time_spread_per_ID_and_day($data) {
 	$header = $data[0];				// first row only
 	$body = array_slice($data, 1);	// all rows except first
@@ -512,13 +523,6 @@ show_array_hidden($zpass, 'zpass', 'zpass ALL RECORDS');
 $zpass_split = split_zonar_by_grade($zpass);
 show_array_hidden($zpass_split['error'], 'zpass_err', 'zpass ERROR no Grade (EI/SA)');
 
-$index_list = [
-	CARD_INDEX,
-	DATE_INDEX,
-	DISTRICT_INDEX,
-	TIME_INDEX,
-];
-
 # Changed per Robin Miller's instruction; PAID changed
 $student_id_replacements = [
 	3153276528 => 5623149936,
@@ -543,7 +547,7 @@ foreach (['EI', 'SA'] as $grade) {
 	show_array_hidden($zpass_with_id_found['ok'], "zpass_{$grade}_found", "zpass $grade with ID in student list");
 
 	$zpass_with_date = data_add_columns_day_time($zpass_with_id_found['ok']);
-	$zpass_with_date = remove_columns_by_indexes($index_list, $zpass_with_date);
+	$zpass_with_date = data_remove_columns_date_time_etc($zpass_with_date);
 	show_array_hidden($zpass_with_date, "zpass_{$grade}_date", "zpass $grade with date");
 
 	$zpass_split_id_day = time_spread_per_ID_and_day($zpass_with_date);
