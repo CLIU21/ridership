@@ -548,32 +548,26 @@ if ($files_missing) {
 	<?php
 	exit();
 } else {
-	1;
-}
-?>
-<table>
-<?php
-foreach ($file_labels as $file_id => $file_label) {
 	?>
+<table>
+	<?php
+	foreach ($file_labels as $file_id => $file_label) {
+		?>
 	<tr>
 		<td align="right">
 			<?php echo $file_label?>
 		</td>
 		<td>
-		<?php
-		$file_path = $file_paths[$file_id] ?? "";
-		if ($file_path && file_exists($file_path)) {
-			?>
 			<span style='font-weight:bold'><?=$file_name?></span>
-			<?php
-		}
-		?>
 		</td>
 	</tr>
 		<?php
 	}
-?>
+	?>
 </table>
+	<?php
+}
+?>
 <h2>Processing ...</h2>
 <?php
 echo "<hr />\n";
