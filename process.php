@@ -91,7 +91,7 @@ if ($files_missing) {
 			<?php echo $file_label?>
 		</td>
 		<td>
-			<span style='font-weight:bold'><?=$file_name?></span>
+			<span style='font-weight:bold'><?=$file_path?></span>
 		</td>
 	</tr>
 		<?php
