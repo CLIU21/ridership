@@ -549,7 +549,10 @@ foreach ($file_labels as $file_id => $file_label) {
 	if ($files_needed) {
 		?>
 	<tr>
-		<td colspan="2" align="right">
+		<td align="right">
+			<span style="font-weight: bold; color: red;">Files missing: <?=$files_needed?></span>
+		</td>
+		<td>
 			<form action="upload.php" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="data_month" value="<?=$data_month?>">
 				<input type="submit" name="submit" value="Upload More Files">
