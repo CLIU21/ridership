@@ -47,8 +47,7 @@ $constants = [
 	],
 ];
 
-
-$file_labels = [
+$file_labels_import = [
 	'ZPASS' => 'Zpass File',
 	'EI_IPE' => 'Early Intervention IPE data',
 	'SA_IPE' => 'School-Age IPE data',
@@ -72,13 +71,13 @@ $error_msg = [
 // echo "_FILES:"; echo "<pre>"; print_r($_FILES); echo "</pre>";
 
 $file_paths = [];
-foreach ($file_labels as $file_id => $file_label) {
+foreach ($file_labels_import as $file_id => $file_label) {
 	$file_name = "$file_id.xlsx";
 	$real_name = "$data_dir/$file_name";
 	$file_paths[$file_id] = $real_name;
 }
 $files_missing = [];
-foreach ($file_labels as $file_id => $file_label) {
+foreach ($file_labels_import as $file_id => $file_label) {
 	$file_path = $file_paths[$file_id] ?? "";
 	if ($file_path && file_exists($file_path)) {
 		continue;
@@ -91,7 +90,7 @@ if ($files_missing) {
 <table>
 	<?php
 	foreach ($files_missing as $file_id => $file_path) {
-		$file_label = $file_labels[$file_id];
+		$file_label = $file_labels_import[$file_id];
 		?>
 	<tr>
 		<td align="right">
@@ -121,7 +120,7 @@ if ($files_missing) {
 	?>
 <table>
 	<?php
-	foreach ($file_labels as $file_id => $file_label) {
+	foreach ($file_labels_import as $file_id => $file_label) {
 		?>
 	<tr>
 		<td align="right">
