@@ -53,13 +53,18 @@ function show_xls($filename) {
 	show_array($data);
 }
 
-function extract_studentIDs($filename) {
-	$data = load_xls($filename);
+define('SSG_STUDENT_INDEX', 1);
+function extract_studentIDs($data) {
 	$ids_column = array_map(
-		fn($row) => $row[1],
+		fn($row) => $row[SSG_STUDENT_INDEX],
 		$data,
 	);
-	// $header = ;
+	return $ids_column;
+}
+
+function extract_studentIDs_xls($filename) {
+	$data = load_xls($filename);
+	$ids_column = extract_studentIDs($data);
 	return $ids_column;
 }
 
@@ -532,7 +537,7 @@ foreach (['EI', 'SA'] as $grade) {
 	echo "<hr />\n";
 	echo "<h2>grade = '$grade':</h2>\n";
 
-	$zpass_students = extract_studentIDs($file_paths["{$grade}_IPE"]);
+	$zpass_students = extract_studentIDs_xls($file_paths["{$grade}_IPE"]);
 	show_array_hidden($zpass_students, "students_{$grade}", "students $grade");
 
 	show_array_hidden($zpass_split[$grade], "zpass_{$grade}", "zpass $grade (all)");
