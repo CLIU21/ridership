@@ -507,13 +507,13 @@ foreach ($file_labels as $file_id => $file_label) {
 	$real_name = "$data_dir/$file_name";
 	$file_paths[$file_id] = $real_name;
 }
-$files_needed = 0;
+$files_missing = [];
 foreach ($file_labels as $file_id => $file_label) {
 	$file_path = $file_paths[$file_id] ?? "";
 	if ($file_path && file_exists($file_path)) {
 		continue;
 	} else {
-		$files_needed++;
+		$files_missing[$file_id] = $file_path;
 	}
 }
 ?>
@@ -546,11 +546,11 @@ foreach ($file_labels as $file_id => $file_label) {
 	</tr>
 		<?php
 	}
-	if ($files_needed) {
+	if ($files_missing) {
 		?>
 	<tr>
 		<td align="right">
-			<span style="font-weight: bold; color: red;">Files missing: <?=$files_needed?></span>
+			<span style="font-weight: bold; color: red;">Files missing: <?=count($files_missing)?></span>
 		</td>
 		<td>
 			<form action="upload.php" method="post" enctype="multipart/form-data">
