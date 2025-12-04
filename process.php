@@ -16,9 +16,9 @@ require_once "include/array_data_processing.php";
 
 require_once "include/show_array.php";
 
-require_once "vendor/autoload.php";
+require_once "include/excel_read.php";
+require_once "include/excel_write.php";
 
-use Shuchkin\SimpleXLSX;
 use \avadim\FastExcelWriter\Excel;
 
 define('LAST_NAME_INDEX', 0);
@@ -39,25 +39,10 @@ define('COUNT_INDEX', 'count');
 define('SERVICE_NAME_INDEX', 'service_name'); 
 define('SERVICE_CODE_INDEX', 'service_code'); 
 
-function load_xls($filename) {
-	// echo "load_xls($filename)<br/>\n";
-	if ( $xlsx = SimpleXLSX::parse($filename) ) {
-		return $xlsx->rows();
-	} else {
-	    echo SimpleXLSX::parseError();
-	    return [[]];
-	}
-}
-
 define('SSG_STUDENT_INDEX', 1);
 
 function extract_studentIDs($data) {
 	return extract_one_column($data, SSG_STUDENT_INDEX);
-}
-
-function extract_studentIDs_xls($filename) {
-	$data = load_xls($filename);
-	return extract_studentIDs($data);
 }
 
 function extract_relevant_columns($data) {
@@ -444,7 +429,8 @@ foreach (['EI', 'SA'] as $grade) {
 	echo "<hr />\n";
 	echo "<h2>grade = '$grade':</h2>\n";
 
-	$zpass_students = extract_studentIDs_xls($file_paths["{$grade}_IPE"]);
+	$zpass_students_data = load_xls($file_paths["{$grade}_IPE"]);
+	$zpass_students = extract_studentIDs($zpass_students_data);
 	show_array_hidden($zpass_students, "students_{$grade}", "students $grade");
 
 	show_array_hidden($zpass_split[$grade], "zpass_{$grade}", "zpass $grade (all)");
