@@ -454,7 +454,7 @@ function export_data_as_excel($data, $filename, $sheetname='Sheet1') {
 // strftime is deprecated as of PHP 8.1: use date() or DateTime::format() instead
 // python format: "%m/%d/%Y %I:%M:%S %p"
 // php format:    "m/d/Y h:i:s A"
-// month, day, hour, minute, second have leading zeros
+// month, day, hour, minute, and second have leading zeros
 // year has four digits
 // time is in a 12-hour clock with AM/PM at the end
 date_default_timezone_set('EST');
