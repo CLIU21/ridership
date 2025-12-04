@@ -36,7 +36,7 @@ define('COUNT_INDEX', 'count');
 define('SERVICE_NAME_INDEX', 'service_name'); 
 define('SERVICE_CODE_INDEX', 'service_code'); 
 
-function dump_data($data, $label='dump_data()') {
+function show_array($data, $label='show_array()') {
 	echo '<table border="1">';
 	$row_num = 0;
     foreach ($data as $row) {
@@ -85,7 +85,7 @@ function dump_data($data, $label='dump_data()') {
     echo '</table>';
 }
 
-function dump_data_hidden($data, $span_id, $label='dump_data_hidden()') {
+function show_array_hidden($data, $span_id, $label='show_array_hidden()') {
 	// requires toggle_visibility() from ridership.js
 	$records = count($data) - 1;
 	?>
@@ -99,7 +99,7 @@ function dump_data_hidden($data, $span_id, $label='dump_data_hidden()') {
 		</div>
 		<div id="<?=$span_id?>" style="display:none">
 	<?php
-	dump_data($data, $label);
+	show_array($data, $label);
 	?>
 		</div>
 	</div>
@@ -116,9 +116,9 @@ function load_xls($filename) {
 	}
 }
 
-function dump_xls($filename) {
+function show_xls($filename) {
 	$data = load_xls($filename);
-	dump_data($data);
+	show_array($data);
 }
 
 function extract_studentIDs($filename) {
@@ -576,9 +576,9 @@ $zpass = load_xls($file_paths['ZPASS']);
 // echo 'zpass_data: ' . count($zpass) . "<br/>\n";
 
 $zpass = extract_relevant_columns($zpass);
-dump_data_hidden($zpass, 'zpass', 'zpass ALL RECORDS');
+show_array_hidden($zpass, 'zpass', 'zpass ALL RECORDS');
 $zpass_split = split_zonar_by_grade($zpass);
-dump_data_hidden($zpass_split['error'], 'zpass_err', 'zpass ERROR no Grade (EI/SA)');
+show_array_hidden($zpass_split['error'], 'zpass_err', 'zpass ERROR no Grade (EI/SA)');
 
 $index_list = [
 	CARD_INDEX,
@@ -597,37 +597,37 @@ foreach (['EI', 'SA'] as $grade) {
 	echo "<h2>grade = '$grade':</h2>\n";
 
 	$zpass_students = extract_studentIDs($file_paths["{$grade}_IPE"]);
-	dump_data_hidden($zpass_students, "students_{$grade}", "students $grade");
+	show_array_hidden($zpass_students, "students_{$grade}", "students $grade");
 
-	dump_data_hidden($zpass_split[$grade], "zpass_{$grade}", "zpass $grade (all)");
+	show_array_hidden($zpass_split[$grade], "zpass_{$grade}", "zpass $grade (all)");
 	$zpass_filtered = filter_data_by_has_id($zpass_split[$grade]);
 
-	dump_data_hidden($zpass_filtered['error'], "zpass_{$grade}_err", "zpass $grade ERROR no ID");
-	dump_data_hidden($zpass_filtered['ok'], "zpass_{$grade}_ok", "zpass $grade OK");
+	show_array_hidden($zpass_filtered['error'], "zpass_{$grade}_err", "zpass $grade ERROR no ID");
+	show_array_hidden($zpass_filtered['ok'], "zpass_{$grade}_ok", "zpass $grade OK");
 
 	$zpass_with_id_found = split_data_by_id_found($zpass_filtered['ok'], $zpass_students);
 
-	dump_data_hidden($zpass_with_id_found['error'], "zpass_{$grade}_not_found", "zpass $grade ID not found in student list");
-	dump_data_hidden($zpass_with_id_found['ok'], "zpass_{$grade}_found", "zpass $grade with ID in student list");
+	show_array_hidden($zpass_with_id_found['error'], "zpass_{$grade}_not_found", "zpass $grade ID not found in student list");
+	show_array_hidden($zpass_with_id_found['ok'], "zpass_{$grade}_found", "zpass $grade with ID in student list");
 
 	$zpass_with_date = data_add_columns_day_time($zpass_with_id_found['ok']);
 	$zpass_with_date = remove_columns_by_indexes($index_list, $zpass_with_date);
-	dump_data_hidden($zpass_with_date, "zpass_{$grade}_date", "zpass $grade with date");
+	show_array_hidden($zpass_with_date, "zpass_{$grade}_date", "zpass $grade with date");
 
 	$zpass_split_id_day = time_spread_per_ID_and_day($zpass_with_date);
-	dump_data_hidden($zpass_split_id_day, "zpass_{$grade}_split", "zpass $grade split by ID and day");
+	show_array_hidden($zpass_split_id_day, "zpass_{$grade}_split", "zpass $grade split by ID and day");
 
 	$zpass_clean = zpass_clean($zpass_split_id_day, $student_id_replacements);
-	dump_data_hidden($zpass_clean, "zpass_{$grade}_clean", "zpass $grade cleaned up columns");
+	show_array_hidden($zpass_clean, "zpass_{$grade}_clean", "zpass $grade cleaned up columns");
 
 	$constants_local = array_merge($constants['global'], $constants[$grade]);
 	$zpass_output_all = zpass_output($zpass_clean, $constants_local);[$grade];
-	dump_data_hidden($zpass_output_all, "zpass_{$grade}_output", "zpass $grade for output");
+	show_array_hidden($zpass_output_all, "zpass_{$grade}_output", "zpass $grade for output");
 
 	$max_rows = 1000;
 	$zpass_output_split = split_data_at_row_count($zpass_output_all, $max_rows);
 	foreach ($zpass_output_split as $i => $batch) {
-		dump_data_hidden($batch, "zpass_{$grade}_output_{$i}", "zpass $grade for output #$i");
+		show_array_hidden($batch, "zpass_{$grade}_output_{$i}", "zpass $grade for output #$i");
 	}
 
 	foreach ($zpass_output_split as $i => $batch) {
