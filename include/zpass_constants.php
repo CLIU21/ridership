@@ -27,4 +27,3 @@ $zpass_constants = [
 		'diagnosis_code' => 'R6889',
 	],
 ];
-
