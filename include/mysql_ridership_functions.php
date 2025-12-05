@@ -135,14 +135,16 @@ function insert_ridership_records($data_month, $ridership_data, $overwrite=False
 	}
 
 	echo "DEBUG: inserting " . count($body) . " ridership records:<br/>\n";
-	$sql = "INSERT INTO ridership_data (data_month, last_name, first_name, card_number, scan_date, student_id, district, service_type, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)";
+	$sql = "INSERT INTO ridership_data (data_month, last_name, first_name, card_number, scan_date, scan_day, scan_time, scan_hours, student_id, district, service_type, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
 	$stmt = $mysqli->prepare($sql);
 	$total_inserts = 0;
-	list($last_name, $first_name, $card_number, $date, $student_id, $district, $grade) = array_fill(0, 7, Null);
-	$stmt->bind_param("ssssssss", $data_month, $last_name, $first_name, $card_number, $date, $student_id, $district, $grade);
+	list($last_name, $first_name, $card_number, $date, $day, $time, $hours, $student_id, $district, $grade) = array_fill(0, 10, Null);
+	$stmt->bind_param("sssssssdsss", $data_month, $last_name, $first_name, $card_number, $date, $day, $time, $hours, $student_id, $district, $grade);
 	foreach ($body as $row) {
 		// echo "row: "; print_r($row); echo "<br/>\n";
 		list($last_name, $first_name, $card_number, $date, $student_id, $district, $grade) = array_values($row);
+		list($day, $time) = explode(' ', $date);
+		$hours = convert_time_to_hours($time);
 		// echo "data: last_name:$last_name, first_name:$first_name, card_number:$card_number, date:$date, student_id:$student_id, district:$district, grade:$grade<br/>\n";
 		// echo "data: $last_name, $first_name, $card_number, $date, $student_id, $district, $grade<br/>\n";
 		$stmt->execute();	// each variable is bound by reference
