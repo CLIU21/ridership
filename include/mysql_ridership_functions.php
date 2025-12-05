@@ -143,6 +143,8 @@ function insert_ridership_records($data_month, $ridership_data, $overwrite=False
 	foreach ($body as $row) {
 		// echo "row: "; print_r($row); echo "<br/>\n";
 		list($last_name, $first_name, $card_number, $date, $student_id, $district, $grade) = array_values($row);
+		// translate SP to SA, but change nothing else:
+		$grade = ($grade == "SP") ? "SA" : $grade;
 		list($day, $time) = explode(' ', $date);
 		$hours = convert_time_to_hours($time);
 		// echo "data: last_name:$last_name, first_name:$first_name, card_number:$card_number, date:$date, student_id:$student_id, district:$district, grade:$grade<br/>\n";
