@@ -25,8 +25,8 @@ define('ZPASS_SERVICE_CODE_INDEX', 'service_code');
 
 function extract_relevant_columns($data) {
 	$column_list = [
-		// ZPASS_LAST_NAME_INDEX,
-		// ZPASS_FIRST_NAME_INDEX,
+		ZPASS_LAST_NAME_INDEX,
+		ZPASS_FIRST_NAME_INDEX,
 		ZPASS_CARD_INDEX,
 		ZPASS_DATE_INDEX,
 		ZPASS_STUDENT_INDEX,
@@ -167,6 +167,8 @@ function replace_student_ids($data, $student_id_replacements) {
 function zpass_clean($data, $student_id_replacements) {
 	# delete the columns we don't care about anymore
 	$column_list = [
+		ZPASS_LAST_NAME_INDEX,
+		ZPASS_FIRST_NAME_INDEX,
 		ZPASS_GRADE_INDEX,
 		ZPASS_HOURS_INDEX,
 		ZPASS_MIN_INDEX,
