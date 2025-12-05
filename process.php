@@ -27,7 +27,7 @@ require_once "include/zpass_constants.php";
 
 require_once "include/show_missing_files_and_exit.php";
 
-require_once "include/mysql_connect.php";
+require_once "include/mysql_ridership_functions.php";
 
 ?>
 <h2>Processing ...</h2>
@@ -36,9 +36,12 @@ echo "<hr />\n";
 
 $zpass = load_xls($file_paths_import['ZPASS']);
 // echo 'zpass_data: ' . count($zpass) . "<br/>\n";
-
 $zpass = extract_relevant_columns($zpass);
 show_array_hidden($zpass, 'zpass', 'zpass ALL RECORDS');
+
+$overwrite = true;
+insert_ridership_records($data_month, $zpass, $overwrite);
+
 $zpass_split = split_zonar_by_grade($zpass);
 show_array_hidden($zpass_split['error'], 'zpass_err', 'zpass ERROR no Grade (EI/SA)');
 
@@ -54,6 +57,7 @@ foreach (['EI', 'SA'] as $grade) {
 	$zpass_students_data = load_xls($file_paths_import["{$grade}_IPE"]);
 	$zpass_students = extract_studentIDs($zpass_students_data);
 	show_array_hidden($zpass_students, "students_{$grade}", "students $grade");
+	insert_iep_records($data_month, $grade, $zpass_students, $overwrite);
 
 	show_array_hidden($zpass_split[$grade], "zpass_{$grade}", "zpass $grade (all)");
 	$zpass_filtered = filter_data_by_has_id($zpass_split[$grade]);

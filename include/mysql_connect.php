@@ -14,17 +14,3 @@ if (mysqli_connect_errno()) {
 } else {
 	echo "Success.<br/><br/>\n";
 }
-
-// $result = mysqli_query($mysqli, "SELECT * FROM contacts ORDER BY id DESC");
-
-// $stmt = $mysqli->prepare("INSERT INTO contacts (name,age,email) VALUES(?, ?, ?)");
-// $stmt->bind_param("sis", $name, $age, $email);
-// $stmt->execute();
-
-// $stmt = $mysqli->prepare("UPDATE contacts SET name=?, age=?, email=? WHERE id=?");
-// $stmt->bind_param("sisi", $name, $age, $email, $id);
-// $stmt->execute();
-
-// $stmt = $mysqli->prepare("DELETE FROM contacts WHERE id=?");
-// $stmt->bind_param("i", $id);
-// $stmt->execute();
