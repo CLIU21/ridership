@@ -62,7 +62,11 @@ foreach (['EI', 'SA'] as $grade) {
 	show_array_hidden($zpass_split[$grade], "zpass_{$grade}", "zpass $grade (all)");
 	$zpass_filtered = filter_data_by_has_id($zpass_split[$grade]);
 
-	show_array_hidden($zpass_filtered['error'], "zpass_{$grade}_err", "zpass $grade ERROR no ID");
+	$zpass_filtered_error = zpass_error_no_ID($data_month, $grade);
+
+	show_array_hidden($zpass_filtered['error'], "zpass_{$grade}_err_OLD", "zpass $grade ERROR no ID (OLD)");
+	show_array_hidden($zpass_filtered_error, "zpass_{$grade}_err", "zpass $grade ERROR no ID (NEW)");
+	
 	show_array_hidden($zpass_filtered['ok'], "zpass_{$grade}_ok", "zpass $grade OK");
 
 	$zpass_with_id_found = split_data_by_id_found($zpass_filtered['ok'], $zpass_students);

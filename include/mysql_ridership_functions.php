@@ -184,6 +184,26 @@ function insert_ridership_records($data_month, $ridership_data, $overwrite=False
 	}
 }
 
+function zpass_error_no_ID($data_month, $service_type) {
+	global $mysqli;
+
+	$sql = "SELECT last_name, first_name, card_number, scan_date, student_id, district, service_type
+			FROM ridership_data
+			WHERE is_active = 1
+			AND data_month = ?
+			AND service_type = ?
+			AND student_id = ''";
+	$stmt = $mysqli->prepare($sql);
+	$stmt->bind_param("ss", $data_month, $service_type);
+	$stmt->execute();
+	echo "DEBUG: {$mysqli->info}<br/>\n";
+	$result = $stmt->get_result();
+	$header = column_names_for_result($result);
+	$body = $result->fetch_all(MYSQLI_NUM);
+	$answer = array_merge([$header], $body);
+
+	return $answer;
+}
 
 // $mysqli->autocommit(FALSE); //turn on transactions
 // $mysqli->autocommit(TRUE); //turn off transactions + commit queued queries
