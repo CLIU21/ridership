@@ -2,7 +2,9 @@
 define('SSG_STUDENT_INDEX', 1);
 
 function extract_studentIDs($data) {
-	return extract_one_column($data, SSG_STUDENT_INDEX);
+	$answer = extract_one_column($data, SSG_STUDENT_INDEX);
+	$answer = array_unique($answer);
+	return $answer;
 }
 
 define('ZPASS_LAST_NAME_INDEX', 0);
