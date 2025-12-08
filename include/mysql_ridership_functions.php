@@ -229,8 +229,11 @@ function zpass_error_ID_not_found($data_month, $service_type) {
 function zpass_grouped_by_ID_and_day($data_month, $service_type) {
 	global $mysqli;
 
-	$sql = "SELECT data_month, last_name, first_name, scan_day, diff_hours, service_name, service_code
-				, record_count, student_id, district, service_type
+	// district is also available if desired
+	$sql = "SELECT last_name, first_name, student_id, service_type
+				, scan_day, '---' as 'hours', diff_hours as 'elapsed', record_count
+				, service_name, service_code
+			FROM ridership_data_view
 			WHERE data_month = ?
 			AND service_type = ?";
 	$stmt = $mysqli->prepare($sql);
