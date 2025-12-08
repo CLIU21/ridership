@@ -96,8 +96,15 @@ foreach (['EI', 'SA'] as $grade) {
 	}
 }
 
-echo "<hr />\n";
-
 ?>
+<hr />
+<h2>
+	All files created successfully.
+	Click here to
+	<a href="view.php?data_month=<?=$data_month?>&user_name=<?=$user_name?>">download</a>
+	the files.
+</h2>
+<hr />
+
 </body>
 </html>
