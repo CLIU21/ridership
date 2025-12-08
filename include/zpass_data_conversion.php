@@ -60,8 +60,7 @@ function filter_data_by_has_id($data) {
 }
 
 function data_add_columns_day_time($data) {
-	$header = $data[0];				// first row only
-	$body = array_slice($data, 1);	// all rows except first
+	list($header, $body) = header_and_body($data);
 
 	$header[ZPASS_DAY_INDEX] = "Day";
 	$header[ZPASS_TIME_INDEX] = "Time";
@@ -93,8 +92,7 @@ function data_remove_columns_date_time_etc($data) {
 }
 
 function time_spread_per_ID_and_day($data) {
-	$header = $data[0];				// first row only
-	$body = array_slice($data, 1);	// all rows except first
+	list($header, $body) = header_and_body($data);
 
 	# fix header labels ...
 	$header[ZPASS_STUDENT_INDEX] = 'StudentCode';
@@ -186,8 +184,7 @@ function zpass_clean($data, $student_id_replacements) {
 }
 
 function zpass_output($data, $constants) {
-	$header_discard = $data[0];				// first row only
-	$body = array_slice($data, 1);	// all rows except first
+	list($input_header_discard, $body) = header_and_body($data);
 	$output_header = [
 		"District CD",
 		"Student ID",

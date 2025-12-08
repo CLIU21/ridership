@@ -77,8 +77,7 @@ function insert_iep_records($data_month, $service_type, $student_array, $overwri
 function insert_ridership_records($data_month, $ridership_data, $overwrite=False) {
 	global $mysqli;
 
-	$header = $ridership_data[0];				// first row only
-	$body = array_slice($ridership_data, 1);	// all rows except first
+	list($header, $body) = header_and_body($ridership_data);
 
 	//	Header should contain:
 	$expected_header = [

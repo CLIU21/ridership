@@ -27,11 +27,17 @@ function keep_columns_by_indexes($column_list, $data) {
 	return array_map($filter_rows, $data);
 }
 
+// input: matrix; output: array[header-row, all-other-rows]
+function header_and_body($data) {
+	$header = $data[0];				// first row only
+	$body = array_slice($data, 1);	// all rows except first
+	return [$header, $body];
+}
+
 // input: matrix; output: array['ok' -> matrix, 'error' -> matrix]
 function split_rows_by_column_data_present($data, $column_index, $allow_list) {
 	# returns 'ok' and 'error' sections for column $column_index value being present or absent in allow_list
-	$header = $data[0];				// first row only
-	$body = array_slice($data, 1);	// all rows except first
+	list($header, $body) = header_and_body($data);
 	$answer = [];
 
 	foreach (['ok', 'error'] as $bucket) {
@@ -50,8 +56,7 @@ function split_rows_by_column_data_present($data, $column_index, $allow_list) {
 
 // input: matrix; output: array['ok' -> matrix, 'error' -> matrix]
 function filter_data_by_column_not_blank($column_id, $data) {
-	$header = $data[0];				// first row only
-	$body = array_slice($data, 1);	// all rows except first
+	list($header, $body) = header_and_body($data);
 	$answer = [
 		'ok' => [$header],
 		'error' => [$header],
@@ -67,8 +72,7 @@ function filter_data_by_column_not_blank($column_id, $data) {
 // input: matrix; output: array[value -> matrix, ...]
 function split_rows_by_column_data_value($data, $column_index) {
 	# returns separate sections for each value in column $column_index
-	$header = $data[0];				// first row only
-	$body = array_slice($data, 1);	// all rows except first
+	list($header, $body) = header_and_body($data);
 	$answer = [];
 	foreach ($data as $row) {
 		$value = $row[$column_index];
@@ -89,8 +93,7 @@ function split_data_at_row_count($data, $max_rows) {
 	if (count($data) <= $max_rows) {
 		array_push($output, $data);
 	} else {
-		$header = $data[0];				// first row only
-		$body = array_slice($data, 1);	// all rows except first
+		list($header, $body) = header_and_body($data);
 		$array_of_body_chunks = array_chunk($body, $max_rows);
 		foreach ($array_of_body_chunks as $one_body_chunk) {
 			array_unshift($one_body_chunk, $header);
