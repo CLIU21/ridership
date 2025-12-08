@@ -74,6 +74,15 @@ function insert_iep_records($data_month, $service_type, $student_array, $overwri
 	}
 }
 
+function column_names_for_result($result) {
+	$finfo = mysqli_fetch_fields($result);
+	$column_names = [];
+    foreach ($finfo as $val) {
+        $column_names[] = $val->name;
+    }
+    return $column_names;
+}
+
 function insert_ridership_records($data_month, $ridership_data, $overwrite=False) {
 	global $mysqli;
 
