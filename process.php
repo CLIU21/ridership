@@ -66,12 +66,15 @@ foreach (['EI', 'SA'] as $grade) {
 
 	show_array_hidden($zpass_filtered['error'], "zpass_{$grade}_err_OLD", "zpass $grade ERROR no ID (OLD)");
 	show_array_hidden($zpass_filtered_error, "zpass_{$grade}_err", "zpass $grade ERROR no ID (NEW)");
-	
+
 	show_array_hidden($zpass_filtered['ok'], "zpass_{$grade}_ok", "zpass $grade OK");
 
 	$zpass_with_id_found = split_data_by_id_found($zpass_filtered['ok'], $zpass_students);
 
-	show_array_hidden($zpass_with_id_found['error'], "zpass_{$grade}_not_found", "zpass $grade ID not found in student list");
+	$zpass_with_id_found_error = zpass_error_ID_not_found($data_month, $grade);
+
+	show_array_hidden($zpass_with_id_found['error'], "zpass_{$grade}_not_found_OLD", "zpass $grade ID not found in student list (OLD)");
+	show_array_hidden($zpass_with_id_found_error, "zpass_{$grade}_not_found", "zpass $grade ID not found in student list (NEW)");
 	show_array_hidden($zpass_with_id_found['ok'], "zpass_{$grade}_found", "zpass $grade with ID in student list");
 
 	$zpass_with_date = data_add_columns_day_time($zpass_with_id_found['ok']);

@@ -205,6 +205,27 @@ function zpass_error_no_ID($data_month, $service_type) {
 	return $answer;
 }
 
+function zpass_error_ID_not_found($data_month, $service_type) {
+	global $mysqli;
+
+	// scan_hours is also available if desired
+	$sql = "SELECT last_name, first_name, card_number, scan_day, scan_time, student_id, district, service_type
+			FROM ridership_data_view_has_iep
+			WHERE has_iep = 0
+			AND data_month = ?
+			AND service_type = ?";
+	$stmt = $mysqli->prepare($sql);
+	$stmt->bind_param("ss", $data_month, $service_type);
+	$stmt->execute();
+	echo "DEBUG: {$mysqli->info}<br/>\n";
+	$result = $stmt->get_result();
+	$header = column_names_for_result($result);
+	$body = $result->fetch_all(MYSQLI_NUM);
+	$answer = array_merge([$header], $body);
+
+	return $answer;
+}
+
 // $mysqli->autocommit(FALSE); //turn on transactions
 // $mysqli->autocommit(TRUE); //turn off transactions + commit queued queries
 // try { bla bla bla } catch(Exception $e) { $mysqli->rollback(); throw $e; }
