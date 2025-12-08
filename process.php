@@ -81,10 +81,13 @@ foreach (['EI', 'SA'] as $grade) {
 	$zpass_with_date = data_remove_columns_date_time_etc($zpass_with_date);
 	show_array_hidden($zpass_with_date, "zpass_{$grade}_date", "zpass $grade with date");
 
-	$zpass_split_id_day = time_spread_per_ID_and_day($zpass_with_date);
-	show_array_hidden($zpass_split_id_day, "zpass_{$grade}_split", "zpass $grade split by ID and day");
+	$zpass_split_id_day_OLD = time_spread_per_ID_and_day($zpass_with_date);
+	$zpass_split_id_day_NEW = zpass_grouped_by_ID_and_day($data_month, $grade);
 
-	$zpass_clean = zpass_clean($zpass_split_id_day, $student_id_replacements);
+	show_array_hidden($zpass_split_id_day_OLD, "zpass_{$grade}_split_OLD", "zpass $grade split by ID and day (OLD)");
+	show_array_hidden($zpass_split_id_day_NEW, "zpass_{$grade}_split", "zpass $grade split by ID and day (NEW)");
+
+	$zpass_clean = zpass_clean($zpass_split_id_day_OLD, $student_id_replacements);
 	show_array_hidden($zpass_clean, "zpass_{$grade}_clean", "zpass $grade cleaned up columns");
 
 	$constants_local = array_merge($zpass_constants['global'], $zpass_constants[$grade]);

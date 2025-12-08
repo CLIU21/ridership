@@ -226,6 +226,25 @@ function zpass_error_ID_not_found($data_month, $service_type) {
 	return $answer;
 }
 
+function zpass_grouped_by_ID_and_day($data_month, $service_type) {
+	global $mysqli;
+
+	$sql = "SELECT data_month, last_name, first_name, scan_day, diff_hours, service_name, service_code
+				, record_count, student_id, district, service_type
+			WHERE data_month = ?
+			AND service_type = ?";
+	$stmt = $mysqli->prepare($sql);
+	$stmt->bind_param("ss", $data_month, $service_type);
+	$stmt->execute();
+	echo "DEBUG: {$mysqli->info}<br/>\n";
+	$result = $stmt->get_result();
+	$header = column_names_for_result($result);
+	$body = $result->fetch_all(MYSQLI_NUM);
+	$answer = array_merge([$header], $body);
+
+	return $answer;
+}
+
 // $mysqli->autocommit(FALSE); //turn on transactions
 // $mysqli->autocommit(TRUE); //turn off transactions + commit queued queries
 // try { bla bla bla } catch(Exception $e) { $mysqli->rollback(); throw $e; }
