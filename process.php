@@ -92,7 +92,9 @@ foreach (['EI', 'SA'] as $grade) {
 
 	$constants_local = array_merge($zpass_constants['global'], $zpass_constants[$grade]);
 	$zpass_output_all_OLD = zpass_data_for_output_OLD($zpass_clean, $constants_local);
+	$zpass_output_all = zpass_data_for_export($data_month, $grade, $constants);
 	show_array_hidden($zpass_output_all_OLD, "zpass_{$grade}_output_OLD", "zpass $grade for output (OLD)");
+	show_array_hidden($zpass_output_all, "zpass_{$grade}_output", "zpass $grade for output (NEW)");
 
 	$max_rows = 1000;
 	$zpass_output_split = split_data_at_row_count($zpass_output_all_OLD, $max_rows);

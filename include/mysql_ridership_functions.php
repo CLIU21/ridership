@@ -248,6 +248,49 @@ function zpass_grouped_by_ID_and_day($data_month, $service_type) {
 	return $answer;
 }
 
+function zpass_data_for_export($data_month, $service_type, $constants) {
+	global $mysqli;
+
+	// district is also available if desired
+	$sql = "SELECT {$constants['district_code']} as 'District CD'
+				, student_id as 'Student ID'
+				, {$constants['uploaded_by']} as 'Provider ID'
+				, scan_day as 'Service Date'
+				, '' as 'Make-Up Date'
+				, '' as 'Start Time'
+				, '' as 'End Time'
+				, {$constants['service_type']} as 'Service Type'
+				, service_code as 'Service Code'
+				, '' as 'Group Size'
+				, '' as 'Therapy Method'
+				, '' as 'Therapy Method2'
+				, {$constants['diagnosis_code']} as 'Diagnosis Code'
+				, '' as 'Place of Service CD'
+				, '' as 'Place of Service Description'
+				, '' as 'School CD'
+				, '' as 'Progress'
+				, '' as 'Therapy Notes'
+				, {$constants['uploaded_by']} as 'Entered by ID'
+				, {$constants['timestamp']} as 'Entered Date'
+				, '' as 'Approved?'
+				, '' as 'Approver ID'
+				, '' as 'Approved Date'
+				, '' as 'Reference Number'
+			FROM ridership_data_view
+			WHERE data_month = ?
+			AND service_type = ?";
+	$stmt = $mysqli->prepare($sql);
+	$stmt->bind_param("ss", $data_month, $service_type);
+	$stmt->execute();
+	echo "DEBUG: {$mysqli->info}<br/>\n";
+	$result = $stmt->get_result();
+	$header = column_names_for_result($result);
+	$body = $result->fetch_all(MYSQLI_NUM);
+	$answer = array_merge([$header], $body);
+
+	return $answer;
+}
+
 // $mysqli->autocommit(FALSE); //turn on transactions
 // $mysqli->autocommit(TRUE); //turn off transactions + commit queued queries
 // try { bla bla bla } catch(Exception $e) { $mysqli->rollback(); throw $e; }
