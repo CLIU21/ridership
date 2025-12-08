@@ -185,7 +185,7 @@ function zpass_clean($data, $student_id_replacements) {
 	return $data;
 }
 
-function zpass_output($data, $constants) {
+function zpass_data_for_output_OLD($data, $constants) {
 	list($input_header_discard, $body) = header_and_body($data);
 	$output_header = [
 		"District CD",

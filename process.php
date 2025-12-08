@@ -91,11 +91,11 @@ foreach (['EI', 'SA'] as $grade) {
 	show_array_hidden($zpass_clean, "zpass_{$grade}_clean", "zpass $grade cleaned up columns");
 
 	$constants_local = array_merge($zpass_constants['global'], $zpass_constants[$grade]);
-	$zpass_output_all = zpass_output($zpass_clean, $constants_local);[$grade];
-	show_array_hidden($zpass_output_all, "zpass_{$grade}_output", "zpass $grade for output");
+	$zpass_output_all_OLD = zpass_data_for_output_OLD($zpass_clean, $constants_local);
+	show_array_hidden($zpass_output_all_OLD, "zpass_{$grade}_output_OLD", "zpass $grade for output (OLD)");
 
 	$max_rows = 1000;
-	$zpass_output_split = split_data_at_row_count($zpass_output_all, $max_rows);
+	$zpass_output_split = split_data_at_row_count($zpass_output_all_OLD, $max_rows);
 	foreach ($zpass_output_split as $i => $batch) {
 		show_array_hidden($batch, "zpass_{$grade}_output_{$i}", "zpass $grade for output #$i");
 	}
