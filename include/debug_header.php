@@ -32,4 +32,5 @@ function header($header) {
 </script>
 <a href="<?=$url?>">Redirect Now</a>
 	<?php
+	exit("... wait for redirect");
 }
