@@ -91,10 +91,10 @@ function split_data_at_row_count($data, $max_rows) {
 	} else {
 		$header = $data[0];				// first row only
 		$body = array_slice($data, 1);	// all rows except first
-		$chunks = array_chunk($body, $max_rows);
-		foreach ($chunks as $batch) {
-			array_unshift($batch, $header);
-			array_push($output, $batch);
+		$array_of_body_chunks = array_chunk($body, $max_rows);
+		foreach ($array_of_body_chunks as $one_body_chunk) {
+			array_unshift($one_body_chunk, $header);
+			array_push($output, $one_body_chunk);
 		}
 	}
 	return $output;

@@ -188,7 +188,7 @@ function zpass_clean($data, $student_id_replacements) {
 function zpass_output($data, $constants) {
 	$header_discard = $data[0];				// first row only
 	$body = array_slice($data, 1);	// all rows except first
-	$header = [
+	$output_header = [
 		"District CD",
 		"Student ID",
 		"Provider ID",
@@ -214,7 +214,7 @@ function zpass_output($data, $constants) {
 		"Approved Date",
 		"Reference Number",
 	];
-	$answer = [$header];
+	$answer = [$output_header];
 
 	echo "<pre>DEBUG: Constants = "; print_r($constants); echo "</pre>\n";
 
