@@ -96,8 +96,10 @@ foreach (['EI', 'SA'] as $grade) {
 	show_array_hidden($zpass_output_all_OLD, "zpass_{$grade}_output_OLD", "zpass $grade for output (OLD)");
 	show_array_hidden($zpass_output_all, "zpass_{$grade}_output", "zpass $grade for output (NEW)");
 
-	if ($zpass_output_all_OLD !== $zpass_output_all) {
+	$differences = deep_matrix_differences($zpass_output_all_OLD, $zpass_output_all);
+	if ($differences) {
 		echo "<h1>ERROR: output is different!!!</h1>\n";
+		show_array_hidden($differences, "zpass_{$grade}_matrix_differences", "zpass $grade for output (ERRORS)");
 		die();
 	}
 
