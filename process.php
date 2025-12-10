@@ -42,8 +42,9 @@ show_array_hidden($zpass, 'zpass', 'zpass ALL RECORDS');
 $overwrite = true;
 insert_ridership_records($data_month, $zpass, $overwrite);
 
-$zpass_split = split_zonar_by_grade($zpass);
-show_array_hidden($zpass_split['error'], 'zpass_err', 'zpass ERROR no Grade (EI/SA)');
+$zpass_split_error = zpass_error_no_grade($data_month);
+
+show_array_hidden($zpass_split_error, 'zpass_err', 'zpass ERROR no Grade (EI/SA)');
 
 # Changed per Robin Miller's instruction; PAID changed
 $student_id_replacements = [
