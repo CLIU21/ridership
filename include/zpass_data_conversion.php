@@ -220,29 +220,29 @@ function zpass_data_for_output_OLD($data, $constants) {
 	foreach ($body as $row) {
 		$answer_row = [
             $constants['district_code'],
-            $row[ZPASS_STUDENT_INDEX],			// student ID
-            $constants['uploaded_by'],		// Provider ID
+            strval($row[ZPASS_STUDENT_INDEX]),	// student ID
+            $constants['uploaded_by'],			// Provider ID
             $row[ZPASS_DAY_INDEX],				// Service Date
-            '',								// Make-Up Date
-            '',								// Start Time
-            '',								// End Time
-            $constants['service_type'],		// Service Type
+            '',									// Make-Up Date
+            '',									// Start Time
+            '',									// End Time
+            $constants['service_type'],			// Service Type
             $row[ZPASS_SERVICE_CODE_INDEX],		// Service Code
-            '',								// Group Size
-            '',								// Therapy Method
-            '',								// Therapy Method2
-            $constants['diagnosis_code'],	// Diagnosis Code
-            '',								// Place of Service CD
-            '',								// Place of Service Description
-            '',								// School CD
-            '',								// Progress
-            '',								// Therapy Notes
-            $constants['uploaded_by'],		// Entered by ID
-            $constants['timestamp'],		// Entered Date
-            '',								// Approved?
-            '',								// Approver ID
-            '',								// Approved Date
-            '',								// Reference Number
+            '',									// Group Size
+            '',									// Therapy Method
+            '',									// Therapy Method2
+            $constants['diagnosis_code'],		// Diagnosis Code
+            '',									// Place of Service CD
+            '',									// Place of Service Description
+            '',									// School CD
+            '',									// Progress
+            '',									// Therapy Notes
+            $constants['uploaded_by'],			// Entered by ID
+            $constants['timestamp'],			// Entered Date
+            '',									// Approved?
+            '',									// Approver ID
+            '',									// Approved Date
+            '',									// Reference Number
 		];
 		array_push($answer, $answer_row);
 	}
