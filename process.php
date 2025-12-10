@@ -59,52 +59,22 @@ foreach (['EI', 'SA'] as $grade) {
 	show_array_hidden($zpass_students, "students_{$grade}", "students $grade");
 	insert_iep_records($data_month, $grade, $zpass_students, $overwrite);
 
-	show_array_hidden($zpass_split[$grade], "zpass_{$grade}", "zpass $grade (all)");
-	$zpass_filtered = filter_data_by_has_id($zpass_split[$grade]);
-
 	$zpass_filtered_error = zpass_error_no_ID($data_month, $grade);
-
-	show_array_hidden($zpass_filtered['error'], "zpass_{$grade}_err_OLD", "zpass $grade ERROR no ID (OLD)");
-	show_array_hidden($zpass_filtered_error, "zpass_{$grade}_err", "zpass $grade ERROR no ID (NEW)");
-
-	show_array_hidden($zpass_filtered['ok'], "zpass_{$grade}_ok", "zpass $grade OK");
-
-	$zpass_with_id_found = split_data_by_id_found($zpass_filtered['ok'], $zpass_students);
+	show_array_hidden($zpass_filtered_error, "zpass_{$grade}_err", "zpass $grade ERROR no ID");
 
 	$zpass_with_id_found_error = zpass_error_ID_not_found($data_month, $grade);
+	show_array_hidden($zpass_with_id_found_error, "zpass_{$grade}_not_found", "zpass $grade ID not found in student list");
 
-	show_array_hidden($zpass_with_id_found['error'], "zpass_{$grade}_not_found_OLD", "zpass $grade ID not found in student list (OLD)");
-	show_array_hidden($zpass_with_id_found_error, "zpass_{$grade}_not_found", "zpass $grade ID not found in student list (NEW)");
-	show_array_hidden($zpass_with_id_found['ok'], "zpass_{$grade}_found", "zpass $grade with ID in student list");
+	$zpass_split_id_day = zpass_grouped_by_ID_and_day($data_month, $grade);
 
-	$zpass_with_date = data_add_columns_day_time($zpass_with_id_found['ok']);
-	$zpass_with_date = data_remove_columns_date_time_etc($zpass_with_date);
-	show_array_hidden($zpass_with_date, "zpass_{$grade}_date", "zpass $grade with date");
-
-	$zpass_split_id_day_OLD = time_spread_per_ID_and_day($zpass_with_date);
-	$zpass_split_id_day_NEW = zpass_grouped_by_ID_and_day($data_month, $grade);
-
-	show_array_hidden($zpass_split_id_day_OLD, "zpass_{$grade}_split_OLD", "zpass $grade split by ID and day (OLD)");
-	show_array_hidden($zpass_split_id_day_NEW, "zpass_{$grade}_split", "zpass $grade split by ID and day (NEW)");
-
-	$zpass_clean = zpass_clean($zpass_split_id_day_OLD, $student_id_replacements);
-	show_array_hidden($zpass_clean, "zpass_{$grade}_clean", "zpass $grade cleaned up columns");
+	show_array_hidden($zpass_split_id_day, "zpass_{$grade}_split", "zpass $grade split by ID and day");
 
 	$constants_local = array_merge($zpass_constants['global'], $zpass_constants[$grade]);
-	$zpass_output_all_OLD = zpass_data_for_output_OLD($zpass_clean, $constants_local);
 	$zpass_output_all = zpass_data_for_export($data_month, $grade, $constants_local);
-	show_array_hidden($zpass_output_all_OLD, "zpass_{$grade}_output_OLD", "zpass $grade for output (OLD)");
-	show_array_hidden($zpass_output_all, "zpass_{$grade}_output", "zpass $grade for output (NEW)");
-
-	$differences = deep_matrix_differences($zpass_output_all_OLD, $zpass_output_all);
-	if ($differences) {
-		echo "<h1>ERROR: output is different!!!</h1>\n";
-		show_array_hidden($differences, "zpass_{$grade}_matrix_differences", "zpass $grade for output (ERRORS)");
-		die();
-	}
+	show_array_hidden($zpass_output_all, "zpass_{$grade}_output", "zpass $grade for output");
 
 	$max_rows = 1000;
-	$zpass_output_split = split_data_at_row_count($zpass_output_all_OLD, $max_rows);
+	$zpass_output_split = split_data_at_row_count($zpass_output_all, $max_rows);
 	foreach ($zpass_output_split as $i => $batch) {
 		show_array_hidden($batch, "zpass_{$grade}_output_{$i}", "zpass $grade for output #$i");
 	}
