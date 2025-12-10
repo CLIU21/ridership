@@ -12,7 +12,6 @@ function insert_iep_records($data_month, $service_type, $student_array, $overwri
 		$stmt->bind_param("sis", $data_month, $active_status, $service_type);
 		foreach ([0, 1] as $active_status) {
 			$stmt->execute();
-			// echo "DEBUG: {$mysqli->info}<br/>\n";
 			if ($mysqli->affected_rows < 0) {
 				echo "Rows: {$mysqli->affected_rows}<br/>\n";
 				echo "Error: {$mysqli->error}<br/>\n";
@@ -30,7 +29,6 @@ function insert_iep_records($data_month, $service_type, $student_array, $overwri
 		$stmt->bind_param("sis", $data_month, $active_status, $service_type);
 		foreach ([0, 1] as $active_status) {
 			$stmt->execute();
-			// echo "DEBUG: {$mysqli->info}<br/>\n";
 			$result = $stmt->get_result();
 			$row = $result->fetch_assoc();
 			$num = $row['num'];
@@ -48,7 +46,6 @@ function insert_iep_records($data_month, $service_type, $student_array, $overwri
 	$stmt->bind_param("sss", $data_month, $service_type, $student_id);
 	foreach ($student_array as $student_id) {
 		$stmt->execute();	// $student_id variable is bound by reference
-		// echo "DEBUG: {$mysqli->info}<br/>\n";
 		if ($mysqli->affected_rows < 0) {
 			echo "Rows: {$mysqli->affected_rows}<br/>\n";
 			echo "Error: {$mysqli->error}<br/>\n";
@@ -64,7 +61,6 @@ function insert_iep_records($data_month, $service_type, $student_array, $overwri
 	$stmt = $mysqli->prepare($sql);
 	$stmt->bind_param("ss", $data_month, $service_type);
 	$stmt->execute();
-	// echo "DEBUG: {$mysqli->info}<br/>\n";
 	$total_updates = $mysqli->affected_rows;
 	echo "Updated $total_inserts IEP records of type '$service_type'.<br />\n";
 
@@ -113,7 +109,6 @@ function insert_ridership_records($data_month, $ridership_data, $overwrite=False
 		$stmt->bind_param("si", $data_month, $active_status);
 		foreach ([0, 1] as $active_status) {
 			$stmt->execute();
-			// echo "DEBUG: {$mysqli->info}<br/>\n";
 			if ($mysqli->affected_rows < 0) {
 				echo "Rows: {$mysqli->affected_rows}<br/>\n";
 				echo "Error: {$mysqli->error}<br/>\n";
@@ -131,7 +126,6 @@ function insert_ridership_records($data_month, $ridership_data, $overwrite=False
 		$stmt->bind_param("si", $data_month, $active_status);
 		foreach ([0, 1] as $active_status) {
 			$stmt->execute();
-			// echo "DEBUG: {$mysqli->info}<br/>\n";
 			$result = $stmt->get_result();
 			$row = $result->fetch_assoc();
 			$num = $row['num'];
@@ -142,7 +136,6 @@ function insert_ridership_records($data_month, $ridership_data, $overwrite=False
 		}
 	}
 
-	echo "DEBUG: inserting " . count($body) . " ridership records:<br/>\n";
 	$sql = "INSERT INTO ridership_data (data_month, last_name, first_name, card_number, scan_date, scan_day, scan_time, scan_hours, student_id, district, service_type, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
 	$stmt = $mysqli->prepare($sql);
 	$total_inserts = 0;
@@ -158,7 +151,6 @@ function insert_ridership_records($data_month, $ridership_data, $overwrite=False
 		// echo "data: last_name:$last_name, first_name:$first_name, card_number:$card_number, date:$date, student_id:$student_id, district:$district, grade:$grade<br/>\n";
 		// echo "data: $last_name, $first_name, $card_number, $date, $student_id, $district, $grade<br/>\n";
 		$stmt->execute();	// each variable is bound by reference
-		// echo "DEBUG: {$mysqli->info}<br/>\n";
 		if ($mysqli->affected_rows < 0) {
 			echo "Rows: {$mysqli->affected_rows}<br/>\n";
 			echo "Error: {$mysqli->error}<br/>\n";
@@ -174,7 +166,6 @@ function insert_ridership_records($data_month, $ridership_data, $overwrite=False
 	$stmt = $mysqli->prepare($sql);
 	$stmt->bind_param("s", $data_month);
 	$stmt->execute();
-	// echo "DEBUG: {$mysqli->info}<br/>\n";
 	$total_updates = $mysqli->affected_rows;
 	echo "Updated $total_inserts Ridership records.<br />\n";
 
@@ -215,7 +206,6 @@ function zpass_error_no_ID($data_month, $service_type) {
 	$stmt = $mysqli->prepare($sql);
 	$stmt->bind_param("ss", $data_month, $service_type);
 	$stmt->execute();
-	echo "DEBUG: {$mysqli->info}<br/>\n";
 	$result = $stmt->get_result();
 	$header = column_names_for_result($result);
 	$body = $result->fetch_all(MYSQLI_NUM);
@@ -236,7 +226,6 @@ function zpass_error_ID_not_found($data_month, $service_type) {
 	$stmt = $mysqli->prepare($sql);
 	$stmt->bind_param("ss", $data_month, $service_type);
 	$stmt->execute();
-	echo "DEBUG: {$mysqli->info}<br/>\n";
 	$result = $stmt->get_result();
 	$header = column_names_for_result($result);
 	$body = $result->fetch_all(MYSQLI_NUM);
@@ -258,7 +247,6 @@ function zpass_grouped_by_ID_and_day($data_month, $service_type) {
 	$stmt = $mysqli->prepare($sql);
 	$stmt->bind_param("ss", $data_month, $service_type);
 	$stmt->execute();
-	echo "DEBUG: {$mysqli->info}<br/>\n";
 	$result = $stmt->get_result();
 	$header = column_names_for_result($result);
 	$body = $result->fetch_all(MYSQLI_NUM);
@@ -298,7 +286,6 @@ function zpass_data_for_export($data_month, $service_type, $constants) {
 			FROM ridership_data_view
 			WHERE data_month = ?
 			AND service_type = ?";
-	echo "DEBUG: sql=<pre>$sql</pre>\n";
 	$stmt = $mysqli->prepare($sql);
 	$stmt->bind_param(
 		"ssssssss", 
@@ -312,7 +299,6 @@ function zpass_data_for_export($data_month, $service_type, $constants) {
 		$service_type
 	);
 	$stmt->execute();
-	echo "DEBUG: {$mysqli->info}<br/>\n";
 	$result = $stmt->get_result();
 	$header = column_names_for_result($result);
 	$body = $result->fetch_all(MYSQLI_NUM);
