@@ -107,7 +107,7 @@ function activate_iep_records($data_month, $service_type) {
 	return $total_updates;
 }
 
-function insert_iep_records_w_override($data_month, $service_type, $student_array, $overwrite=False) {
+function insert_iep_records_w_overwrite($data_month, $service_type, $student_array, $overwrite=False) {
 	if ($overwrite) {
 		$total_deletes = 0;
 		foreach ([0, 1] as $active_status) {
