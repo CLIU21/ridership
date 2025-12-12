@@ -10,6 +10,8 @@ require_once "include/data_dir_create.php";
 require_once "include/file_paths_import.php";
 require_once "include/file_paths_export.php";
 
+require_once "include/mysql_ridership_functions.php";
+
 function is_visible_file($basename) {
 	return (! is_hidden_file($basename));
 }
@@ -37,6 +39,21 @@ $file_paths = array_map('full_path', $files);
 $import_files = array_filter($file_paths, 'is_import_path');
 $export_files = array_filter($file_paths, 'is_export_path');
 $other_files = array_filter($file_paths, 'is_other_path');
+
+$count_iep_EI = count_iep_records($data_month, 'EI', 1);
+$count_iep_SA = count_iep_records($data_month, 'SA', 1);
+$count_ridership = count_ridership_records($data_month, 1);
+?>
+
+<h2>Data uploaded by user:</h2>
+<?php
+?>
+<table border="1">
+	<tr><td style="font-weight: bold;">EI IEP records</td><td><?=$count_iep_EI?></td></tr>
+	<tr><td style="font-weight: bold;">SA IEP records</td><td><?=$count_iep_SA?></td></tr>
+	<tr><td style="font-weight: bold;">Ridership records</td><td><?=$count_ridership?></td></tr>
+</table>
+<?php
 ?>
 
 <h2>Files uploaded by user, from ZPass and SSG:</h2>
