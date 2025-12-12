@@ -57,24 +57,8 @@ function delete_iep_records($data_month, $service_type, $active_status) {
 	return $total_deletes;
 }
 
-function insert_iep_records($data_month, $service_type, $student_array, $overwrite=False) {
+function insert_iep_records($data_month, $service_type, $student_array) {
 	global $mysqli;
-
-	if ($overwrite) {
-		$total_deletes = 0;
-		foreach ([0, 1] as $active_status) {
-			$total_deletes += delete_iep_records($data_month, $service_type, $active_status);
-		}
-		echo "Deleted $total_deletes IEP records of type '$service_type'.<br />\n";
-	} else {
-		foreach ([0, 1] as $active_status) {
-			$num = count_iep_records($data_month, $service_type, $active_status);
-			echo "Found $num IEP records with active status $active_status<br/>\n";
-			if ($num) {
-				exit('halt');
-			}
-		}
-	}
 
 	$sql = "INSERT INTO iep_data (data_month, service_type, student_id, is_active) VALUES (?, ?, ?, 0)";
 	$stmt = $mysqli->prepare($sql);
@@ -91,14 +75,42 @@ function insert_iep_records($data_month, $service_type, $student_array, $overwri
 		// echo "... insert {$mysqli->affected_rows} rows<br/>\n";
 		$total_inserts += $mysqli->affected_rows;
 	}
-	echo "Inserted $total_inserts IEP records of type '$service_type'.<br />\n";
-	// $stmt->close();
+	return $total_inserts;
+}
+
+function activate_iep_records($data_month, $service_type) {
+	global $mysqli;
 
 	$sql = "UPDATE iep_data SET is_active = 1 WHERE data_month = ? and is_active = 0 and service_type = ?";
 	$stmt = $mysqli->prepare($sql);
 	$stmt->bind_param("ss", $data_month, $service_type);
 	$stmt->execute();
 	$total_updates = $mysqli->affected_rows;
+
+	return $total_updates;
+}
+
+function insert_iep_records_w_override($data_month, $service_type, $student_array, $overwrite=False) {
+	if ($overwrite) {
+		$total_deletes = 0;
+		foreach ([0, 1] as $active_status) {
+			$total_deletes += delete_iep_records($data_month, $service_type, $active_status);
+		}
+		echo "Deleted $total_deletes IEP records of type '$service_type'.<br />\n";
+	} else {
+		foreach ([0, 1] as $active_status) {
+			$num = count_iep_records($data_month, $service_type, $active_status);
+			echo "Found $num IEP records with active status $active_status<br/>\n";
+			if ($num) {
+				exit('halt');
+			}
+		}
+	}
+
+	$total_inserts = insert_iep_records($data_month, $service_type, $student_array);
+	echo "Inserted $total_inserts IEP records of type '$service_type'.<br />\n";
+
+	$total_updates = activate_iep_records($data_month, $service_type);
 	echo "Updated $total_inserts IEP records of type '$service_type'.<br />\n";
 
 	if ($total_inserts != $total_updates) {
@@ -126,6 +138,7 @@ function count_ridership_records($data_month, $active_status) {
 	$result = $stmt->get_result();
 	$row = $result->fetch_assoc();
 	$num = $row['num'];
+
 	return $num;
 }
 
@@ -146,10 +159,49 @@ function delete_ridership_records($data_month, $active_status) {
 	return $total_deletes;
 }
 
-function insert_ridership_records($data_month, $ridership_data, $overwrite=False) {
+function insert_ridership_records($data_month, $ridership_body) {
 	global $mysqli;
 
-	list($header, $body) = header_and_body($ridership_data);
+	$sql = "INSERT INTO ridership_data (data_month, last_name, first_name, card_number, scan_date, scan_day, scan_time, scan_hours, student_id, district, service_type, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
+	$stmt = $mysqli->prepare($sql);
+	$total_inserts = 0;
+	list($last_name, $first_name, $card_number, $date, $day, $time, $hours, $student_id, $district, $grade) = array_fill(0, 10, Null);
+	$stmt->bind_param("sssssssdsss", $data_month, $last_name, $first_name, $card_number, $date, $day, $time, $hours, $student_id, $district, $grade);
+	foreach ($body as $row) {
+		// echo "row: "; print_r($row); echo "<br/>\n";
+		list($last_name, $first_name, $card_number, $date, $student_id, $district, $grade) = array_values($row);
+		// translate SP to SA, but change nothing else:
+		$grade = ($grade == "SP") ? "SA" : $grade;
+		list($day, $time) = explode(' ', $date);
+		$hours = convert_time_to_hours($time);
+		// echo "data: last_name:$last_name, first_name:$first_name, card_number:$card_number, date:$date, student_id:$student_id, district:$district, grade:$grade<br/>\n";
+		// echo "data: $last_name, $first_name, $card_number, $date, $student_id, $district, $grade<br/>\n";
+		$stmt->execute();	// each variable is bound by reference
+		if ($mysqli->affected_rows < 0) {
+			echo "Rows: {$mysqli->affected_rows}<br/>\n";
+			echo "Error: {$mysqli->error}<br/>\n";
+			exit();
+		}
+		// echo "... insert {$mysqli->affected_rows} rows<br/>\n";
+		$total_inserts += $mysqli->affected_rows;
+	}
+	return $total_inserts;
+}
+
+function activate_ridership_records($data_month) {
+	global $mysqli;
+
+	$sql = "UPDATE ridership_data SET is_active = 1 WHERE data_month = ? and is_active = 0";
+	$stmt = $mysqli->prepare($sql);
+	$stmt->bind_param("s", $data_month);
+	$stmt->execute();
+	$total_updates = $mysqli->affected_rows;
+
+	return $total_updates;
+}
+
+function insert_ridership_records_w_header($data_month, $ridership_data_w_header, $overwrite=False) {
+	list($ridership_header, $ridership_body) = header_and_body($ridership_data_w_header);
 
 	//	Header should contain:
 	$expected_header = [
@@ -184,37 +236,10 @@ function insert_ridership_records($data_month, $ridership_data, $overwrite=False
 		}
 	}
 
-	$sql = "INSERT INTO ridership_data (data_month, last_name, first_name, card_number, scan_date, scan_day, scan_time, scan_hours, student_id, district, service_type, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
-	$stmt = $mysqli->prepare($sql);
-	$total_inserts = 0;
-	list($last_name, $first_name, $card_number, $date, $day, $time, $hours, $student_id, $district, $grade) = array_fill(0, 10, Null);
-	$stmt->bind_param("sssssssdsss", $data_month, $last_name, $first_name, $card_number, $date, $day, $time, $hours, $student_id, $district, $grade);
-	foreach ($body as $row) {
-		// echo "row: "; print_r($row); echo "<br/>\n";
-		list($last_name, $first_name, $card_number, $date, $student_id, $district, $grade) = array_values($row);
-		// translate SP to SA, but change nothing else:
-		$grade = ($grade == "SP") ? "SA" : $grade;
-		list($day, $time) = explode(' ', $date);
-		$hours = convert_time_to_hours($time);
-		// echo "data: last_name:$last_name, first_name:$first_name, card_number:$card_number, date:$date, student_id:$student_id, district:$district, grade:$grade<br/>\n";
-		// echo "data: $last_name, $first_name, $card_number, $date, $student_id, $district, $grade<br/>\n";
-		$stmt->execute();	// each variable is bound by reference
-		if ($mysqli->affected_rows < 0) {
-			echo "Rows: {$mysqli->affected_rows}<br/>\n";
-			echo "Error: {$mysqli->error}<br/>\n";
-			exit();
-		}
-		// echo "... insert {$mysqli->affected_rows} rows<br/>\n";
-		$total_inserts += $mysqli->affected_rows;
-	}
+	$total_inserts = insert_ridership_records($data_month, $ridership_body);
 	echo "Inserted $total_inserts Ridership records.<br />\n";
-	// $stmt->close();
 
-	$sql = "UPDATE ridership_data SET is_active = 1 WHERE data_month = ? and is_active = 0";
-	$stmt = $mysqli->prepare($sql);
-	$stmt->bind_param("s", $data_month);
-	$stmt->execute();
-	$total_updates = $mysqli->affected_rows;
+	$total_updates = activate_ridership_records($data_month);
 	echo "Updated $total_inserts Ridership records.<br />\n";
 
 	if ($total_inserts != $total_updates) {
