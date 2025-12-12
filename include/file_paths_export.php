@@ -2,8 +2,9 @@
 function get_month_number($data_dir) {
 	// echo "DEBUG: get_month_number($data_dir)<br/>\n";
 	$data_month = basename($data_dir);
-	echo "DEBUG: data_month = $data_month<br/>\n";
-	return "10";
+	$frag = explode('-', $data_month);
+	$month = $frag[1];
+	return $month;
 }
 
 function get_grade_name($grade) {
