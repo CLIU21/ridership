@@ -17,7 +17,7 @@ if ($_SERVER["SERVER_NAME"] == "localhost") {
 	return;
 }
 
-if (!$_SESSION["az_user_data"]["userPrincipalName"]) {
+if (! ($_SESSION["az_user_data"]["userPrincipalName"] ?? "")) {
 	header("Location: https://ridership.cliu.org/az_auth.php");
 	die();
 }
