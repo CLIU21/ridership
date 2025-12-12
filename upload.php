@@ -15,8 +15,7 @@ echo "_GET:"; echo "<pre>"; print_r($_GET); echo "</pre>";
 echo "_POST:"; echo "<pre>"; print_r($_POST); echo "</pre>";
 echo "_FILES:"; echo "<pre>"; print_r($_FILES); echo "</pre>";
 
-$uploaded_data = uploaded_data_with_labels($data_month);
-
+# handle uploaded files:
 foreach ($file_labels_import as $file_id => $file_label) {
 	$File = $_FILES[$file_id] ?? ['error' => 4];
 	$error = $File['error'];
@@ -46,6 +45,11 @@ foreach ($file_labels_import as $file_id => $file_label) {
 		echo "<br />\n";
 	}
 }
+
+# wait until here so prior section uploads are included:
+$uploaded_data = uploaded_data_with_labels($data_month);
+
+echo "DEBUG: updated_data<pre>"; print_r($uploaded_data); echo "</pre>\n";
 
 $files_needed = [];
 ?>
