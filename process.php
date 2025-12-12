@@ -55,7 +55,7 @@ foreach (['EI', 'SA'] as $grade) {
 	echo "<hr />\n";
 	echo "<h2>grade = '$grade':</h2>\n";
 
-	$zpass_students_data = load_xls($file_paths_import["{$grade}_IPE"]);
+	$zpass_students_data = load_xls($file_paths_import["{$grade}_IEP"]);
 	$zpass_students = extract_studentIDs($zpass_students_data);
 	show_array_hidden($zpass_students, "students_{$grade}", "students $grade");
 	insert_iep_records($data_month, $grade, $zpass_students, $overwrite);
