@@ -20,20 +20,47 @@ require_once "include/data_dir.php";	# must be after definition of $data_month
 </form>
 </table>
 
+<?php
+function all_available_data_month_in_dir() {
+	global $data_root;
+	$directories = scandir($data_root, SCANDIR_SORT_DESCENDING);
+	$answer = [];
+	foreach ($directories as $dir) {
+		if (! preg_match('/^[.]/', $dir)) {
+			$answer[] = $dir;
+		}
+	}
+	return $answer;
+}
+
+$data_months_available_db = all_available_data_month_in_db();
+$data_months_available_dir = all_available_data_month_in_dir();
+
+
+?>
+
 <h2>Or, choose a past report to revisit:</h2>
+<h3>(db)</h3>
 <ul>
 <?php
-$directories = scandir($data_root, SCANDIR_SORT_DESCENDING);
-foreach ($directories as $dir) {
-	if (! preg_match('/^[.]/', $dir)) {
-$data_months_available_db = all_available_data_month_in_db();
 foreach ($data_months_available_db as $month) {
-		?>
+	?>
 	<li>
 		<a href="view.php?data_month=<?=$month?>"><?=$month?></a>
 	</li>
-		<?php
-	}
+	<?php
+}
+?>
+</ul>
+<h3>(dir)</h3>
+<ul>
+<?php
+foreach ($data_months_available_dir as $month) {
+	?>
+	<li>
+		<a href="view.php?data_month=<?=$month?>"><?=$month?></a>
+	</li>
+	<?php
 }
 ?>
 </ul>
