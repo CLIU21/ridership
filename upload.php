@@ -46,7 +46,8 @@ foreach ($file_labels_import as $file_id => $file_label) {
 		echo "<br />\n";
 	}
 }
-$files_needed = 0;
+
+$files_needed = [];
 ?>
 <table>
 	<!-- a form with no "action" tag posts back to the current page -->
@@ -74,7 +75,7 @@ $files_needed = 0;
 					?>
 				<input type="file" name="<?php echo $file_id?>" value="">
 					<?php
-					$files_needed++;
+					$files_needed[] = $file_id;
 				}
 				?>
 			</td>
@@ -84,7 +85,9 @@ $files_needed = 0;
 		if ($files_needed) {
 			?>
 		<tr>
-			<td align="right" style="font-weight: bold; color: red">Files needed: <?=$files_needed?></td>
+			<td align="right" style="font-weight: bold; color: red">
+				Files needed: <?=count($files_needed)?>
+			</td>
 			<td align="left"><input type="submit" name="submit" value="Upload"></td>
 		</tr>
 			<?php
