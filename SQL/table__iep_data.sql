@@ -3,7 +3,9 @@ create table iep_data (
     data_month		VARCHAR(255)	NOT NULL,
     service_type	VARCHAR(255)	NOT NULL,
 	student_id		VARCHAR(255)	NOT NULL,
-    is_active		TINYINT(1)		DEFAULT 0
+    created_date    TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_date    TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    is_active       TINYINT(1)      DEFAULT 0
 );
 
 ALTER TABLE iep_data ADD INDEX (data_month, is_active, service_type, student_id);
