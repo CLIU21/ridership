@@ -49,9 +49,9 @@ $count_ridership = count_ridership_records($data_month, 1);
 <?php
 ?>
 <table border="1">
-	<tr><td style="font-weight: bold;">EI IEP records</td><td><?=$count_iep_EI?></td></tr>
-	<tr><td style="font-weight: bold;">SA IEP records</td><td><?=$count_iep_SA?></td></tr>
-	<tr><td style="font-weight: bold;">Ridership records</td><td><?=$count_ridership?></td></tr>
+	<tr><td style="font-weight: bold;">SSG records: EI</td><td><?=$count_iep_EI?></td></tr>
+	<tr><td style="font-weight: bold;">SSG records: SA</td><td><?=$count_iep_SA?></td></tr>
+	<tr><td style="font-weight: bold;">ZPASS records</td><td><?=$count_ridership?></td></tr>
 </table>
 <?php
 ?>
