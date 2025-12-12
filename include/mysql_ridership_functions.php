@@ -21,9 +21,9 @@ function all_available_data_month_in_db() {
 
 function uploaded_data_with_labels() {
 	$uploaded_data = [
-		'Early Intervention IPE data' => count_iep_records($data_month, 'EI', 1),
-		'School-Age IPE data' => count_iep_records($data_month, 'SA', 1),
-		'Zpass File' => count_ridership_records($data_month, 1),
+		'EI_IEP' => count_iep_records($data_month, 'EI', 1),
+		'SA_IEP' => count_iep_records($data_month, 'SA', 1),
+		'ZPASS' => count_ridership_records($data_month, 1),
 	];
 	return $uploaded_data;
 }
