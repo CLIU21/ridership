@@ -20,6 +20,8 @@ function all_available_data_month_in_db() {
 }
 
 function count_iep_records($data_month, $service_type, $active_status) {
+	global $mysqli;
+
 	$sql = "SELECT COUNT(*) as num FROM iep_data WHERE data_month = ? and service_type = ? and is_active = ?";
 	$stmt = $mysqli->prepare($sql);
 	$active_status = 0;
@@ -103,6 +105,8 @@ function column_names_for_result($result) {
 }
 
 function count_ridership_records($data_month, $active_status) {
+	global $mysqli;
+
 	$sql = "SELECT COUNT(*) as num FROM ridership_data WHERE data_month = ? and is_active = ?";
 	$stmt = $mysqli->prepare($sql);
 	$active_status = 0;
