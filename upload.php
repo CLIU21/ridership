@@ -115,9 +115,18 @@ $files_needed = [];
 			<td>
 				<?php
 				$file_path = $file_paths_import[$file_id] ?? "";
+				$file_path_done = $file_paths_import_done[$file_id] ?? "";
+
+				$file_path_existing = "";
 				if ($file_path && file_exists($file_path)) {
+					$file_path_existing = $file_path;
+				} elseif ($file_path_done && file_exists($file_path_done)) {
+					$file_path_existing = $file_path_done;
+				}
+
+				if ($file_path_existing) {
 					?>
-				<span style='font-weight:bold'><?=$file_path?></span>
+				<span style='font-weight:bold'><?=$file_path_existing?></span>
 					<?php
 				} else {
 					?>
