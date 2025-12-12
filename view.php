@@ -47,7 +47,7 @@ if ($checksum) {
 <h2>Data uploaded by user:</h2>
 <table border="1">
 	<?php
-	foreach ($uploaded_data as $label => $file_id) {
+	foreach ($uploaded_data as $file_id => $value) {
 		$label = $file_labels_import[$file_id];
 		?>
 	<tr><td style="font-weight: bold;"><?=$label?></td><td><?=$value?></td></tr>
