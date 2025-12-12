@@ -39,11 +39,7 @@ $import_files = array_filter($file_paths, 'is_import_path');
 $export_files = array_filter($file_paths, 'is_export_path');
 $other_files = array_filter($file_paths, 'is_other_path');
 
-$uploaded_data = [
-	'SSG records: EI' => count_iep_records($data_month, 'EI', 1),
-	'SSG records: SA' => count_iep_records($data_month, 'SA', 1),
-	'ZPASS records' => count_ridership_records($data_month, 1),
-];
+$uploaded_data = uploaded_data_with_labels();
 
 $checksum = array_sum($uploaded_data);
 if ($checksum) {
