@@ -167,7 +167,7 @@ function insert_ridership_records($data_month, $ridership_body) {
 	$total_inserts = 0;
 	list($last_name, $first_name, $card_number, $date, $day, $time, $hours, $student_id, $district, $grade) = array_fill(0, 10, Null);
 	$stmt->bind_param("sssssssdsss", $data_month, $last_name, $first_name, $card_number, $date, $day, $time, $hours, $student_id, $district, $grade);
-	foreach ($body as $row) {
+	foreach ($ridership_body as $row) {
 		// echo "row: "; print_r($row); echo "<br/>\n";
 		list($last_name, $first_name, $card_number, $date, $student_id, $district, $grade) = array_values($row);
 		// translate SP to SA, but change nothing else:
