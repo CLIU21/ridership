@@ -10,7 +10,10 @@ function all_available_data_month_in_db() {
 	$stmt = $mysqli->prepare($sql);
 	$stmt->execute();
 	$result = $stmt->get_result();
-	$answer = $result->fetch_all(MYSQLI_NUM);
+	$answer = [];
+	while($row = mysqli_fetch_assoc($result)) {
+		$answer[] = $row['data_month'];
+	}
 
 	return $answer;
 }
