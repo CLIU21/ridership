@@ -8,7 +8,6 @@ function get_month_number($data_dir) {
 }
 
 function get_grade_name($grade) {
-	echo "DEBUG: get_grade_name($grade)<br/>\n";
 	$grade_lookup = [
 		'EI' => 'etr',
 		'SA' => 'tr',
