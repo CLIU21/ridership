@@ -40,6 +40,23 @@ function count_iep_records($data_month, $service_type, $active_status) {
 	return $num;
 }
 
+function query_iep_records($data_month, $service_type) {
+	global $mysqli;
+
+	$sql = "SELECT COUNT(*) as num
+			FROM iep_data
+			WHERE data_month = ? and service_type = ? and is_active = 1";
+	$stmt = $mysqli->prepare($sql);
+	$stmt->bind_param("ss", $data_month, $service_type);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$header = column_names_for_result($result);
+	$body = $result->fetch_all(MYSQLI_NUM);
+	$answer = array_merge([$header], $body);
+
+	return $answer;
+}
+
 function delete_iep_records($data_month, $service_type, $active_status) {
 	global $mysqli;
 
