@@ -39,7 +39,7 @@ $import_files = array_filter($file_paths, 'is_import_path');
 $export_files = array_filter($file_paths, 'is_export_path');
 $other_files = array_filter($file_paths, 'is_other_path');
 
-$uploaded_data = uploaded_data_with_labels();
+$uploaded_data = uploaded_data_with_labels($data_month);
 
 $checksum = array_sum($uploaded_data);
 if ($checksum) {
