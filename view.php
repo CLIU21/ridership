@@ -37,6 +37,8 @@ $file_paths = array_map('full_path', $files);
 
 $import_files = array_filter($file_paths, 'is_import_path');
 $export_files = array_filter($file_paths, 'is_export_path');
+$error_files = array_filter($file_paths, 'is_error_path');
+
 $other_files = array_filter($file_paths, 'is_other_path');
 
 $uploaded_data = uploaded_data_with_labels($data_month);
@@ -87,6 +89,31 @@ if ($export_files) {
 <table border="1">
 	<?php
 	foreach ($export_files as $full_path) {
+		$basename = basename($full_path);
+		?>
+	<tr>
+		<td>
+			<!-- <a href="view.php?data_month=<?=$basename?>"><?=$basename?></a> -->
+			<?=$basename?>
+		</td>
+		<td>
+			<a href="<?=$full_path?>" download>
+				<button>Download</button>
+			</a>
+		</td>
+	</tr>
+		<?php
+	}
+	if ($error_files) {
+		?>
+	<tr>
+		<td colspan="2" style="font-weight: bold; text-align: center;">
+			Error Files
+		</td>
+	</tr>
+		<?php
+	}
+	foreach ($error_files as $full_path) {
 		$basename = basename($full_path);
 		?>
 	<tr>
