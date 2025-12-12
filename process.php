@@ -83,7 +83,7 @@ foreach (['EI', 'SA'] as $grade) {
 
 	foreach ($zpass_output_split as $i => $batch) {
 		$filename = export_file_path($data_dir, $grade, $i);
-		export_data_as_excel($batch, $filename, 'Sheet Name Goes Here');
+		export_data_as_excel($batch, $filename, 'Sheet1');
 	}
 }
 
