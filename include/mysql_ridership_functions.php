@@ -38,27 +38,33 @@ function count_iep_records($data_month, $service_type, $active_status) {
 	return $num;
 }
 
+function delete_iep_records($data_month, $service_type, $active_status) {
+	global $mysqli;
+
+	$sql = "DELETE FROM iep_data WHERE data_month = ? and is_active = ? and service_type = ?";
+	$stmt = $mysqli->prepare($sql);
+	$active_status = 0;
+	$stmt->bind_param("sis", $data_month, $active_status, $service_type);
+	$stmt->execute();
+	if ($mysqli->affected_rows < 0) {
+		echo "Rows: {$mysqli->affected_rows}<br/>\n";
+		echo "Error: {$mysqli->error}<br/>\n";
+		exit();
+	}
+	// echo "... delete {$mysqli->affected_rows} rows<br/>\n";
+	$total_deletes = $mysqli->affected_rows;
+	return $total_deletes;
+}
+
 function insert_iep_records($data_month, $service_type, $student_array, $overwrite=False) {
 	global $mysqli;
 
 	if ($overwrite) {
 		$total_deletes = 0;
-		$sql = "DELETE FROM iep_data WHERE data_month = ? and is_active = ? and service_type = ?";
-		$stmt = $mysqli->prepare($sql);
-		$active_status = 0;
-		$stmt->bind_param("sis", $data_month, $active_status, $service_type);
 		foreach ([0, 1] as $active_status) {
-			$stmt->execute();
-			if ($mysqli->affected_rows < 0) {
-				echo "Rows: {$mysqli->affected_rows}<br/>\n";
-				echo "Error: {$mysqli->error}<br/>\n";
-				exit();
-			}
-			// echo "... delete {$mysqli->affected_rows} rows<br/>\n";
-			$total_deletes += $mysqli->affected_rows;
+			$total_deletes += delete_iep_records($data_month, $service_type, $active_status);
 		}
 		echo "Deleted $total_deletes IEP records of type '$service_type'.<br />\n";
-		// $stmt->close();
 	} else {
 		foreach ([0, 1] as $active_status) {
 			$num = count_iep_records($data_month, $service_type, $active_status);
@@ -123,6 +129,24 @@ function count_ridership_records($data_month, $active_status) {
 	return $num;
 }
 
+function delete_ridership_records($data_month, $active_status) {
+	global $mysqli;
+
+	$sql = "DELETE FROM ridership_data WHERE data_month = ? and is_active = ?";
+	$stmt = $mysqli->prepare($sql);
+	$active_status = 0;
+	$stmt->bind_param("si", $data_month, $active_status);
+	$stmt->execute();
+	if ($mysqli->affected_rows < 0) {
+		echo "Rows: {$mysqli->affected_rows}<br/>\n";
+		echo "Error: {$mysqli->error}<br/>\n";
+		exit();
+	}
+	// echo "... delete {$mysqli->affected_rows} rows<br/>\n";
+	$total_deletes = $mysqli->affected_rows;
+	return $total_deletes;
+}
+
 function insert_ridership_records($data_month, $ridership_data, $overwrite=False) {
 	global $mysqli;
 
@@ -147,22 +171,10 @@ function insert_ridership_records($data_month, $ridership_data, $overwrite=False
 
 	if ($overwrite) {
 		$total_deletes = 0;
-		$sql = "DELETE FROM ridership_data WHERE data_month = ? and is_active = ?";
-		$stmt = $mysqli->prepare($sql);
-		$active_status = 0;
-		$stmt->bind_param("si", $data_month, $active_status);
 		foreach ([0, 1] as $active_status) {
-			$stmt->execute();
-			if ($mysqli->affected_rows < 0) {
-				echo "Rows: {$mysqli->affected_rows}<br/>\n";
-				echo "Error: {$mysqli->error}<br/>\n";
-				exit();
-			}
-			// echo "... delete {$mysqli->affected_rows} rows<br/>\n";
-			$total_deletes += $mysqli->affected_rows;
+			$total_deletes += delete_ridership_records($data_month, $active_status);
 		}
 		echo "Deleted $total_deletes Ridership records.<br />\n";
-		// $stmt->close();
 	} else {
 		foreach ([0, 1] as $active_status) {
 			$num = count_ridership_records($data_month, $active_status);
