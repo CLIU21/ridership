@@ -354,32 +354,3 @@ function zpass_data_for_export($data_month, $service_type, $constants) {
 
 	return $answer;
 }
-
-// $mysqli->autocommit(FALSE); //turn on transactions
-// $mysqli->autocommit(TRUE); //turn off transactions + commit queued queries
-// try { bla bla bla } catch(Exception $e) { $mysqli->rollback(); throw $e; }
-
-// $result = mysqli_query($mysqli, "SELECT * FROM contacts ORDER BY id DESC");
-
-// $stmt = $mysqli->prepare("INSERT INTO contacts (name,age,email) VALUES(?, ?, ?)");
-// $stmt->bind_param("sis", $name, $age, $email);
-// $stmt->execute();
-// $result = $stmt->get_result();
-// ONE ROW:
-// $row = $result->fetch_assoc() - Fetch an associative array
-// $row = $result->fetch_row() - Fetch a numeric array
-// $row = $result->fetch_object() - Fetch an object array
-// ALL:
-// $arr = $result->fetch_all(MYSQLI_ASSOC) - Fetch an associative array
-// $arr = $result->fetch_all(MYSQLI_NUM) - Fetch a numeric array
-
-// $stmt = $mysqli->prepare("UPDATE contacts SET name=?, age=?, email=? WHERE id=?");
-// $stmt->bind_param("sisi", $name, $age, $email, $id);
-// $stmt->execute();
-
-// $stmt = $mysqli->prepare("DELETE FROM contacts WHERE id=?");
-// $stmt->bind_param("i", $id);
-// $stmt->execute();
-
-// if($stmt->affected_rows === 0) exit('No rows updated');
-// $stmt->close();
