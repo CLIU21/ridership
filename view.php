@@ -53,10 +53,10 @@ if ($checksum) {
 <table border="1">
 	<?php
 	foreach ($uploaded_data as $label => $value) {
-	?>
+		?>
 	<tr><td style="font-weight: bold;"><?=$label?></td><td><?=$value?></td></tr>
-	<?php
-}
+		<?php
+	}
 	?>
 </table>
 	<?php
@@ -69,16 +69,16 @@ if ($import_files) {
 <table border="1">
 	<?php
 	foreach ($import_files as $full_path) {
-	$basename = basename($full_path);
-	?>
+		$basename = basename($full_path);
+		?>
 	<tr>
 		<td>
 			<!-- <a href="view.php?data_month=<?=$basename?>"><?=$basename?></a> -->
 			<?=$basename?>
 		</td>
 	</tr>
-	<?php
-}
+		<?php
+	}
 	?>
 </table>
 	<?php
@@ -104,8 +104,8 @@ if ($export_files) {
 			</a>
 		</td>
 	</tr>
-	<?php
-}
+		<?php
+	}
 	?>
 </table>
 	<?php
@@ -132,6 +132,15 @@ if ($other_files) {
 	<?php
 }
 # else don't show this section
+?>
+
+<h2><a href="upload.php?data_month=<?=$data_month?>&user_name=<?=$user_name?>">Upload some files</a></h2>
+<?php
+if ($import_files) {
+	?>
+<h2><a href="process.php?data_month=<?=$data_month?>&user_name=<?=$user_name?>">Process files</a></h2>
+	<?php
+}
 ?>
 
 </body>
