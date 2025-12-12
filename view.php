@@ -36,6 +36,7 @@ function full_path($basename) {
 $file_paths = array_map('full_path', $files);
 
 $import_files = array_filter($file_paths, 'is_import_path');
+$done_files = array_filter($file_paths, 'is_done_path');
 $export_files = array_filter($file_paths, 'is_export_path');
 $error_files = array_filter($file_paths, 'is_error_path');
 
@@ -61,12 +62,41 @@ if ($checksum) {
 }
 # else don't show this section
 
-if ($import_files) {
+if ($import_files or $done_files) {
 	?>
 <h2>Files uploaded by user, from ZPass and SSG:</h2>
 <table border="1">
 	<?php
+	if ($import_files) {
+		?>
+	<tr>
+		<td colspan="2" style="font-weight: bold; text-align: center;">
+			Files Available for Import
+		</td>
+	</tr>
+		<?php
+	}
 	foreach ($import_files as $full_path) {
+		$basename = basename($full_path);
+		?>
+	<tr>
+		<td>
+			<!-- <a href="view.php?data_month=<?=$basename?>"><?=$basename?></a> -->
+			<?=$basename?>
+		</td>
+	</tr>
+		<?php
+	}
+	if ($done_files) {
+		?>
+	<tr>
+		<td colspan="2" style="font-weight: bold; text-align: center;">
+			Files Successfully Imported
+		</td>
+	</tr>
+		<?php
+	}
+	foreach ($done_files as $full_path) {
 		$basename = basename($full_path);
 		?>
 	<tr>
