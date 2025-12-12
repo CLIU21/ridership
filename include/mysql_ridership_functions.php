@@ -213,9 +213,9 @@ function insert_ridership_records_w_header($data_month, $ridership_data_w_header
 		19 => 'Home District',
 		20 => 'Grade (EI or SP)',
 	];
-	if ($header != $expected_header) {
+	if ($ridership_header != $expected_header) {
 		echo "ERROR: header is incorrect!<br/>\n";
-		echo "actual: "; print_r($header); echo "<br/>\n";
+		echo "actual: "; print_r($ridership_header); echo "<br/>\n";
 		echo "expected: "; print_r($expected_header); echo "<br/>\n";
 		exit();
 	}
