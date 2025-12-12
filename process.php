@@ -39,7 +39,7 @@ $zpass = load_xls($file_paths_import['ZPASS']);
 $zpass = extract_relevant_columns($zpass);
 show_array_hidden($zpass, 'zpass', 'zpass ALL RECORDS');
 
-$overwrite = true;
+$overwrite = false;
 insert_ridership_records($data_month, $zpass, $overwrite);
 
 $zpass_split_error = zpass_error_no_grade($data_month);
