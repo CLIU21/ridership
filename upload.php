@@ -46,10 +46,54 @@ foreach ($file_labels_import as $file_id => $file_label) {
 	}
 }
 
+# import uploaded files:
+foreach ($file_labels_import as $file_id => $file_label) {
+	$file_path = $file_paths_import[$file_id] ?? "";
+	$file_path_done = $file_paths_import_done[$file_id] ?? "";
+	if ($file_path && file_exists($file_path)) {
+		switch ($file_id) {
+			case 'ZPASS':
+				$zpass = load_xls($file_path);
+				$zpass = extract_relevant_columns($zpass);
+				show_array_hidden($zpass, 'zpass', 'zpass ALL RECORDS');
+				$overwrite = true;
+				insert_ridership_records_w_header($data_month, $zpass, $overwrite);
+				break;
+
+			case 'EI_IEP':
+				$grade = 'EI';
+				$zpass_students_data = load_xls($file_path);
+				$zpass_students = extract_studentIDs($zpass_students_data);
+				show_array_hidden($zpass_students, "students_{$grade}", "students $grade");
+				$overwrite = true;
+				insert_iep_records_w_overwrite($data_month, $grade, $zpass_students, $overwrite);
+				break;
+
+			case 'SA_IEP':
+				$grade = 'SA';
+				$zpass_students_data = load_xls($file_path);
+				$zpass_students = extract_studentIDs($zpass_students_data);
+				show_array_hidden($zpass_students, "students_{$grade}", "students $grade");
+				$overwrite = true;
+				insert_iep_records_w_overwrite($data_month, $grade, $zpass_students, $overwrite);
+				break;
+
+			default:
+				echo "<h2>Error: Unknown file_id '$file_id'</h2>\n";
+				exit('halt for error');
+				break;
+		}
+		$success = rename($file_path, $file_path_done);
+		if (! $success) {
+			echo "<h2>Error: file rename failed: "
+				. error_get_last()['message']
+				. "</h2>\n";
+		}
+	}
+}
+
 # wait until here so prior section uploads are included:
 $uploaded_data = uploaded_data_with_labels($data_month);
-
-echo "DEBUG: updated_data<pre>"; print_r($uploaded_data); echo "</pre>\n";
 
 $files_needed = [];
 ?>

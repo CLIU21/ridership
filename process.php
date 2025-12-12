@@ -35,13 +35,8 @@ require_once "include/mysql_ridership_functions.php";
 <?php
 echo "<hr />\n";
 
-$zpass = load_xls($file_paths_import['ZPASS']);
-// echo 'zpass_data: ' . count($zpass) . "<br/>\n";
-$zpass = extract_relevant_columns($zpass);
+$zpass = query_ridership_records($data_month);
 show_array_hidden($zpass, 'zpass', 'zpass ALL RECORDS');
-
-$overwrite = false;
-insert_ridership_records($data_month, $zpass, $overwrite);
 
 $zpass_split_error = zpass_error_no_grade($data_month);
 
@@ -56,10 +51,8 @@ foreach (['EI', 'SA'] as $grade) {
 	echo "<hr />\n";
 	echo "<h2>grade = '$grade':</h2>\n";
 
-	$zpass_students_data = load_xls($file_paths_import["{$grade}_IEP"]);
-	$zpass_students = extract_studentIDs($zpass_students_data);
+	$zpass_students = query_iep_records($data_month, $grade);
 	show_array_hidden($zpass_students, "students_{$grade}", "students $grade");
-	insert_iep_records($data_month, $grade, $zpass_students, $overwrite);
 
 	$zpass_filtered_error = zpass_error_no_ID($data_month, $grade);
 	show_array_hidden($zpass_filtered_error, "zpass_{$grade}_err", "zpass $grade ERROR no ID");
@@ -68,7 +61,6 @@ foreach (['EI', 'SA'] as $grade) {
 	show_array_hidden($zpass_with_id_found_error, "zpass_{$grade}_not_found", "zpass $grade ID not found in student list");
 
 	$zpass_split_id_day = zpass_grouped_by_ID_and_day($data_month, $grade);
-
 	show_array_hidden($zpass_split_id_day, "zpass_{$grade}_split", "zpass $grade split by ID and day");
 
 	$constants_local = array_merge($zpass_constants['global'], $zpass_constants[$grade]);
