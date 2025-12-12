@@ -159,6 +159,23 @@ function count_ridership_records($data_month, $active_status) {
 	return $num;
 }
 
+function query_ridership_records($data_month) {
+	global $mysqli;
+
+	$sql = "SELECT COUNT(*) as num
+			FROM ridership_data
+			WHERE data_month = ? and is_active = 1";
+	$stmt = $mysqli->prepare($sql);
+	$stmt->bind_param("s", $data_month);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$header = column_names_for_result($result);
+	$body = $result->fetch_all(MYSQLI_NUM);
+	$answer = array_merge([$header], $body);
+
+	return $answer;
+}
+
 function delete_ridership_records($data_month, $active_status) {
 	global $mysqli;
 
