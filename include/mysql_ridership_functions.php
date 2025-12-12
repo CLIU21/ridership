@@ -84,6 +84,18 @@ function column_names_for_result($result) {
     return $column_names;
 }
 
+function count_ridership_records($data_month, $active_status) {
+	$sql = "SELECT COUNT(*) as num FROM ridership_data WHERE data_month = ? and is_active = ?";
+	$stmt = $mysqli->prepare($sql);
+	$active_status = 0;
+	$stmt->bind_param("si", $data_month, $active_status);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$row = $result->fetch_assoc();
+	$num = $row['num'];
+	return $num;
+}
+
 function insert_ridership_records($data_month, $ridership_data, $overwrite=False) {
 	global $mysqli;
 
@@ -125,15 +137,8 @@ function insert_ridership_records($data_month, $ridership_data, $overwrite=False
 		echo "Deleted $total_deletes Ridership records.<br />\n";
 		// $stmt->close();
 	} else {
-		$sql = "SELECT COUNT(*) as num FROM ridership_data WHERE data_month = ? and is_active = ?";
-		$stmt = $mysqli->prepare($sql);
-		$active_status = 0;
-		$stmt->bind_param("si", $data_month, $active_status);
 		foreach ([0, 1] as $active_status) {
-			$stmt->execute();
-			$result = $stmt->get_result();
-			$row = $result->fetch_assoc();
-			$num = $row['num'];
+			$num = count_ridership_records($data_month, $active_status);
 			echo "Found $num Ridership records with active status $active_status<br/>\n";
 			if ($num) {
 				exit('halt');
