@@ -9,7 +9,10 @@ require_once "include/data_dir_create.php";
 require_once "include/file_paths_import.php";
 require_once "include/error_msg_file_upload.php";
 
+require_once "include/show_array.php";
 require_once "include/mysql_ridership_functions.php";
+require_once "include/zpass_data_conversion.php";
+require_once "include/excel_read.php";
 
 echo "_GET:"; echo "<pre>"; print_r($_GET); echo "</pre>";
 echo "_POST:"; echo "<pre>"; print_r($_POST); echo "</pre>";

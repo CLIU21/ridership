@@ -1,4 +1,7 @@
 <?php
+require_once "include/time_conversion.php";
+require_once "include/array_data_processing.php";
+
 define('SSG_STUDENT_INDEX', 1);
 
 function extract_studentIDs($data) {
