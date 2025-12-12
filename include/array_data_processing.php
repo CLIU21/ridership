@@ -1,4 +1,5 @@
 <?php
+require_once "include/split_header_and_body.php";
 
 // input: matrix; output: array
 function extract_one_column($data, $column_id) {
@@ -25,13 +26,6 @@ function keep_columns_by_indexes($column_list, $data) {
 	};
 	$filter_rows = fn($row) => array_filter($row, $filter_columns_keep, ARRAY_FILTER_USE_BOTH);
 	return array_map($filter_rows, $data);
-}
-
-// input: matrix; output: array[header-row, all-other-rows]
-function header_and_body($data) {
-	$header = $data[0];				// first row only
-	$body = array_slice($data, 1);	// all rows except first
-	return [$header, $body];
 }
 
 // input: matrix; output: array['ok' -> matrix, 'error' -> matrix]
