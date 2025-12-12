@@ -9,9 +9,13 @@ require_once "include/data_dir_create.php";
 require_once "include/file_paths_import.php";
 require_once "include/error_msg_file_upload.php";
 
+require_once "include/mysql_ridership_functions.php";
+
 echo "_GET:"; echo "<pre>"; print_r($_GET); echo "</pre>";
 echo "_POST:"; echo "<pre>"; print_r($_POST); echo "</pre>";
 echo "_FILES:"; echo "<pre>"; print_r($_FILES); echo "</pre>";
+
+$uploaded_data = uploaded_data_with_labels($data_month);
 
 foreach ($file_labels_import as $file_id => $file_label) {
 	$File = $_FILES[$file_id] ?? ['error' => 4];
@@ -55,6 +59,9 @@ $files_needed = 0;
 		<tr>
 			<td align="right">
 				<?php echo $file_label?>
+			</td>
+			<td align="right">
+				<?php echo $uploaded_data[$file_id]?>
 			</td>
 			<td>
 				<?php
