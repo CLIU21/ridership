@@ -1,6 +1,18 @@
 <?php
 require_once "include/mysql_connect.php";
 
+function count_iep_records($data_month, $service_type, $active_status) {
+	$sql = "SELECT COUNT(*) as num FROM iep_data WHERE data_month = ? and service_type = ? and is_active = ?";
+	$stmt = $mysqli->prepare($sql);
+	$active_status = 0;
+	$stmt->bind_param("ssi", $data_month, $service_type, $active_status);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$row = $result->fetch_assoc();
+	$num = $row['num'];
+	return $num;
+}
+
 function insert_iep_records($data_month, $service_type, $student_array, $overwrite=False) {
 	global $mysqli;
 
@@ -23,15 +35,8 @@ function insert_iep_records($data_month, $service_type, $student_array, $overwri
 		echo "Deleted $total_deletes IEP records of type '$service_type'.<br />\n";
 		// $stmt->close();
 	} else {
-		$sql = "SELECT COUNT(*) as num FROM iep_data WHERE data_month = ? and is_active = ? and service_type = ?";
-		$stmt = $mysqli->prepare($sql);
-		$active_status = 0;
-		$stmt->bind_param("sis", $data_month, $active_status, $service_type);
 		foreach ([0, 1] as $active_status) {
-			$stmt->execute();
-			$result = $stmt->get_result();
-			$row = $result->fetch_assoc();
-			$num = $row['num'];
+			$num = count_iep_records($data_month, $service_type, $active_status);
 			echo "Found $num IEP records with active status $active_status<br/>\n";
 			if ($num) {
 				exit('halt');
