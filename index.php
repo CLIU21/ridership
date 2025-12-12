@@ -2,7 +2,7 @@
 require_once "include/az.php";
 require_once "include/header.php";
 
-require_once "include/mysql_connect.php";	// not required here, but we want to fail early if DB is broken
+require_once "include/mysql_ridership_functions.php";
 
 $last_month = strtotime('-1 month');
 $default_data_month = date('Y-m', $last_month);
@@ -26,9 +26,11 @@ require_once "include/data_dir.php";	# must be after definition of $data_month
 $directories = scandir($data_root, SCANDIR_SORT_DESCENDING);
 foreach ($directories as $dir) {
 	if (! preg_match('/^[.]/', $dir)) {
+$data_months_available_db = all_available_data_month_in_db();
+foreach ($data_months_available_db as $month) {
 		?>
 	<li>
-		<a href="view.php?data_month=<?=$dir?>"><?=$dir?></a>
+		<a href="view.php?data_month=<?=$month?>"><?=$month?></a>
 	</li>
 		<?php
 	}

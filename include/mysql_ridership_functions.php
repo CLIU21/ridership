@@ -1,6 +1,24 @@
 <?php
 require_once "include/mysql_connect.php";
 
+function all_available_data_month_in_db() {
+	global $mysqli;
+
+	$sql = "
+			SELECT DISTINCT data_month
+			FROM iep_data
+			UNION
+			SELECT DISTINCT data_month
+			FROM ridership_data
+	";
+	$stmt = $mysqli->prepare($sql);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$answer = $result->fetch_all(MYSQLI_NUM);
+
+	return $answer;
+}
+
 function count_iep_records($data_month, $service_type, $active_status) {
 	$sql = "SELECT COUNT(*) as num FROM iep_data WHERE data_month = ? and service_type = ? and is_active = ?";
 	$stmt = $mysqli->prepare($sql);
