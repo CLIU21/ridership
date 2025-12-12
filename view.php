@@ -18,22 +18,20 @@ function is_visible_file($basename) {
 $files = scandir($data_dir);
 $files = array_filter($files, 'is_visible_file');
 
-function is_other_path($full_path) {
-	if (is_import_path($full_path)) {
-		return false;
-	} elseif (is_export_path($full_path)) {
-		return false;
-	} else {
-		return true;
-	}
-}
-
 function full_path($basename) {
 	global $data_dir;
 	return $data_dir . "/" . $basename;
 }
 
 $file_paths = array_map('full_path', $files);
+
+function is_other_path($full_path) {
+	if (is_import_path($full_path)) { return false; }
+	if (is_done_path($full_path)) { return false; }
+	if (is_export_path($full_path)) { return false; }
+	if (is_error_path($full_path)) { return false; }
+	return true;
+}
 
 $import_files = array_filter($file_paths, 'is_import_path');
 $done_files = array_filter($file_paths, 'is_done_path');
