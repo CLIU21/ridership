@@ -4,13 +4,9 @@ require_once "include/mysql_connect.php";
 function all_available_data_month_in_db() {
 	global $mysqli;
 
-	$sql = "
-			SELECT DISTINCT data_month
-			FROM iep_data
+	$sql = "SELECT DISTINCT data_month FROM iep_data
 			UNION
-			SELECT DISTINCT data_month
-			FROM ridership_data
-	";
+			SELECT DISTINCT data_month FROM ridership_data";
 	$stmt = $mysqli->prepare($sql);
 	$stmt->execute();
 	$result = $stmt->get_result();
