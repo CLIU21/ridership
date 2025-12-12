@@ -39,8 +39,9 @@ $zpass = query_ridership_records($data_month);
 show_array_hidden($zpass, 'zpass', 'zpass ALL RECORDS');
 
 $zpass_split_error = zpass_error_no_grade($data_month);
-
 show_array_hidden($zpass_split_error, 'zpass_err', 'zpass ERROR no Grade (EI/SA)');
+$split_error_file = error_file_path($data_dir, '', "no_grade");
+export_data_as_excel($zpass_split_error, $split_error_file, 'error: no Grade');
 
 # Changed per Robin Miller's instruction; PAID changed
 $student_id_replacements = [
@@ -56,9 +57,13 @@ foreach (['EI', 'SA'] as $grade) {
 
 	$zpass_filtered_error = zpass_error_no_ID($data_month, $grade);
 	show_array_hidden($zpass_filtered_error, "zpass_{$grade}_err", "zpass $grade ERROR no ID");
+	$filtered_error_file = error_file_path($data_dir, $grade, "no_ID");
+	export_data_as_excel($zpass_filtered_error, $filtered_error_file, 'error: no ID');
 
 	$zpass_with_id_found_error = zpass_error_ID_not_found($data_month, $grade);
 	show_array_hidden($zpass_with_id_found_error, "zpass_{$grade}_not_found", "zpass $grade ID not found in student list");
+	$id_found_error_file = error_file_path($data_dir, $grade, "not_in_list");
+	export_data_as_excel($zpass_with_id_found_error, $id_found_error_file, 'error: ID not in list');
 
 	$zpass_split_id_day = zpass_grouped_by_ID_and_day($data_month, $grade);
 	show_array_hidden($zpass_split_id_day, "zpass_{$grade}_split", "zpass $grade split by ID and day");

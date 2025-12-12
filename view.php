@@ -83,11 +83,20 @@ if ($import_files) {
 }
 # else don't show this section
 
-if ($export_files) {
+if ($export_files or $error_files) {
 	?>
 <h2>Files produced by Ridership system:</h2>
 <table border="1">
 	<?php
+	if ($export_files) {
+		?>
+	<tr>
+		<td colspan="2" style="font-weight: bold; text-align: center;">
+			Export Files
+		</td>
+	</tr>
+		<?php
+	}
 	foreach ($export_files as $full_path) {
 		$basename = basename($full_path);
 		?>
