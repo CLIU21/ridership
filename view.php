@@ -40,18 +40,24 @@ $import_files = array_filter($file_paths, 'is_import_path');
 $export_files = array_filter($file_paths, 'is_export_path');
 $other_files = array_filter($file_paths, 'is_other_path');
 
-$count_iep_EI = count_iep_records($data_month, 'EI', 1);
-$count_iep_SA = count_iep_records($data_month, 'SA', 1);
-$count_ridership = count_ridership_records($data_month, 1);
+$uploaded_data = [
+	'SSG records: EI' => count_iep_records($data_month, 'EI', 1),
+	'SSG records: SA' => count_iep_records($data_month, 'SA', 1),
+	'ZPASS records' => count_ridership_records($data_month, 1),
+];
 ?>
 
 <h2>Data uploaded by user:</h2>
 <?php
 ?>
 <table border="1">
-	<tr><td style="font-weight: bold;">SSG records: EI</td><td><?=$count_iep_EI?></td></tr>
-	<tr><td style="font-weight: bold;">SSG records: SA</td><td><?=$count_iep_SA?></td></tr>
-	<tr><td style="font-weight: bold;">ZPASS records</td><td><?=$count_ridership?></td></tr>
+<?php
+foreach ($uploaded_data as $label => $value) {
+	?>
+	<tr><td style="font-weight: bold;"><?=$label?></td><td><?=$value?></td></tr>
+	<?php
+}
+?>
 </table>
 <?php
 ?>
