@@ -45,29 +45,30 @@ $uploaded_data = [
 	'SSG records: SA' => count_iep_records($data_month, 'SA', 1),
 	'ZPASS records' => count_ridership_records($data_month, 1),
 ];
-?>
 
+$checksum = array_sum($uploaded_data);
+if ($checksum) {
+	?>
 <h2>Data uploaded by user:</h2>
-<?php
-?>
 <table border="1">
-<?php
-foreach ($uploaded_data as $label => $value) {
+	<?php
+	foreach ($uploaded_data as $label => $value) {
 	?>
 	<tr><td style="font-weight: bold;"><?=$label?></td><td><?=$value?></td></tr>
 	<?php
 }
-?>
+	?>
 </table>
-<?php
-?>
+	<?php
+}
+# else don't show this section
 
+if ($import_files) {
+	?>
 <h2>Files uploaded by user, from ZPass and SSG:</h2>
-<?php
-?>
 <table border="1">
-<?php
-foreach ($import_files as $full_path) {
+	<?php
+	foreach ($import_files as $full_path) {
 	$basename = basename($full_path);
 	?>
 	<tr>
@@ -78,20 +79,20 @@ foreach ($import_files as $full_path) {
 	</tr>
 	<?php
 }
-?>
-</table>
-<?php
-?>
-
-<h2>Files produced by Ridership system:</h2>
-<?php
-?>
-<table border="1">
-<?php
-
-foreach ($export_files as $full_path) {
-	$basename = basename($full_path);
 	?>
+</table>
+	<?php
+}
+# else don't show this section
+
+if ($export_files) {
+	?>
+<h2>Files produced by Ridership system:</h2>
+<table border="1">
+	<?php
+	foreach ($export_files as $full_path) {
+		$basename = basename($full_path);
+		?>
 	<tr>
 		<td>
 			<!-- <a href="view.php?data_month=<?=$basename?>"><?=$basename?></a> -->
@@ -105,18 +106,17 @@ foreach ($export_files as $full_path) {
 	</tr>
 	<?php
 }
-?>
+	?>
 </table>
-<?php
-?>
+	<?php
+}
+# else don't show this section
 
-<?php
 if ($other_files) {
 	?>
 <h2>Other (unknown) files:</h2>
 <table border="1">
 	<?php
-
 	foreach ($other_files as $full_path) {
 		$basename = basename($full_path);
 		?>
