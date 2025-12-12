@@ -11,6 +11,12 @@ foreach ($file_labels_import as $file_id => $file_label) {
 	$file_paths_import[$file_id] = $real_name;
 }
 
+$file_paths_import_done = [];
+foreach ($file_labels_import as $file_id => $file_label) {
+	$real_name = "$data_dir/{$file_id}_done.xlsx";
+	$file_paths_import_done[$file_id] = $real_name;
+}
+
 $files_missing = [];
 foreach ($file_labels_import as $file_id => $file_label) {
 	$file_path = $file_paths_import[$file_id] ?? "";
@@ -29,3 +35,9 @@ function is_import_path($full_path) {
 	global $file_paths_import;
 	return in_array($full_path, $file_paths_import);
 }
+
+function is_done_path($full_path) {
+	global $file_paths_import_done;
+	return in_array($full_path, $file_paths_import_done);
+}
+
