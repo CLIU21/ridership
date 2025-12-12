@@ -14,7 +14,7 @@ function is_visible_file($basename) {
 	return (! is_hidden_file($basename));
 }
 
-$files = scandir($data_dir, SCANDIR_SORT_ASCENDING);
+$files = scandir($data_dir);
 $files = array_filter($files, 'is_visible_file');
 
 function is_other_path($full_path) {
