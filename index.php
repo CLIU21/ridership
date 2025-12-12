@@ -35,8 +35,6 @@ function all_available_data_month_in_dir() {
 
 $data_months_available_db = all_available_data_month_in_db();
 $data_months_available_dir = all_available_data_month_in_dir();
-
-
 ?>
 
 <h2>Or, choose a past report to revisit:</h2>
