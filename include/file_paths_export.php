@@ -11,6 +11,7 @@ function get_grade_name($grade) {
 	$grade_lookup = [
 		'EI' => 'etr',
 		'SA' => 'tr',
+		'COUNTS' => 'COUNTS',
 	];
 	$grade_name = $grade_lookup[$grade] ?? "";
 	if (! $grade_name) {
@@ -29,7 +30,7 @@ function export_file_path($data_dir, $grade, $i) {
 
 function is_export_path($full_path) {
 	$basename = basename($full_path);
-	return preg_match('/^[0-9]+_Ridership_(etr|tr)_part_[0-9]+[.]xlsx$/', $basename);
+	return preg_match('/^[0-9]+_Ridership_(etr|tr|COUNTS)_part_[0-9]+[.]xlsx$/', $basename);
 }
 
 function error_file_path($data_dir, $grade, $error_type) {

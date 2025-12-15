@@ -37,6 +37,11 @@ show_array_hidden($zpass_split_error, 'zpass_err', 'zpass ERROR no Grade (EI/SA)
 $split_error_file = error_file_path($data_dir, '', "no_grade");
 export_data_as_excel($zpass_split_error, $split_error_file, 'error: no Grade');
 
+$zpass_counts_for_email = zpass_counts_for_email($data_month);
+show_array_hidden($zpass_counts_for_email, 'zpass_counts', 'zpass counts for email');
+$counts_for_email_file = export_file_path($data_dir, "COUNTS", 0);
+export_data_as_excel($zpass_counts_for_email, $counts_for_email_file, 'counts for email');
+
 # Changed per Robin Miller's instruction; PAID changed
 $student_id_replacements = [
 	3153276528 => 5623149936,

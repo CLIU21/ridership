@@ -364,6 +364,32 @@ function zpass_grouped_by_ID_and_day($data_month, $service_type) {
 	return $answer;
 }
 
+function zpass_counts_for_email($data_month) {
+	global $mysqli;
+
+	$sql = "SELECT data_month, service_type, service_name, service_code
+			, students_count, trip_multiplier
+			, (students_count * trip_multiplier) as effective_trips
+				FROM (
+				SELECT data_month, service_type, service_name, service_code
+				, count(student_id) AS students_count
+				, IF(service_name = 'RoundTrip', 2, 1) AS trip_multiplier
+				FROM ridership_data_view_trips as R
+				WHERE data_month = ?
+				GROUP BY data_month, service_type, service_name, service_code
+			) AS C
+			";
+	$stmt = $mysqli->prepare($sql);
+	$stmt->bind_param("s", $data_month);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$header = column_names_for_result($result);
+	$body = $result->fetch_all(MYSQLI_NUM);
+	$answer = array_merge([$header], $body);
+
+	return $answer;
+}
+
 function zpass_data_for_export($data_month, $service_type, $constants) {
 	global $mysqli;
 
