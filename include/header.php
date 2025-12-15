@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Ridership</title>
-	<script src="/js/ridership.js" type="text/javascript"></script>
+	<script src="./js/ridership.js" type="text/javascript"></script>
 </head>
 <body>
 <h1>Ridership Report</h1>
