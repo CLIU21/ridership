@@ -1,6 +1,7 @@
 {
     "require": {
         "shuchkin/simplexlsx": "^1.1",
-        "avadim/fast-excel-writer": "^6.8"
+        "avadim/fast-excel-writer": "^6.8",
+        "phpmailer/phpmailer": "^7.0"
     }
 }
