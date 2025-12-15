@@ -324,9 +324,11 @@ function zpass_error_no_ID($data_month, $service_type) {
 function zpass_error_ID_not_found($data_month, $service_type) {
 	global $mysqli;
 
-	// scan_hours is also available if desired
-	$sql = "SELECT last_name, first_name, card_number, scan_day, scan_time, student_id, district, service_type
-			FROM ridership_data_view_has_iep
+	// diff_hours is also available if desired
+	$sql = "SELECT last_name, first_name, scan_day
+			, service_name, service_code, record_count
+			, student_id, district, service_type
+			FROM ridership_data_view_check_iep
 			WHERE has_iep = 0
 			AND data_month = ?
 			AND service_type = ?";
