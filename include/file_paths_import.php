@@ -1,8 +1,8 @@
 <?php
 $file_labels_import = [
 	'ZPASS' => 'Zpass File',
-	'EI_IEP' => 'Early Intervention IPE data',
-	'SA_IEP' => 'School-Age IPE data',
+	'EI_IEP' => 'Early Intervention IEP data',
+	'SA_IEP' => 'School-Age IEP data',
 ];
 
 $file_paths_import = [];
