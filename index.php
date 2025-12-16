@@ -1,5 +1,5 @@
 <?php
-require_once "include/az.php";
+// header.php must be BEFORE any other output to browser:
 require_once "include/header.php";
 
 require_once "include/mysql_ridership_functions.php";

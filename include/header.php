@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<?php
+// az.php must be BEFORE any other output to browser:
+require_once "include/az.php";
+?><!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
