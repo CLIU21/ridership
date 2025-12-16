@@ -46,7 +46,7 @@ $checksum = array_sum($uploaded_data);
 if ($checksum) {
 	?>
 <h2>Data uploaded by user:</h2>
-<table border="1">
+<table class="bordered">
 	<?php
 	foreach ($uploaded_data as $file_id => $value) {
 		$label = $file_labels_import[$file_id];
