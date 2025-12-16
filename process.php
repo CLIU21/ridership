@@ -6,6 +6,13 @@ require_once "include/header.php";
 // (3153276528 -> 5623149936   # Changed per Robin Miller's instruction; PAID changed)
 // and it's unclear whether this needs to happen *prior* to
 // looking each student up in the Medicare files or *afterwards*.
+// Currently, we aren't doing it at all, pending the next student
+// who has this issue.
+
+# Changed per Robin Miller's instruction; PAID changed
+$student_id_replacements = [
+	3153276528 => 5623149936,
+];
 
 require_once "include/data_month_required.php";
 require_once "include/user_name_required.php";
@@ -43,11 +50,6 @@ show_array_hidden($zpass_counts_for_email, 'zpass_counts', 'zpass counts for ema
 $counts_for_email_file = export_file_path($data_dir, "COUNTS", 0);
 export_data_as_excel($zpass_counts_for_email, $counts_for_email_file, 'counts for email');
 send_count_email($counts_for_email_file);
-
-# Changed per Robin Miller's instruction; PAID changed
-$student_id_replacements = [
-	3153276528 => 5623149936,
-];
 
 foreach (['EI', 'SA'] as $grade) {
 	echo "<hr />\n";
