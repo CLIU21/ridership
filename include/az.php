@@ -18,6 +18,8 @@ if ($_SERVER["SERVER_NAME"] == "localhost") {
 }
 
 if (! ($_SESSION["az_user_data"]["userPrincipalName"] ?? "")) {
+	// echo "DEBUG: _SESSION<pre>"; print_r($_SESSION); echo "</pre>\n";
+	// javascript_header("Location: https://ridership.cliu.org/az_auth.php", 60);
 	header("Location: https://ridership.cliu.org/az_auth.php");
 	die();
 }
@@ -33,4 +35,5 @@ if ($_SERVER["HTTPS"] != "on") {
 	}
 
 	header($pageURL);
+	die();
 }

@@ -115,9 +115,14 @@ if (!isset($_GET["code"]) and !isset($_GET["error"])) {  //Real authentication p
   $_SESSION["az_user_data"] = $userdata;
   //$_SESSION["az_group_data"] = $groupdata;
   $_SESSION["az_groups"] = $az_groups;
+
+  // echo "DEBUG: az_user_data<pre>"; print_r($userdata); echo "</pre>\n";
+  // echo "DEBUG: az_groups<pre>"; print_r($az_groups); echo "</pre>\n";
+  // javascript_header("Location: " . $landing_url, 60);
   
   //mail($error_email, $site_url . " error", "az_auth.php data: \r\n" . print_r($userdata, true));
   header("Location: " . $landing_url);
+  die();
   }
 } else {
   //If we end up here, something has obviously gone wrong... Likely a hacking attempt since sent and returned state aren't matching and no $_GET["error"] received.

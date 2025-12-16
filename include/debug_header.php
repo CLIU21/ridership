@@ -2,7 +2,9 @@
 
 namespace FakeDebugHeader;
 
-function header($header) {
+function header($header) { javascript_header($header); }
+
+function javascript_header($header, $seconds=5) {
 	$pieces = explode(' ', $header);
 	if (count($pieces) != 2) {
 		echo "<h1>DEBUG header() ignored [!=2]</h1>\n";
@@ -15,7 +17,6 @@ function header($header) {
 		echo "<h2>DEBUG $header</h2>\n";
 		return;
 	}
-	$seconds = 2;
 	echo "<h1>DEBUG header() sent: redirecting in $seconds seconds</h1>\n";
 	echo "<h2>DEBUG $header</h2>\n";
 	?>
