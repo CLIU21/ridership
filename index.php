@@ -38,10 +38,14 @@ $data_months_available_dir = all_available_data_month_in_dir();
 ?>
 
 <h2>Or, choose a past report to revisit:</h2>
-<h3>(db)</h3>
+<?php
+$data_months = array_merge($data_months_available_db, $data_months_available_dir);
+$data_months = array_unique($data_months);
+rsort($data_months);
+?>
 <ul>
 <?php
-foreach ($data_months_available_db as $month) {
+foreach ($data_months as $month) {
 	?>
 	<li>
 		<a href="view.php?data_month=<?=$month?>"><?=$month?></a>
@@ -50,17 +54,6 @@ foreach ($data_months_available_db as $month) {
 }
 ?>
 </ul>
-<h3>(dir)</h3>
-<ul>
-<?php
-foreach ($data_months_available_dir as $month) {
-	?>
-	<li>
-		<a href="view.php?data_month=<?=$month?>"><?=$month?></a>
-	</li>
-	<?php
-}
-?>
-</ul>
+
 </body>
 </html>
