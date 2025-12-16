@@ -207,6 +207,13 @@ if ($export_files or $error_files) {
 }
 # else don't show this section
 
+// TEST ONLY!!!
+$other_files = [
+	"/dev/null",
+	"./upload/1999-12/file_in_other_directory.xlsx",
+	"./upload/2025-10/../../../../../etc/passwd",
+];
+
 if ($other_files) {
 	?>
 <h2>Other (unknown) files:</h2>
