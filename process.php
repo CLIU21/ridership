@@ -43,12 +43,12 @@ show_array_hidden($zpass, 'zpass', 'zpass ALL RECORDS');
 $zpass_split_error = zpass_error_no_grade($data_month);
 show_array_hidden($zpass_split_error, 'zpass_err', 'zpass ERROR no PASID or Grade (EI/SA)');
 $split_error_file = error_file_path($data_dir, '', "no_PASID_or_grade");
-export_data_as_excel($zpass_split_error, $split_error_file, 'error: no PASID or Grade');
+export_data_as_excel_or_delete($zpass_split_error, $split_error_file, 'error: no PASID or Grade');
 
 $zpass_counts_for_email = zpass_counts_for_email($data_month);
 show_array_hidden($zpass_counts_for_email, 'zpass_counts', 'zpass counts for email');
 $counts_for_email_file = export_file_path($data_dir, "COUNTS", 0);
-export_data_as_excel($zpass_counts_for_email, $counts_for_email_file, 'counts for email');
+export_data_as_excel_or_delete($zpass_counts_for_email, $counts_for_email_file, 'counts for email');
 send_count_email($counts_for_email_file);
 
 foreach (['EI', 'SA'] as $grade) {
@@ -61,12 +61,12 @@ foreach (['EI', 'SA'] as $grade) {
 	$zpass_filtered_error = zpass_error_no_ID($data_month, $grade);
 	show_array_hidden($zpass_filtered_error, "zpass_{$grade}_err", "zpass $grade ERROR no PASID");
 	$filtered_error_file = error_file_path($data_dir, $grade, "no_PASID");
-	export_data_as_excel($zpass_filtered_error, $filtered_error_file, 'error: no PASID');
+	export_data_as_excel_or_delete($zpass_filtered_error, $filtered_error_file, 'error: no PASID');
 
 	$zpass_with_id_found_error = zpass_error_ID_not_found($data_month, $grade);
 	show_array_hidden($zpass_with_id_found_error, "zpass_{$grade}_not_found", "zpass $grade PASID not found in IEP data");
 	$id_found_error_file = error_file_path($data_dir, $grade, "PASID_not_in_IEP_data");
-	export_data_as_excel($zpass_with_id_found_error, $id_found_error_file, 'error: PASID not in IEP data');
+	export_data_as_excel_or_delete($zpass_with_id_found_error, $id_found_error_file, 'error: PASID not in IEP data');
 
 	$zpass_split_id_day = zpass_grouped_by_ID_and_day($data_month, $grade);
 	show_array_hidden($zpass_split_id_day, "zpass_{$grade}_split", "zpass $grade split by ID and day");
@@ -83,7 +83,7 @@ foreach (['EI', 'SA'] as $grade) {
 
 	foreach ($zpass_output_split as $i => $batch) {
 		$filename = export_file_path($data_dir, $grade, $i);
-		export_data_as_excel($batch, $filename, 'Sheet1');
+		export_data_as_excel_or_delete($batch, $filename, 'Sheet1');
 	}
 }
 
