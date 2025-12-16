@@ -14,9 +14,9 @@ require_once "include/mysql_ridership_functions.php";
 require_once "include/zpass_data_conversion.php";
 require_once "include/excel_read.php";
 
-echo "_GET:"; echo "<pre>"; print_r($_GET); echo "</pre>";
-echo "_POST:"; echo "<pre>"; print_r($_POST); echo "</pre>";
-echo "_FILES:"; echo "<pre>"; print_r($_FILES); echo "</pre>";
+// echo "_GET:"; echo "<pre>"; print_r($_GET); echo "</pre>";
+// echo "_POST:"; echo "<pre>"; print_r($_POST); echo "</pre>";
+// echo "_FILES:"; echo "<pre>"; print_r($_FILES); echo "</pre>";
 
 # handle uploaded files:
 foreach ($file_labels_import as $file_id => $file_label) {
