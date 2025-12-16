@@ -34,9 +34,9 @@ $zpass = query_ridership_records($data_month);
 show_array_hidden($zpass, 'zpass', 'zpass ALL RECORDS');
 
 $zpass_split_error = zpass_error_no_grade($data_month);
-show_array_hidden($zpass_split_error, 'zpass_err', 'zpass ERROR no Grade (EI/SA)');
-$split_error_file = error_file_path($data_dir, '', "no_grade");
-export_data_as_excel($zpass_split_error, $split_error_file, 'error: no Grade');
+show_array_hidden($zpass_split_error, 'zpass_err', 'zpass ERROR no PASID or Grade (EI/SA)');
+$split_error_file = error_file_path($data_dir, '', "no_PASID_or_grade");
+export_data_as_excel($zpass_split_error, $split_error_file, 'error: no PASID or Grade');
 
 $zpass_counts_for_email = zpass_counts_for_email($data_month);
 show_array_hidden($zpass_counts_for_email, 'zpass_counts', 'zpass counts for email');
@@ -57,14 +57,14 @@ foreach (['EI', 'SA'] as $grade) {
 	show_array_hidden($zpass_students, "students_{$grade}", "students $grade");
 
 	$zpass_filtered_error = zpass_error_no_ID($data_month, $grade);
-	show_array_hidden($zpass_filtered_error, "zpass_{$grade}_err", "zpass $grade ERROR no ID");
-	$filtered_error_file = error_file_path($data_dir, $grade, "no_ID");
-	export_data_as_excel($zpass_filtered_error, $filtered_error_file, 'error: no ID');
+	show_array_hidden($zpass_filtered_error, "zpass_{$grade}_err", "zpass $grade ERROR no PASID");
+	$filtered_error_file = error_file_path($data_dir, $grade, "no_PASID");
+	export_data_as_excel($zpass_filtered_error, $filtered_error_file, 'error: no PASID');
 
 	$zpass_with_id_found_error = zpass_error_ID_not_found($data_month, $grade);
-	show_array_hidden($zpass_with_id_found_error, "zpass_{$grade}_not_found", "zpass $grade ID not found in student list");
-	$id_found_error_file = error_file_path($data_dir, $grade, "not_in_list");
-	export_data_as_excel($zpass_with_id_found_error, $id_found_error_file, 'error: ID not in list');
+	show_array_hidden($zpass_with_id_found_error, "zpass_{$grade}_not_found", "zpass $grade PASID not found in IEP data");
+	$id_found_error_file = error_file_path($data_dir, $grade, "PASID_not_in_IEP_data");
+	export_data_as_excel($zpass_with_id_found_error, $id_found_error_file, 'error: PASID not in IEP data');
 
 	$zpass_split_id_day = zpass_grouped_by_ID_and_day($data_month, $grade);
 	show_array_hidden($zpass_split_id_day, "zpass_{$grade}_split", "zpass $grade split by ID and day");
