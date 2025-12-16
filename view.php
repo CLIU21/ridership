@@ -18,6 +18,44 @@ if ($allow_delete) {
 	File deletion allowed: see below
 </h2>
 	<?php
+	$delete = $_POST['delete'] ?? [];
+	if ($delete) {
+		$delete = array_map('urldecode', $delete);
+		echo "DEBUG: delete<pre>"; print_r($delete); echo "</pre>\n";
+		?>
+		<h2 style="color: orange;">
+			Deleting files:
+		</h2>
+		<?php
+		foreach ($delete as $file_path) {
+			$directory = dirname($file_path);
+			if ($directory == $data_dir) {
+				?>
+				<h3 style="color: orange;">
+					Deleting file <?=$file_path?>:
+				<?php
+				unlink($file_path);
+				if (file_exists($file_path)) {
+					?>
+					<span style="color: red; ">FAILED</span>
+					<?php
+				} else {
+					?>
+					<span style="color: green; ">success</span>
+					<?php
+				}
+				?>
+				</h3>
+			<?php
+			} else {
+				?>
+				<h3 style="color: red;">
+					ERROR: invalid file <?=$file_path?> will not be deleted.
+				</h3>
+				<?php
+			}
+		}
+	}
 }
 
 function is_visible_file($basename) {
@@ -107,7 +145,7 @@ function show_files_list_tr_td($filename_list, $allow_delete, $allow_download, $
 			DOWNLOAD:
 			<a href="<?=$full_path?>" download>
 				<img
-					src="./image/down-arrow-svgrepo-com.svg"
+					src="./image/arrow-circle-down.svg"
 					alt="Download"
 					title="Download"
 				/>
