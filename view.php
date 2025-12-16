@@ -11,6 +11,9 @@ require_once "include/file_paths_export.php";
 
 require_once "include/mysql_ridership_functions.php";
 
+// echo "DEBUG: _GET<pre>"; print_r($_GET); echo "</pre>\n";
+// echo "DEBUG: _POST<pre>"; print_r($_POST); echo "</pre>\n";
+
 $allow_delete = $_POST['allow_delete'] ?? $_GET['allow_delete'] ?? "";
 if ($allow_delete) {
 	?>
