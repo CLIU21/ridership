@@ -60,51 +60,76 @@ if ($checksum) {
 }
 # else don't show this section
 
+if ($allow_delete) {
+	?>
+<!-- a form with no "action" tag posts back to the current page -->
+<form method="post">
+<?php
+}
+
+function show_files_list_tr_td($filename_list, $allow_delete, $allow_download, $header_text) {
+	if ($filename_list) {
+		$width = 1;
+		if ($allow_delete) {
+			$width++;
+		}
+		if ($allow_download) {
+			$width++;
+		}
+		?>
+	<tr>
+		<td colspan="<?=$width?>" style="font-weight: bold; text-align: center;">
+			<?=$header_text?>
+		</td>
+	</tr>
+		<?php
+	}
+	foreach ($filename_list as $full_path) {
+		$basename = basename($full_path);
+		?>
+	<tr>
+		<td>
+			<?=$basename?>
+		</td>
+		<?php
+		if ($allow_download) {
+			?>
+		<td>
+			DOWNLOAD:
+			<a href="<?=$full_path?>" download>
+				<img
+					src="./image/down-arrow-svgrepo-com.svg"
+					alt="Download"
+					title="Download"
+				/>
+			</a>
+		</td>
+			<?php
+		}
+		if ($allow_delete) {
+			?>
+		<td>
+			<span style="color: orange; font-weight: bold;">
+				DELETE:
+			</span>
+		    <input type="checkbox" name="delete[]" value="<?=urlencode($full_path)?>">
+		</td>
+			<?php
+		}
+		?>
+	</tr>
+		<?php
+	}
+}
+
 if ($import_files or $done_files) {
 	?>
 <h2>Files uploaded by user, from ZPass and SSG:</h2>
-<table border="1">
+<table class="bordered">
 	<?php
-	if ($import_files) {
-		?>
-	<tr>
-		<td colspan="2" style="font-weight: bold; text-align: center;">
-			Files Available for Import
-		</td>
-	</tr>
-		<?php
-	}
-	foreach ($import_files as $full_path) {
-		$basename = basename($full_path);
-		?>
-	<tr>
-		<td>
-			<!-- <a href="view.php?data_month=<?=$basename?>"><?=$basename?></a> -->
-			<?=$basename?>
-		</td>
-	</tr>
-		<?php
-	}
-	if ($done_files) {
-		?>
-	<tr>
-		<td colspan="2" style="font-weight: bold; text-align: center;">
-			Files Successfully Imported
-		</td>
-	</tr>
-		<?php
-	}
-	foreach ($done_files as $full_path) {
-		$basename = basename($full_path);
-		?>
-	<tr>
-		<td>
-			<!-- <a href="view.php?data_month=<?=$basename?>"><?=$basename?></a> -->
-			<?=$basename?>
-		</td>
-	</tr>
-		<?php
-	}
+	$allow_download = 0;
+	show_files_list_tr_td($import_files, $allow_delete, $allow_download, 'Files Available for Import');
+	show_files_list_tr_td($done_files, $allow_delete, $allow_download, 'Files Successfully Imported');
 	?>
 </table>
 	<?php
@@ -114,58 +139,11 @@ if ($import_files or $done_files) {
 if ($export_files or $error_files) {
 	?>
 <h2>Files produced by Ridership system:</h2>
-<table border="1">
+<table class="bordered">
 	<?php
-	if ($export_files) {
-		?>
-	<tr>
-		<td colspan="2" style="font-weight: bold; text-align: center;">
-			Export Files
-		</td>
-	</tr>
-		<?php
-	}
-	foreach ($export_files as $full_path) {
-		$basename = basename($full_path);
-		?>
-	<tr>
-		<td>
-			<!-- <a href="view.php?data_month=<?=$basename?>"><?=$basename?></a> -->
-			<?=$basename?>
-		</td>
-		<td>
-			<a href="<?=$full_path?>" download>
-				<button>Download</button>
-			</a>
-		</td>
-	</tr>
-		<?php
-	}
-	if ($error_files) {
-		?>
-	<tr>
-		<td colspan="2" style="font-weight: bold; text-align: center;">
-			Error Files
-		</td>
-	</tr>
-		<?php
-	}
-	foreach ($error_files as $full_path) {
-		$basename = basename($full_path);
-		?>
-	<tr>
-		<td>
-			<!-- <a href="view.php?data_month=<?=$basename?>"><?=$basename?></a> -->
-			<?=$basename?>
-		</td>
-		<td>
-			<a href="<?=$full_path?>" download>
-				<button>Download</button>
-			</a>
-		</td>
-	</tr>
-		<?php
-	}
+	$allow_download = 1;
+	show_files_list_tr_td($export_files, $allow_delete, $allow_download, 'Export Files');
+	show_files_list_tr_td($error_files, $allow_delete, $allow_download, 'Error Files');
 	?>
 </table>
 	<?php
@@ -175,18 +153,10 @@ if ($export_files or $error_files) {
 if ($other_files) {
 	?>
 <h2>Other (unknown) files:</h2>
-<table border="1">
+<table class="bordered">
 	<?php
-	foreach ($other_files as $full_path) {
-		$basename = basename($full_path);
-		?>
-	<tr>
-		<td>
-			<?=$basename?>
-		</td>
-	</tr>
-		<?php
-	}
+	$allow_download = 0;
+	show_files_list_tr_td($other_files, $allow_delete, $allow_download, '');
 	?>
 </table>
 	<?php
@@ -194,7 +164,26 @@ if ($other_files) {
 # else don't show this section
 ?>
 
-<h2><a href="upload.php?data_month=<?=$data_month?>&user_name=<?=$user_name?>">Upload some files</a></h2>
+<h2>
+	<a href="upload.php?data_month=<?=$data_month?>&user_name=<?=$user_name?>">Upload some files</a>
+</h2>
+
+<?php
+if ($allow_delete) {
+	?>
+    <input type="submit" name="submit" value="Confirm Delete">
+</form>
+<?php
+} else {
+	?>
+<h2>
+	To upload replacement data:
+	<a href="?allow_delete=1&data_month=<?=$data_month?>&user_name=<?=$user_name?>">Allow file deletion</a>
+</h2>
+	<?php
+}
+?>
+
 <?php
 if ($import_files) {
 	?>
