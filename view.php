@@ -30,6 +30,14 @@ if ($allow_delete) {
 		foreach ($delete as $file_path) {
 			$directory = dirname($file_path);
 			if ($directory == $data_dir) {
+				if (! file_exists($file_path)) {
+					?>
+				<h3 style="color: orange;">
+					File <?=$file_path?> already deleted
+				</h3>
+					<?php
+					continue;
+				}
 				?>
 				<h3 style="color: orange;">
 					Deleting file <?=$file_path?>:
