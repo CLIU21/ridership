@@ -49,7 +49,7 @@ $zpass_counts_for_email = zpass_counts_for_email($data_month);
 show_array_hidden($zpass_counts_for_email, 'zpass_counts', 'zpass counts for email');
 $counts_for_email_file = export_file_path($data_dir, "COUNTS", 0);
 export_data_as_excel_or_delete($zpass_counts_for_email, $counts_for_email_file, 'counts for email');
-send_count_email($counts_for_email_file);
+// send_count_email($counts_for_email_file);
 
 foreach (['EI', 'SA'] as $grade) {
 	echo "<hr />\n";
