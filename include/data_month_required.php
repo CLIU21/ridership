@@ -11,12 +11,12 @@ if (! $data_month) {
 
 if ($error_message) {
 	?>
-	<h2 style='color:red'>Error: <?=$error_message?></h2>
+	<h2 class="error">Error: <?=$error_message?></h2>
 	Please <a href="index.php">choose a data month for the report</a>
 	<?php
 	exit();
 } else {
 	?>
-	<h2 style='color:green'>Month for data: <?=$data_month?></h2>
+	<h2 class="success">Month for data: <?=$data_month?></h2>
 	<?php
 }
