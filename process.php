@@ -41,6 +41,7 @@ $zpass_counts_for_email = zpass_counts_for_email($data_month);
 show_array_hidden($zpass_counts_for_email, 'zpass_counts', 'zpass counts for email');
 $counts_for_email_file = export_file_path($data_dir, "COUNTS", 0);
 export_data_as_excel($zpass_counts_for_email, $counts_for_email_file, 'counts for email');
+send_count_email($counts_for_email_file);
 
 # Changed per Robin Miller's instruction; PAID changed
 $student_id_replacements = [
