@@ -69,7 +69,7 @@ foreach ($file_labels_import as $file_id => $file_label) {
 				$zpass_students = extract_studentIDs($zpass_students_data);
 				show_array_hidden($zpass_students, "students_{$grade}", "students $grade");
 				$overwrite = true;
-				insert_iep_records_w_overwrite($data_month, $grade, $zpass_students, $overwrite);
+				insert_iep_records_w_header($data_month, $grade, $zpass_students, $overwrite);
 				break;
 
 			case 'SA_IEP':
@@ -78,7 +78,7 @@ foreach ($file_labels_import as $file_id => $file_label) {
 				$zpass_students = extract_studentIDs($zpass_students_data);
 				show_array_hidden($zpass_students, "students_{$grade}", "students $grade");
 				$overwrite = true;
-				insert_iep_records_w_overwrite($data_month, $grade, $zpass_students, $overwrite);
+				insert_iep_records_w_header($data_month, $grade, $zpass_students, $overwrite);
 				break;
 
 			default:

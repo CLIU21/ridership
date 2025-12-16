@@ -43,7 +43,7 @@ function count_iep_records($data_month, $service_type, $active_status) {
 function query_iep_records($data_month, $service_type) {
 	global $mysqli;
 
-	$sql = "SELECT COUNT(*) as num
+	$sql = "SELECT student_id
 			FROM iep_data
 			WHERE data_month = ? and service_type = ? and is_active = 1";
 	$stmt = $mysqli->prepare($sql);
@@ -107,7 +107,18 @@ function activate_iep_records($data_month, $service_type) {
 	return $total_updates;
 }
 
-function insert_iep_records_w_overwrite($data_month, $service_type, $student_array, $overwrite=False) {
+function insert_iep_records_w_header($data_month, $service_type, $student_data_w_header, $overwrite=False) {
+	list($student_header, $student_body) = header_and_body($student_data_w_header);
+
+	//	Header should contain:
+	$expected_header = 'Student ID';
+	if ($student_header != $expected_header) {
+		echo "ERROR: header is incorrect!<br/>\n";
+		echo "actual: "; print_r($student_header); echo "<br/>\n";
+		echo "expected: "; print_r($expected_header); echo "<br/>\n";
+		exit();
+	}
+
 	if ($overwrite) {
 		$total_deletes = 0;
 		foreach ([0, 1] as $active_status) {
@@ -124,7 +135,7 @@ function insert_iep_records_w_overwrite($data_month, $service_type, $student_arr
 		}
 	}
 
-	$total_inserts = insert_iep_records($data_month, $service_type, $student_array);
+	$total_inserts = insert_iep_records($data_month, $service_type, $student_body);
 	echo "Inserted $total_inserts IEP records of type '$service_type'.<br />\n";
 
 	$total_updates = activate_iep_records($data_month, $service_type);
@@ -162,7 +173,15 @@ function count_ridership_records($data_month, $active_status) {
 function query_ridership_records($data_month) {
 	global $mysqli;
 
-	$sql = "SELECT COUNT(*) as num
+	$sql = "SELECT last_name
+			, first_name
+			, card_number
+			, scan_date
+			, scan_day
+			, scan_time
+			, scan_hours
+			, student_id
+			, district
 			FROM ridership_data
 			WHERE data_month = ? and is_active = 1";
 	$stmt = $mysqli->prepare($sql);
