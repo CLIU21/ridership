@@ -4,7 +4,7 @@
 require_once 'vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
-// use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 function send_count_email($filename) {

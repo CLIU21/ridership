@@ -22,6 +22,7 @@ require_once "include/excel_write.php";
 require_once "include/zpass_constants.php";
 
 require_once "include/mysql_ridership_functions.php";
+require_once "include/send_count_email.php";
 
 require_once "include/show_missing_files_and_exit.php";
 ?>
