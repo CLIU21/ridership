@@ -13,5 +13,7 @@ function export_data_as_excel($data, $filename, $sheetname='Sheet1') {
 		$sheet->writeRow($row, $rowOptions);
 	}
 	$excel->save($filename);
-	echo "<h2 style='color: green'>DEBUG: saved excel data to '$filename'</h2>\n";
+	?>
+	<h2 class="success">Saved Excel data to '<?=$filename?>'</h2>
+	<?php
 }
