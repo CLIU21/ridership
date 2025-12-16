@@ -15,7 +15,7 @@ function header($header) {
 		echo "<h2>DEBUG $header</h2>\n";
 		return;
 	}
-	$seconds = 30;
+	$seconds = 2;
 	echo "<h1>DEBUG header() sent: redirecting in $seconds seconds</h1>\n";
 	echo "<h2>DEBUG $header</h2>\n";
 	?>
