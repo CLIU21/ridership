@@ -11,6 +11,15 @@ require_once "include/file_paths_export.php";
 
 require_once "include/mysql_ridership_functions.php";
 
+$allow_delete = $_POST['allow_delete'] ?? $_GET['allow_delete'] ?? "";
+if ($allow_delete) {
+	?>
+<h2 style="color: orange;">
+	File deletion allowed: see below
+</h2>
+	<?php
+}
+
 function is_visible_file($basename) {
 	return (! is_hidden_file($basename));
 }
