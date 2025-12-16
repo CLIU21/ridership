@@ -102,6 +102,17 @@ $files_needed = [];
 ?>
 <br />
 <table class="bordered">
+	<tr>
+		<th class="strong right">
+			Data Type
+		</th>
+		<th class="strong">
+			Imported<br/>Records
+		</th>
+		<th class="strong">
+			Filename
+		</th>
+	</tr>
 	<!-- a form with no "action" tag posts back to the current page -->
 	<form method="post" enctype="multipart/form-data">
 		<input type="hidden" name="data_month" value="<?=$data_month?>">
