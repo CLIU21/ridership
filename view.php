@@ -66,6 +66,60 @@ if ($allow_delete) {
 	}
 }
 
+function show_files_list_tr_td($filename_list, $allow_delete, $allow_download, $header_text) {
+	if ($filename_list) {
+		$width = 1;
+		if ($allow_delete) {
+			$width++;
+		}
+		if ($allow_download) {
+			$width++;
+		}
+		?>
+	<tr>
+		<td colspan="<?=$width?>" style="font-weight: bold; text-align: center;">
+			<?=$header_text?>
+		</td>
+	</tr>
+		<?php
+	}
+	foreach ($filename_list as $full_path) {
+		$basename = basename($full_path);
+		?>
+	<tr>
+		<td>
+			<?=$basename?>
+		</td>
+		<?php
+		if ($allow_download) {
+			?>
+		<td>
+			<a href="<?=$full_path?>" download>
+				<img
+					src="./image/arrow-circle-down.svg"
+					alt="Download"
+					title="Download"
+				/>
+			</a>
+		</td>
+			<?php
+		}
+		if ($allow_delete) {
+			?>
+		<td>
+			<span style="color: orange; font-weight: bold;">
+				DELETE:
+			</span>
+		    <input type="checkbox" name="delete[]" value="<?=urlencode($full_path)?>">
+		</td>
+			<?php
+		}
+		?>
+	</tr>
+		<?php
+	}
+}
+
 function is_visible_file($basename) {
 	return (! is_hidden_file($basename));
 }
@@ -120,61 +174,6 @@ if ($allow_delete) {
 <!-- a form with no "action" tag posts back to the current page -->
 <form method="post">
 <?php
-}
-
-function show_files_list_tr_td($filename_list, $allow_delete, $allow_download, $header_text) {
-	if ($filename_list) {
-		$width = 1;
-		if ($allow_delete) {
-			$width++;
-		}
-		if ($allow_download) {
-			$width++;
-		}
-		?>
-	<tr>
-		<td colspan="<?=$width?>" style="font-weight: bold; text-align: center;">
-			<?=$header_text?>
-		</td>
-	</tr>
-		<?php
-	}
-	foreach ($filename_list as $full_path) {
-		$basename = basename($full_path);
-		?>
-	<tr>
-		<td>
-			<?=$basename?>
-		</td>
-		<?php
-		if ($allow_download) {
-			?>
-		<td>
-			DOWNLOAD:
-			<a href="<?=$full_path?>" download>
-				<img
-					src="./image/arrow-circle-down.svg"
-					alt="Download"
-					title="Download"
-				/>
-			</a>
-		</td>
-			<?php
-		}
-		if ($allow_delete) {
-			?>
-		<td>
-			<span style="color: orange; font-weight: bold;">
-				DELETE:
-			</span>
-		    <input type="checkbox" name="delete[]" value="<?=urlencode($full_path)?>">
-		</td>
-			<?php
-		}
-		?>
-	</tr>
-		<?php
-	}
 }
 
 if ($import_files or $done_files) {
