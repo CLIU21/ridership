@@ -37,9 +37,9 @@ foreach ($file_labels_import as $file_id => $file_label) {
 		$orig_name = $File['name'];
 		$real_name = $file_paths_import[$file_id];
 		echo "File '$file_id':<br />\n";
-		echo "... temp " . "'" . $tmp_name . "'" . "<br />\n";
-		echo "... orig " . "'" . $orig_name . "'" . "<br />\n";
-		echo "... filepath " . "'" . $real_name . "'" . "<br />\n";
+		// echo "... from " . "'" . $tmp_name . "'" . "<br />\n";
+		echo "... from " . "'" . $orig_name . "'" . "<br />\n";
+		echo "... to " . "'" . $real_name . "'" . "<br />\n";
 		if (move_uploaded_file($tmp_name, $real_name)) {
 			echo "==> MOVED<br />";
 		} else {
