@@ -17,7 +17,7 @@ require_once "include/mysql_ridership_functions.php";
 $allow_delete = $_POST['allow_delete'] ?? $_GET['allow_delete'] ?? "";
 if ($allow_delete) {
 	?>
-<h2 style="color: orange;">
+<h2 class="warning">
 	File deletion allowed: see below
 </h2>
 	<?php
@@ -26,7 +26,7 @@ if ($allow_delete) {
 		$delete = array_map('urldecode', $delete);
 		echo "DEBUG: delete<pre>"; print_r($delete); echo "</pre>\n";
 		?>
-		<h2 style="color: orange;">
+		<h2 class="warning">
 			Deleting files:
 		</h2>
 		<?php
@@ -35,24 +35,24 @@ if ($allow_delete) {
 			if ($directory == $data_dir) {
 				if (! file_exists($file_path)) {
 					?>
-				<h3 style="color: orange;">
+				<h3 class="warning">
 					File <?=$file_path?> already deleted
 				</h3>
 					<?php
 					continue;
 				}
 				?>
-				<h3 style="color: orange;">
+				<h3 class="warning">
 					Deleting file <?=$file_path?>:
 				<?php
 				unlink($file_path);
 				if (file_exists($file_path)) {
 					?>
-					<span style="color: red; ">FAILED</span>
+					<span class="error">FAILED</span>
 					<?php
 				} else {
 					?>
-					<span style="color: green; ">success</span>
+					<span class="success">success</span>
 					<?php
 				}
 				?>
@@ -60,7 +60,7 @@ if ($allow_delete) {
 			<?php
 			} else {
 				?>
-				<h3 style="color: red;">
+				<h3 class="error">
 					ERROR: invalid file <?=$file_path?> will not be deleted.
 				</h3>
 				<?php
@@ -81,9 +81,9 @@ function show_files_list_tr_td($filename_list, $allow_delete, $allow_download, $
 			}
 			?>
 	<tr>
-		<td colspan="<?=$width?>" style="font-weight: bold; text-align: center;">
+		<th colspan="<?=$width?>">
 			<?=$header_text?>
-		</td>
+		</th>
 	</tr>
 			<?php
 		}
@@ -111,8 +111,8 @@ function show_files_list_tr_td($filename_list, $allow_delete, $allow_download, $
 		}
 		if ($allow_delete) {
 			?>
-		<td>
-			<span style="color: orange; font-weight: bold;">
+		<td class="warning strong">
+			<span>
 				DELETE:
 			</span>
 		    <input type="checkbox" name="delete[]" value="<?=urlencode($full_path)?>">
@@ -165,7 +165,10 @@ if ($checksum) {
 	foreach ($uploaded_data as $file_id => $value) {
 		$label = $file_labels_import[$file_id];
 		?>
-	<tr><td style="font-weight: bold;"><?=$label?></td><td><?=$value?></td></tr>
+	<tr>
+		<td class="strong right"><?=$label?></td>
+		<td class="right"><?=$value?></td>
+	</tr>
 		<?php
 	}
 	?>

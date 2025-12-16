@@ -12,7 +12,7 @@ if (! $user_name) {
 
 if ($error_message) {
 	?>
-	<h2 style='color:red'>Error: <?=$error_message?></h2>
+	<h2 class="error">Error: <?=$error_message?></h2>
 <table>
 	<!-- a form with no "action" tag posts back to the current page -->
 	<form method="get">
@@ -25,6 +25,6 @@ if ($error_message) {
 	exit();
 } else {
 	?>
-	<h2 style='color:green'>Your SSG Username: <?=$user_name?></h2>
+	<h2 class="success">Your SSG Username: <?=$user_name?></h2>
 	<?php
 }

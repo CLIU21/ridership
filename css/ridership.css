@@ -1,6 +1,36 @@
 table.bordered {
    border-collapse: collapse;
 }
-table.bordered td,  table.bordered th {
+
+table.bordered td, table.bordered th {
    border: 2px solid black;
+}
+
+table.bordered th {
+   font-weight: bold;
+   text-align: center;
+}
+
+table.bordered td.strong {
+   font-weight: bold;
+}
+
+table.bordered td.center {
+   text-align: center;
+}
+
+table.bordered td.right {
+   text-align: right;
+}
+
+.error {
+   color: red;
+}
+
+.warning {
+   color: orange;
+}
+
+.success {
+   color: green;
 }

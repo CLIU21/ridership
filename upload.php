@@ -100,7 +100,8 @@ $uploaded_data = uploaded_data_with_labels($data_month);
 
 $files_needed = [];
 ?>
-<table>
+<br />
+<table class="bordered">
 	<!-- a form with no "action" tag posts back to the current page -->
 	<form method="post" enctype="multipart/form-data">
 		<input type="hidden" name="data_month" value="<?=$data_month?>">
@@ -109,10 +110,10 @@ $files_needed = [];
 		foreach ($file_labels_import as $file_id => $file_label) {
 			?>
 		<tr>
-			<td align="right">
+			<td class="strong right">
 				<?php echo $file_label?>
 			</td>
-			<td align="right">
+			<td class="right">
 				<?php echo $uploaded_data[$file_id]?>
 			</td>
 			<td>
@@ -129,7 +130,7 @@ $files_needed = [];
 
 				if ($file_path_existing) {
 					?>
-				<span style='font-weight:bold'><?=$file_path_existing?></span>
+				<span class="strong"><?=$file_path_existing?></span>
 					<?php
 				} else {
 					?>
@@ -145,10 +146,12 @@ $files_needed = [];
 		if ($files_needed) {
 			?>
 		<tr>
-			<td align="right" style="font-weight: bold; color: red">
+			<td class="error strong right">
 				Files needed: <?=count($files_needed)?>
 			</td>
-			<td align="left"><input type="submit" name="submit" value="Upload"></td>
+			<td colspan="2" class="center">
+				<input type="submit" name="submit" value="Upload">
+			</td>
 		</tr>
 			<?php
 		}
@@ -164,8 +167,12 @@ $files_needed = [];
 		<input type="hidden" name="user_name" value="<?=$user_name?>">
 		<input type="hidden" name="process" value="process">
 		<tr>
-			<td align="right" style="font-weight: bold; color: blue">All files ready.</td>
-			<td align="left"><input type="submit" name="submit" value="Process"></td>
+			<td class="success strong right">
+				All files ready
+			</td>
+			<td colspan="2" class="center">
+				<input type="submit" name="submit" value="Process">
+			</td>
 		</tr>
 	</form>
 			<?php
