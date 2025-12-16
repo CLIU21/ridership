@@ -71,20 +71,22 @@ if ($allow_delete) {
 
 function show_files_list_tr_td($filename_list, $allow_delete, $allow_download, $header_text) {
 	if ($filename_list) {
-		$width = 1;
-		if ($allow_delete) {
-			$width++;
-		}
-		if ($allow_download) {
-			$width++;
-		}
-		?>
+		if ($header_text) {
+			$width = 1;
+			if ($allow_delete) {
+				$width++;
+			}
+			if ($allow_download) {
+				$width++;
+			}
+			?>
 	<tr>
 		<td colspan="<?=$width?>" style="font-weight: bold; text-align: center;">
 			<?=$header_text?>
 		</td>
 	</tr>
-		<?php
+			<?php
+		}
 	}
 	foreach ($filename_list as $full_path) {
 		$basename = basename($full_path);
