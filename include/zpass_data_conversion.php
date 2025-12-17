@@ -5,7 +5,8 @@ require_once "include/array_data_processing.php";
 define('SSG_STUDENT_INDEX', 1);
 
 function extract_studentIDs($data) {
-	$answer = extract_one_column_by_id($data, SSG_STUDENT_INDEX);
+	$column_name = 'Student ID';
+	$answer = extract_one_column_by_name($data, $column_name);
 	$answer = array_unique($answer);
 	return $answer;
 }

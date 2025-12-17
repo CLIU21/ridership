@@ -1,13 +1,20 @@
 <?php
 require_once "include/split_header_and_body.php";
 
-// input: matrix; output: array
+// input: matrix, int; output: array
 function extract_one_column_by_id($data, $column_id) {
 	$output = array_map(
 		fn($row) => $row[$column_id],
 		$data,
 	);
 	return $output;
+}
+
+// input: matrix, string; output: array
+function extract_one_column_by_name($data, $column_name) {
+	list($data_header, $ignore_header_body) = header_and_body($data);
+	$column_id = array_search($column_name, $data_header);
+	return extract_one_column_by_id($data, $column_id);
 }
 
 // input: matrix; output: matrix
