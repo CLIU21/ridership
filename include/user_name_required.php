@@ -16,7 +16,7 @@ if ($error_message) {
 <table>
 	<!-- a form with no "action" tag posts back to the current page -->
 	<form method="get">
-		<tr><td align="right">Month for data (YYYY-MM):</td><td><input type="text" name="data_month" value="<?=$data_month?>"></td></tr>
+		<input type="hidden" name="data_month" value="<?=$data_month?>">
 		<tr><td align="right">Your SSG Username:</td><td><input type="text" name="user_name" value=""></td></tr>
 		<tr><td colspan="2" align="right"><input type="submit" name="submit" value="Submit"></td></tr>
 	</form>
