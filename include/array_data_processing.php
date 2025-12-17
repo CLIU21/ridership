@@ -2,7 +2,7 @@
 require_once "include/split_header_and_body.php";
 
 // input: matrix; output: array
-function extract_one_column($data, $column_id) {
+function extract_one_column_by_id($data, $column_id) {
 	$output = array_map(
 		fn($row) => $row[$column_id],
 		$data,
