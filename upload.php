@@ -57,6 +57,7 @@ foreach ($file_labels_import as $file_id => $file_label) {
 		switch ($file_id) {
 			case 'ZPASS':
 				$zpass = load_xls($file_path);
+				show_array_hidden($zpass, 'zpass_raw', 'zpass ALL RECORDS - RAW');
 				$zpass = extract_relevant_columns($zpass);
 				show_array_hidden($zpass, 'zpass', 'zpass ALL RECORDS');
 				$overwrite = true;
