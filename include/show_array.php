@@ -62,20 +62,34 @@ function show_array($data, $label='show_array()') {
 function show_array_hidden($data, $span_id, $label='show_array_hidden()') {
 	// requires toggle_visibility() from ridership.js
 	$records = count($data) - 1;
-	?>
-	<div id="<?=$span_id?>_master">
-		<div id="<?=$span_id?>_label">
-			<h2>
-				<?=$label?>:
-				(<?=$records?> records)
-				<button onclick="toggle_visibility('<?=$span_id?>')">Hide/Show</button>
-			</h2>
+	if ($records) {
+		?>
+		<div id="<?=$span_id?>_master">
+			<div id="<?=$span_id?>_label">
+				<h2>
+					<?=$label?>:
+					(<?=$records?> records)
+					<button onclick="toggle_visibility('<?=$span_id?>')">Hide/Show</button>
+				</h2>
+			</div>
+			<div id="<?=$span_id?>" style="display:none">
+		<?php
+		show_array($data, $label);
+		?>
+			</div>
 		</div>
-		<div id="<?=$span_id?>" style="display:none">
-	<?php
-	show_array($data, $label);
-	?>
+		<?php
+	} else {
+		# no records
+		?>
+		<div id="<?=$span_id?>_empty">
+			<div id="<?=$span_id?>_label">
+				<h2 class="warning">
+					<?=$label?>:
+					(<?=$records?> records)
+				</h2>
+			</div>
 		</div>
-	</div>
-	<?php
+		<?php
+	}
 }
