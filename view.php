@@ -231,6 +231,12 @@ if ($allow_delete) {
 	?>
     <input type="submit" name="submit" value="Confirm Delete">
 </form>
+
+<h3>
+	Or,
+	<a href="?allow_delete=0&data_month=<?=$data_month?>&user_name=<?=$user_name?>">CANCEL file deletion</a>
+</h3>
+
 <?php
 } else {
 	?>
