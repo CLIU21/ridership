@@ -1,4 +1,5 @@
 <?php
+$title = "View";
 // header.php must be BEFORE any other output to browser:
 require_once "include/header.php";
 
