@@ -20,35 +20,61 @@ require_once "include/excel_read.php";
 // echo "_FILES:"; echo "<pre>"; print_r($_FILES); echo "</pre>";
 
 # handle uploaded files:
+?>
+<table class="bordered">
+<?php
 foreach ($file_labels_import as $file_id => $file_label) {
+	?>
+	<tr>
+	<?php
 	$File = $_FILES[$file_id] ?? ['error' => 4];
 	$error = $File['error'];
 	if ($error == 4) {
-		// echo "File '$file_id':<br />\n";
-		// echo "... File not passed";
-		// echo "<br />\n";
+		# file not passed: not actually an error
+		continue;
 	}
 	elseif ($error) {
-		echo "File '$file_id':<br />\n";
-		echo "... Error #$error: ";
-		echo $error_msg_file_upload[$error];
-		echo "<br />\n";
+		?>
+		<th><?=$file_id?>:</th>
+		<td class="error strong" colspan="3">
+			Error #<?=$error?>:
+			<?=$error_msg_file_upload[$error]?>
+		</td>
+		<?php
 	} else {
 		$tmp_name = $File['tmp_name'];
 		$orig_name = $File['name'];
 		$real_name = $file_paths_import[$file_id];
-		echo "File '$file_id':<br />\n";
-		// echo "... from " . "'" . $tmp_name . "'" . "<br />\n";
-		echo "... from " . "'" . $orig_name . "'" . "<br />\n";
-		echo "... to " . "'" . $real_name . "'" . "<br />\n";
+		?>
+		<th><?=$file_id?>:</th>
+		<td>
+			<?=$orig_name?>
+		</td>
+		<td>
+			<?=$real_name?>
+		</td>
+		<?php
 		if (move_uploaded_file($tmp_name, $real_name)) {
-			echo "==> MOVED<br />";
+			?>
+		<td class="success">
+			MOVED
+		</td>
+			<?php
 		} else {
-			echo "==> ERROR!<br />";
+			?>
+		<td class="error strong">
+			ERROR!
+		</td>
+			<?php
 		}
-		echo "<br />\n";
+		?>
+	</tr>
+	<?php
 	}
 }
+?>
+</table>
+<?php
 
 # import uploaded files:
 foreach ($file_labels_import as $file_id => $file_label) {
