@@ -31,18 +31,3 @@ function extract_relevant_columns($data) {
 
 	return keep_columns_by_indexes($column_list, $data);
 }
-
-function replace_student_ids($data, $student_id_replacements) {
-	$fix_row = function($row) use ($student_id_replacements) {
-		$value = $row[ZPASS_STUDENT_INDEX];
-		if (isset($student_id_replacements[$value])) {
-			$value = $student_id_replacements[$value];
-			$row[ZPASS_STUDENT_INDEX] = $value;
-		}
-		return $row;
-	};
-	return array_map(
-		$fix_row,
-		$data,
-	);
-}
