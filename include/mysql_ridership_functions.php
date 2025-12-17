@@ -1,5 +1,6 @@
 <?php
 require_once "include/mysql_connect.php";
+require_once "include/time_conversion.php";
 
 function all_available_data_month_in_db() {
 	global $mysqli;

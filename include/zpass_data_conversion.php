@@ -1,5 +1,4 @@
 <?php
-require_once "include/time_conversion.php";
 require_once "include/array_data_processing.php";
 
 function extract_studentIDs($data) {
