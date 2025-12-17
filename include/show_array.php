@@ -1,53 +1,62 @@
 <?php
 // requires toggle_visibility() JS function, found in ridership.js
 
+function show_cell($cell) {
+	if (is_array($cell)) {
+		$cell = print_r($cell, true);
+	}
+	return $cell;
+}
+
 function show_array($data, $label='show_array()') {
-	echo '<table border="1">';
+	?>
+<table class="bordered">
+	<?php
 	$row_num = 0;
     foreach ($data as $row) {
-    	echo '<tr>';
-    	echo "<td>$row_num</td>";
+		?>
+	<tr>
+		<td><?=$row_num?></td>
+		<?php
     	if (is_array($row)) {
 	    	if ($row_num == 0) {
-		    	foreach ($row as $column_num => $cell) {
-			    	echo '<td style="text-align: center">';
-			    	echo $column_num;
-			    	echo '<br />';
-			    	if (is_array($cell)) {
-			    		print_r($cell);
-			    	} else {
-			    		echo $cell;
-			    	}
-			    	echo '</td>';
+		    	foreach ($row as $cell) {
+					?>
+		<th>
+			<?=show_cell($cell)?>
+		</th>
+					<?php
 		    	}
 	    	} else {
 		    	foreach ($row as $cell) {
-			    	echo '<td>';
-			    	if (is_array($cell)) {
-			    		print_r($cell);
-			    	} else {
-			    		echo $cell;
-			    	}
-			    	echo '</td>';
+					?>
+		<td>
+			<?=show_cell($cell)?>
+		</td>
+					<?php
 		    	}
 	    	}
     	} else {
 	    	if ($row_num == 0) {
-		    	echo '<td style="text-align: center">';
-		    	echo '(strings)';
-		    	echo '<br />';
-		    	echo $row;
-		    	echo '</td>';
+				?>
+		<td style="text-align: center">
+			<?=$row?>
+		</td>
+				<?php
 	    	} else {
-		    	echo '<td>';
-		    	echo $row;
-		    	echo '</td>';
+				?>
+		<td><?=$row?></td>
+				<?php
 	    	}
     	}
     	$row_num++;
-    	echo '</tr>';
+		?>
+	</tr>
+		<?php
     }
-    echo '</table>';
+	?>
+</table>
+	<?php
 }
 
 function show_array_hidden($data, $span_id, $label='show_array_hidden()') {
