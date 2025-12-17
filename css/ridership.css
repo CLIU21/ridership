@@ -11,10 +11,6 @@ table.bordered th {
    text-align: center;
 }
 
-table.bordered td.strong {
-   font-weight: bold;
-}
-
 table.bordered td.center {
    text-align: center;
 }
@@ -33,4 +29,8 @@ table.bordered td.right {
 
 .success {
    color: green;
+}
+
+.strong {
+   font-weight: bold;
 }
