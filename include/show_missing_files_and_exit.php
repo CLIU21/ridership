@@ -2,27 +2,27 @@
 
 if ($files_missing) {
 	?>
-<table>
+<table class="bordered">
 	<?php
 	foreach ($files_missing as $file_id => $file_path) {
 		$file_label = $file_labels_import[$file_id];
 		?>
 	<tr>
-		<td align="right">
+		<td class="right">
 			<?php echo $file_label?>:
 		</td>
-		<td>
-			<span style='font-weight:bold; color:red'><?=$file_path?> MISSING</span>
+		<td class="error strong">
+			<?=$file_path?> MISSING
 		</td>
 	</tr>
 		<?php
 	}
 	?>
 	<tr>
-		<td align="right">
-			<span style="font-weight: bold; color: red;">Files missing: <?=count($files_missing)?></span>
+		<td class="right error strong">
+			Files missing: <?=count($files_missing)?>
 		</td>
-		<td>
+		<td class="center">
 			<form action="upload.php" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="data_month" value="<?=$data_month?>">
 				<input type="submit" name="submit" value="Upload More Files">
@@ -33,17 +33,17 @@ if ($files_missing) {
 	exit();
 } else {
 	?>
-<table>
+<table class="bordered">
 	<?php
 	foreach ($file_labels_import as $file_id => $file_label) {
 		$file_path = $file_paths_import[$file_id];
 		?>
 	<tr>
-		<td align="right">
-			<?php echo $file_label?>
+		<td class="right strong">
+			<?php echo $file_label?>:
 		</td>
 		<td>
-			<span style='font-weight:bold'><?=$file_path?></span>
+			<?=$file_path?>
 		</td>
 	</tr>
 		<?php
