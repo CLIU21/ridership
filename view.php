@@ -226,10 +226,6 @@ if ($other_files) {
 # else don't show this section
 ?>
 
-<h2>
-	<a href="upload.php?data_month=<?=$data_month?>&user_name=<?=$user_name?>">Upload some files</a>
-</h2>
-
 <?php
 if ($allow_delete) {
 	?>
@@ -245,6 +241,12 @@ if ($allow_delete) {
 	<?php
 }
 ?>
+
+<hr />
+
+<h2>
+	<a href="upload.php?data_month=<?=$data_month?>&user_name=<?=$user_name?>">Upload some files</a>
+</h2>
 
 <?php
 if ($import_files) {
