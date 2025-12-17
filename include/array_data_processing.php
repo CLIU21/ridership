@@ -19,13 +19,32 @@ function remove_columns_by_indexes($column_list, $data) {
 	return array_map($filter_rows, $data);
 }
 
-// input: matrix; output: matrix
+// input: int[], matrix; output: matrix
 function keep_columns_by_indexes($column_list, $data) {
 	$filter_columns_keep = function ($value, $key) use ($column_list) {
 		return in_array($key, $column_list);
 	};
 	$filter_rows = fn($row) => array_filter($row, $filter_columns_keep, ARRAY_FILTER_USE_BOTH);
 	return array_map($filter_rows, $data);
+}
+
+// input: string[], matrix; output: matrix
+function keep_columns_by_headers($column_headers, $data) {
+	list($data_header, $ignore_header_body) = header_and_body($data);
+	// echo "DEBUG: column_headers <pre>"; print_r($column_headers); echo "</pre>\n";
+	// echo "DEBUG: data_header <pre>"; print_r($data_header); echo "</pre>\n";
+	$fn_array_search = function($header_entry) use ($data_header) {
+		return array_search($header_entry, $data_header);
+	};
+	$column_list = array_map(
+		$fn_array_search,
+		$column_headers
+	);
+	// echo "DEBUG: column_list <pre>"; print_r($column_list); echo "</pre>\n";
+	$answer = keep_columns_by_indexes($column_list, $data);
+	list($answer_header, $ignore_answer_body) = header_and_body($answer);
+	// echo "DEBUG: answer_header <pre>"; print_r($answer_header); echo "</pre>\n";
+	return $answer;
 }
 
 // input: matrix; output: array['ok' -> matrix, 'error' -> matrix]
