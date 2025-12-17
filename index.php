@@ -24,7 +24,7 @@ require_once "include/data_dir.php";	# must be after definition of $data_month
 <?php
 function all_available_data_month_in_dir() {
 	global $data_root;
-	$directories = scandir($data_root, SCANDIR_SORT_DESCENDING);
+	$directories = scandir($data_root);
 	$answer = [];
 	foreach ($directories as $dir) {
 		if (! preg_match('/^[.]/', $dir)) {
