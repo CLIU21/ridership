@@ -19,15 +19,15 @@ define('ZPASS_DISTRICT_INDEX', 19);
 define('ZPASS_GRADE_INDEX', 20);
 
 function extract_relevant_columns($data) {
-	$column_list = [
-		ZPASS_LAST_NAME_INDEX,
-		ZPASS_FIRST_NAME_INDEX,
-		ZPASS_CARD_INDEX,
-		ZPASS_DATE_INDEX,
-		ZPASS_STUDENT_INDEX,
-		ZPASS_DISTRICT_INDEX,
-		ZPASS_GRADE_INDEX,
+	$column_headers = [
+		'Last Name',
+		'First Name',
+		'Card No',
+		'Date',
+		'PA Secure ID',
+		'Home District',
+		'Grade (EI or SP)',
 	];
 
-	return keep_columns_by_indexes($column_list, $data);
+	return keep_columns_by_headers($column_headers, $data);
 }
