@@ -229,6 +229,10 @@ if ($other_files) {
 <?php
 if ($allow_delete) {
 	?>
+	<br />
+	<input type="hidden" name="data_month" value="<?=$data_month?>">
+	<input type="hidden" name="user_name" value="<?=$user_name?>">
+	<input type="hidden" name="allow_delete" value="0">
     <input type="submit" name="submit" value="Confirm Delete">
 </form>
 
