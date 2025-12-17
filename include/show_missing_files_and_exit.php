@@ -32,6 +32,7 @@ if ($files_missing) {
 	<?php
 	exit();
 } else {
+	// not files missing
 	?>
 <table class="bordered">
 	<?php
