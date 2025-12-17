@@ -255,16 +255,17 @@ function activate_ridership_records($data_month) {
 
 function insert_ridership_records_w_header($data_month, $ridership_data_w_header, $overwrite=False) {
 	list($ridership_header, $ridership_body) = header_and_body($ridership_data_w_header);
+	$ridership_header = array_values($ridership_header);
 
 	//	Header should contain:
 	$expected_header = [
-		0 => 'Last Name',
-		1 => 'First Name',
-		2 => 'Card No',
-		8 => 'Date',
-		17 => 'PA Secure ID',
-		19 => 'Home District',
-		20 => 'Grade (EI or SP)',
+		'Last Name',
+		'First Name',
+		'Card No',
+		'Date',
+		'PA Secure ID',
+		'Home District',
+		'Grade (EI or SP)',
 	];
 	if ($ridership_header != $expected_header) {
 		echo "ERROR: header is incorrect!<br/>\n";
