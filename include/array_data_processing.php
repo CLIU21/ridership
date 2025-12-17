@@ -26,7 +26,7 @@ function remove_columns_by_indexes($column_list, $data) {
 	return array_map($filter_rows, $data);
 }
 
-// input: int[], matrix; output: matrix
+// input: array[int, matrix; output: matrix
 function keep_columns_by_indexes($column_list, $data) {
 	$filter_columns_keep = function ($value, $key) use ($column_list) {
 		return in_array($key, $column_list);
@@ -35,7 +35,7 @@ function keep_columns_by_indexes($column_list, $data) {
 	return array_map($filter_rows, $data);
 }
 
-// input: string[], matrix; output: matrix
+// input: array[string], matrix; output: matrix
 function keep_columns_by_headers($column_headers, $data) {
 	list($data_header, $ignore_header_body) = header_and_body($data);
 	// echo "DEBUG: column_headers <pre>"; print_r($column_headers); echo "</pre>\n";
