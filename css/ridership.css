@@ -11,6 +11,10 @@ th {
    text-align: center;
 }
 
+td.left {
+   text-align: left;
+}
+
 td.center {
    text-align: center;
 }
