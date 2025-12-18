@@ -6,16 +6,16 @@ table.bordered td, table.bordered th {
    border: 2px solid black;
 }
 
-table.bordered th {
+th {
    font-weight: bold;
    text-align: center;
 }
 
-table.bordered td.center {
+td.center {
    text-align: center;
 }
 
-table.bordered td.right {
+td.right {
    text-align: right;
 }
 
