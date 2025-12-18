@@ -1,16 +1,13 @@
 <?php
 $title = "Index";
-// header.php must be BEFORE any other output to browser:
-require_once "include/header.php";
-
-require_once "include/mysql_ridership_functions.php";
 
 $last_month = strtotime('-1 month');
 $default_data_month = date('Y-m', $last_month);
 
-$data_month = $_POST['data_month'] ?? $_GET['data_month'] ?? $default_data_month;
-
-require_once "include/data_dir.php";	# must be after definition of $data_month
+// header.php must be BEFORE any other output to browser:
+require_once "include/header.php";
+require_once "include/data_dir.php";
+require_once "include/mysql_ridership_functions.php";
 
 ?>
 <table>

@@ -1,6 +1,5 @@
 <?php
 
-$data_month = $_POST['data_month'] ?? $_GET['data_month'] ?? "";
 if (! $data_month) {
 	$error_message = "no data_month passed";
 } elseif (! preg_match('/^[12][0-9][0-9][0-9]-[0-9][0-9]$/', $data_month)) {

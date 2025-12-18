@@ -1,8 +1,12 @@
 <?php
 // az.php must be BEFORE any other output to browser:
 require_once "include/az.php";
+
+// $title should be set before including this file
 $title = $title ?? "Unknown";
-$user_name = $user_name ?? $_POST['user_name'] ?? $_GET['user_name'] ?? "";
+// $default_data_month may be set before including this file
+$data_month = $_POST['data_month'] ?? $_GET['data_month'] ?? $default_data_month ?? "";
+$user_name = $_POST['user_name'] ?? $_GET['user_name'] ?? "";
 
 ?><!DOCTYPE html>
 <html>
