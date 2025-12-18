@@ -34,3 +34,66 @@ table.bordered td.right {
 .strong {
    font-weight: bold;
 }
+
+div.breadcrumb_container {
+   display: flex;
+   flex-flow: row nowrap;
+   justify-content: center;
+}
+
+div.breadcrumb {
+   border: 1px solid black;
+   flex: none;
+   height: auto;
+   margin: 3px;
+   padding: 5px;
+   text-align: center;
+   vertical-align: center;
+   width: 150px;
+}
+
+div.breadcrumb a {
+   color: inherit;
+   font-size: 150%;
+}
+
+div.breadcrumb a:link {
+  text-decoration: none;
+}
+
+div.breadcrumb a:visited {
+  text-decoration: none;
+}
+
+/* hover must come after link and visited */
+div.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+/* active must come after hover */
+div.breadcrumb a:active {
+  text-decoration: underline;
+}
+
+div.past {
+   color: #8026ff;               /* dark purple */
+   background-color: #dfbfff;    /* light purple */
+   background-image: url("green-checkmark-line-icon.png");
+}
+
+div.present {
+   color: #008000;               /* dark green */
+   background-color: #acffac;    /* light green */
+   background-image: url("green-circle-outline-icon.png");
+}
+
+div.future {
+   color: #404040;               /* dark gray */
+   background-color: #bfbfbf;    /* light gray */
+   background-image: url("red-x-line-icon.png");
+}
+
+div.past div.present div.future {
+   background-repeat: no-repeat;
+   background-position: left;
+}

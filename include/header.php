@@ -21,3 +21,43 @@ $user_name = $_POST['user_name'] ?? $_GET['user_name'] ?? "";
 </head>
 <body>
 <h1>Ridership Report: <?=$title?></h1>
+<?php
+$section_pages = [
+	"Index" => "index.php",
+	"View" => "view.php",
+	"Upload" => "upload.php",
+	"Process" => "process.php",
+];
+$sections = array_keys($section_pages);
+$this_page_index = array_search($title, $sections);
+
+$query_string_items = [
+	"data_month={$data_month}",
+	"user_name={$user_name}",
+];
+$query_string = join("&", $query_string_items);
+
+?>
+<div class="breadcrumb_container">
+<?php
+foreach ($sections as $page_index => $section_title) {
+	$url = $section_pages[$section_title] . "?" . $query_string;
+	if ($page_index < $this_page_index) {
+		$time = "past";
+	} elseif ($page_index == $this_page_index) {
+		$time = "present";
+	} else {
+		// page_index > $this_page_index
+		$time = "future";
+	}
+	?>
+	<div class="<?=$time?> breadcrumb">
+		<a href="<?=$url?>">
+			<?=$section_title?>
+		</a>
+	</div>
+	<?php
+}
+?>
+</div>
+<br />
