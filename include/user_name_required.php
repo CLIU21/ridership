@@ -1,7 +1,5 @@
 <?php
 
-require_once "user_name.php";
-
 if (! $user_name) {
 	$error_message = "no SSG Username passed";
 } elseif (! preg_match('/^[A-Z]*$/', $user_name)) {

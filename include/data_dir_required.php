@@ -1,6 +1,5 @@
 <?php
 require_once "include/data_dir.php";
-require_once "include/user_name.php";
 
 function verify_dir($path) {
 	global $data_month;

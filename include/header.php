@@ -2,6 +2,8 @@
 // az.php must be BEFORE any other output to browser:
 require_once "include/az.php";
 $title = $title ?? "Unknown";
+$user_name = $user_name ?? $_POST['user_name'] ?? $_GET['user_name'] ?? "";
+
 ?><!DOCTYPE html>
 <html>
 <head>

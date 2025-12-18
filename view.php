@@ -4,7 +4,6 @@ $title = "View";
 require_once "include/header.php";
 
 require_once "include/data_month_required.php";
-require_once "include/user_name.php";
 require_once "include/data_dir_create.php";
 
 require_once "include/file_paths_import.php";
